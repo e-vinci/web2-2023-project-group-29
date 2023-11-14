@@ -16,7 +16,7 @@ const LoginPage = () => {
                         <label for="password">Mot de passe</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-
+                    <br>
                     <button type="submit" class="btn btn-primary">Se connecter</button>
                 </form>
             </div>
