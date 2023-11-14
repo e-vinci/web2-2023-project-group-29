@@ -1,36 +1,51 @@
-import Phaser from 'phaser';
-import GameScene from '../Game/GameScene';
+// eslint-disable-next-line
+import anime from 'animejs';
 
-let game;
+
 
 const GamePage = () => {
-  const phaserGame = `
-<div id="gameDiv" class="d-flex justify-content-center my-3">
-</div>`;
 
-  const main = document.querySelector('main');
-  main.innerHTML = phaserGame;
+    /*  
+    Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
+    URL of the Code: https://codesandbox.io/u/mcfarljw
+    */
+    const body=document.querySelector("body");
+    
+    body.innerHTML=`<div class="card-container">
+                      <div class="card">
+                        <div class="front">
+                          A
+                        </div>
+                        <div class="back">
+                          B
+                        </div>
+                      </div>
+                    </div>`;
+    const card = document.querySelector(".card");
 
-  const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-      default: 'arcade',
-      arcade: {
-        gravity: { y: 300 },
-        debug: false,
-      },
-    },
-    scene: [GameScene],
-    //  parent DOM element into which the canvas created by the renderer will be injected.
-    parent: 'gameDiv',
-  };
+    let playing = false;
+    
 
-  // there could be issues when a game was quit (events no longer working)
-  // therefore destroy any started game prior to recreate it
-  if (game) game.destroy(true);
-  game = new Phaser.Game(config);
+    card.addEventListener("click", () => {
+      if (playing) return;
+
+      playing = true;
+
+      anime({
+        targets: card,
+        scale: [{ value: 1 }, { value: 1.4 }, { value: 1, delay: 250 }],
+        rotateY: { value: "+=540", delay: 200 },
+        easing: "easeInOutSine",
+        duration: 400,
+        
+        // eslint-disable-next-line no-unused-vars
+        complete: (anim) => {
+          playing = false;
+        }
+      });
+    });
+
 };
 
 export default GamePage;
+
