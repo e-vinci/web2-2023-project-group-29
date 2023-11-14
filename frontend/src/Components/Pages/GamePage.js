@@ -9,7 +9,7 @@ const GamePage = () => {
     Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
     URL of the Code: https://codesandbox.io/u/mcfarljw
     */
-    const body=document.querySelector("body");
+    const body=document.querySelector("main");
     
     body.innerHTML=`<div class="card-container">
                       <div class="card">
