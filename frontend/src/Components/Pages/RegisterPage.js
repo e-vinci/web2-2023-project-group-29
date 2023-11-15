@@ -26,7 +26,6 @@ const RegisterPage = () => {
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
               </div>
 
-              <br>
               <div class="form-group">
                 <label for="profilePicture">Photo de profil</label>
                 <input type="file" class="form-control-file" id="profilePicture" name="profilePicture" accept="image/*" required>
