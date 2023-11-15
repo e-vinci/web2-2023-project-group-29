@@ -4,9 +4,8 @@ const HomePage = () => {
   const main = document.querySelector('main');
   const audio = new Audio(audioPath);
 
-  audio.setAttribute('controls', true);
+  audio.play();
   audio.setAttribute('autoplay', true);
-  audio.setAttribute('hidden', true);
   audio.loop = true;
 
   const homePage = `
