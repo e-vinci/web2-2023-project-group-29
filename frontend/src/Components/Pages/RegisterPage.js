@@ -33,7 +33,7 @@ const RegisterPage = () => {
               </div>
   
               <br>
-              <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
+              <button type="submit" class="btn btn-warning btn-block" data-uri="/game">S'inscrire</button>
             </form>
           </div>
         </div>

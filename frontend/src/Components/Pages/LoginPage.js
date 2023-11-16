@@ -1,7 +1,7 @@
 const LoginPage = () => {
-    const main = document.querySelector('main');
-  
-    const loginPage = `
+  const main = document.querySelector('main');
+
+  const loginPage = `
       <div class="container mt-5" style="background-color: black; color: white;">
         <div class="row justify-content-center">
           <div class="col-md-6">
@@ -17,20 +17,19 @@ const LoginPage = () => {
               </div>
   
               <br>
-              <button type="submit" class="btn btn-warning btn-block">Se connecter</button>
+              <button type="submit" class="btn btn-warning btn-block" data-uri="/game">Se connecter</button>
               
               <p class="mt-3 text-center">
                 Vous n'avez pas de compte ? 
-                <a href="/inscription" class="text-warning">S'inscrire ici</a>
+                <a href="/inscription" class="text-warning" data-uri="/register">S'inscrire ici</a>
               </p>
             </form>
           </div>
         </div>
       </div>
     `;
-  
-    main.innerHTML = loginPage;
-  };
-  
-  export default LoginPage;
-  
+
+  main.innerHTML = loginPage;
+};
+
+export default LoginPage;

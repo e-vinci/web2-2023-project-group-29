@@ -64,7 +64,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Navbar on/off */
   z-index: -1;
 }
 
@@ -86,7 +85,7 @@ body {
   padding: 1vw 2vw;
   margin: 1vw 0;
   text-decoration: none;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.5s ease-in-out;
   background-image: url('../assets/textures/black_rock_texture.png');
   text-align: center;
 }
