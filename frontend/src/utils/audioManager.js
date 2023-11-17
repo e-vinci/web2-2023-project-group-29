@@ -1,3 +1,4 @@
+// audioManager.js
 let audio;
 
 export function initializeAudio(audioPath) {
@@ -12,8 +13,14 @@ export function playAudio() {
   }
 }
 
-export function pauseAudio() {
-  if (!audio.paused) {
+export function toggleAudio() {
+  if (audio.paused) {
+    audio.play();
+  } else {
     audio.pause();
   }
+}
+
+export function isAudioCurrentlyPlaying() {
+  return !audio.paused;
 }
