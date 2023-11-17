@@ -13,8 +13,8 @@ const HomePage = () => {
         <div class="col-md-3 game-menu">
           <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action" data-uri="/login">Play</a>
-            <a href="#" class="list-group-item list-group-item-action data-uri="/rules">Rules</a>
-            <a href="#" class="list-group-item list-group-item-action data-uri="/credits">Credits</a>
+            <a href="#" class="list-group-item list-group-item-action" data-uri="/rules">Rules</a>
+            <a href="#" class="list-group-item list-group-item-action" data-uri="/credits">Credits</a>
           </div>
         </div>
       </div>
