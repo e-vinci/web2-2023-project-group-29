@@ -1,6 +1,8 @@
 /* eslint-disable no-plusplus */
+
 // eslint-disable-next-line
 import anime from 'animejs';
+
 
 const memoryTimer = 5;
 
@@ -34,8 +36,7 @@ const GamePage = () => {
   let innerHTML = `<div id="memoryTimer"></div> 
                     <div class="card-container">`;
   
-  // eslint-disable-next-line no-plusplus
-  for (let index = 0; index < 4; index++) {
+  for (let index = 0; index < 4; index+1) {
     innerHTML += `<div class="card">
                     <div class="front">
                         ?

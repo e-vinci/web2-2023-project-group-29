@@ -1,24 +1,16 @@
 import HomePage from '../Pages/HomePage';
-<<<<<<< HEAD
-import NewPage from '../Pages/NewPage';
 import levelPage from '../Pages/levelPage';
-
-const routes = {
-  '/': HomePage,
-  '/game': GamePage,
-  '/new': NewPage,
-  '/levelPage': levelPage,
-=======
 import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
+// eslint-disable-next-line import/no-named-as-default
 import GamePage  from '../Pages/GamePage';
 
 const routes = {
   '/': HomePage,
+  '/game': GamePage,
   '/login': LoginPage,
   '/register': RegisterPage, 
-  '/game':GamePage
->>>>>>> dev
+  '/levelPage': levelPage,
 };
 
 export default routes;

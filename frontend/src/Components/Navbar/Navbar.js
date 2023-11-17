@@ -34,19 +34,14 @@ const Navbar = () => {
                 <a class="nav-link" href="#" data-uri="/login">Login Page</a>
               </li>
               <li class="nav-item">
-<<<<<<< HEAD
-                <a class="nav-link" href="#" data-uri="/new">New Page</a>
-              </li> 
-              <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/levelPage">level Page</a>
-            </li>                         
-=======
                 <a class="nav-link" href="#" data-uri="/register">Register Page</a>
               </li>  
               <li class="nav-item">
                 <a class="nav-link" href="#" data-uri="/game">Game Page</a>
-              </li>                       
->>>>>>> dev
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/levelPage">level Page</a>
+            </li>                         
             </ul>
           </div>
         </div>
