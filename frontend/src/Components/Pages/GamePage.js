@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 // eslint-disable-next-line
 import anime from 'animejs';
 
@@ -23,40 +24,58 @@ const GamePage = () => {
   /*  
     Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
     URL of the Code: https://codesandbox.io/u/mcfarljw
-    ligne 34 -> 45
-  */
+    ligne 34 -> 47
+  */ 
+  const main = document.querySelector('main');
+  
+  // Ajout de la div pour afficher le minuteur
 
-  let innerHTML = `<div class="card-container">`;
+
+  let innerHTML = `<div id="memoryTimer"></div> 
+                    <div class="card-container">`;
+  
   // eslint-disable-next-line no-plusplus
   for (let index = 0; index < 4; index++) {
     innerHTML += `<div class="card">
                     <div class="front">
-                        ${index}
+                        ?
                     </div>
                     <div class="back">
                         ${index + 1}
                     </div>                  
                   </div>`;
   }
-
-  const main = document.querySelector('main');
   main.innerHTML = `${innerHTML} </div>`;
+
+
 
   const cards = document.querySelectorAll('.card');
 
-  // Retourne toutes les cartes des le debut de la partie afin que le joueur puise memoriser les cartes dans les temps impartie
+  
+  let secondsRemaining = memoryTimer;
+
+  // Mise en place du minuteur
+  const timerInterval = setInterval(() => {
+    document.getElementById('memoryTimer').innerText = `Temps restant : ${secondsRemaining} secondes`;
+
+    if (secondsRemaining === 0) {
+      clearInterval(timerInterval);
+      document.getElementById('memoryTimer').innerHTML="";
+
+      // Retourner toutes les cartes après que le memoryTimer a expiré
+      cards.forEach((card) => {
+        handleCardClick(card);
+      });
+    }
+    secondsRemaining--;
+  }, 1000);
+
+  // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
   cards.forEach((card) => {
     handleCardClick(card);
   });
 
-  // Retourner toutes les cartes après que le memoryTimer expirer
-  setTimeout(() => {
-    cards.forEach((card) => {
-      handleCardClick(card);
-    });
-  }, memoryTimer * 1000);
-
-  // Mise en place d'ecouteur d'evenement sur toutes les cartes lorsque que l'on click sur une carte. Cela la retourne .
+  // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte. Cela la retourne.
   cards.forEach((card) =>
     card.addEventListener('click', () => {
       handleCardClick(card);
