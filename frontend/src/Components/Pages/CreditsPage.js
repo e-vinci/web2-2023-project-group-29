@@ -6,7 +6,7 @@ const CreditsPage = () => {
     <div class="full-screen-bg">
         <div>
             <p>
-                Nicolae pue. Beaucoup. Et Kusay est gay !
+                On ne rit plus.
             </p>
         </div>
     </div>
