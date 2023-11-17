@@ -11,9 +11,9 @@ import { Navbar as BootstrapNavbar } from 'bootstrap';
 const Navbar = () => {
   const navbarWrapper = document.querySelector('#navbarWrapper');
   const navbar = `
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-orange"> <!-- Ajout de la classe bg-orange -->
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Add your brand here</a>
+          <a class="navbar-brand" href="#">Remember Or Die</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -28,17 +28,25 @@ const Navbar = () => {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#" data-uri="/">Home</a>
+                <a class="nav-link" aria-current="page" href="#" data-uri="/">Home Page</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/game">Game</a>
+                <a class="nav-link" href="#" data-uri="/login">Login Page</a>
               </li>
               <li class="nav-item">
+<<<<<<< HEAD
                 <a class="nav-link" href="#" data-uri="/new">New Page</a>
               </li> 
               <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/levelPage">level Page</a>
             </li>                         
+=======
+                <a class="nav-link" href="#" data-uri="/register">Register Page</a>
+              </li>  
+              <li class="nav-item">
+                <a class="nav-link" href="#" data-uri="/game">Game Page</a>
+              </li>                       
+>>>>>>> dev
             </ul>
           </div>
         </div>
