@@ -24,5 +24,15 @@ const HomePage = () => {
   main.appendChild(audio);
 };
 
+// eslint-disable-next-line spaced-comment
+/*function addEventListenerBtn(listGroup, dataUri){
+  if (dataUri === "/login") {
+
+  }
+  listGroup.addEventListener('click',()=>{
+      Navigate();
+  })
+}*/
+
 export default HomePage;
 

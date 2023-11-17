@@ -2,7 +2,8 @@ const LoginPage = () => {
   const main = document.querySelector('main');
 
   const loginPage = `
-      <div class="container mt-5" style="background-color: black; color: white;">
+  <div class="full-screen-bg">
+      <div class="container mt-5">
         <div class="row justify-content-center">
           <div class="col-md-6">
             <form id="loginForm">
@@ -27,6 +28,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+    </div>
     `;
 
   main.innerHTML = loginPage;
