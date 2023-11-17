@@ -1,38 +1,26 @@
-import audioPath from '../../assets/sound/background_sound.mp3';
-
 const HomePage = () => {
   const main = document.querySelector('main');
-  const audio = new Audio(audioPath);
-
-  audio.setAttribute('autoplay', true);
-  audio.loop = true;
 
   const homePage = `
-    <div class="container-fluid full-screen-bg">
+    <div class="container-fluid" style="background-color: black;">
       <div class="row">
-        <div class="col-md-3 game-menu">
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action" data-uri="/login">Play</a>
-            <a href="#" class="list-group-item list-group-item-action" data-uri="/rules">Rules</a>
-            <a href="#" class="list-group-item list-group-item-action" data-uri="/credits">Credits</a>
-          </div>
+        <div class="col-12 text-center mt-5">
+          <h1 class="text-white">Bienvenue sur Remember Or Die !</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center mt-4">
+          <button type="button" class="btn btn-warning btn-lg mb-2">Jouer</button>
+        </div>
+        <div class="col-12 text-center">
+          <button type="button" class="btn   btn-warning btn-lg">Règles du Jeu</button>
         </div>
       </div>
     </div>
   `;
+
   main.innerHTML = homePage;
-  main.appendChild(audio);
 };
-
-// eslint-disable-next-line spaced-comment
-/*function addEventListenerBtn(listGroup, dataUri){
-  if (dataUri === "/login") {
-
-  }
-  listGroup.addEventListener('click',()=>{
-      Navigate();
-  })
-}*/
 
 export default HomePage;
 
