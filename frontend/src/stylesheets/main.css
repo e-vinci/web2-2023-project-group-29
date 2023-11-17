@@ -7,10 +7,11 @@ head,
 body {
   font-size: xxx-large;
   font-family: 'FantasyFont', sans-serif;
+  user-select: none;
 }
 
 .card-container {
-  font-family: 'Open Sans', sans serif;
+  font-family: 'FantasyFont', sans-serif;
   font-size: 120px;
   font-weight: bold;
   width: 125px;

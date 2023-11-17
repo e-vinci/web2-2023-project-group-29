@@ -6,7 +6,7 @@ const RulesPage = () => {
     <div class="full-screen-bg">
         <div>
             <p>
-                Nicolae pue.
+                Meme on rit.
             </p>
         </div>
     </div>
