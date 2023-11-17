@@ -1,11 +1,5 @@
-import audioPath from '../../assets/sound/background_sound.mp3';
-
 const HomePage = () => {
   const main = document.querySelector('main');
-  const audio = new Audio(audioPath);
-
-  audio.setAttribute('autoplay', true);
-  audio.loop = true;
 
   const homePage = `
     <div class="container-fluid full-screen-bg">
@@ -21,7 +15,6 @@ const HomePage = () => {
     </div>
   `;
   main.innerHTML = homePage;
-  main.appendChild(audio);
 };
 
 // eslint-disable-next-line spaced-comment
