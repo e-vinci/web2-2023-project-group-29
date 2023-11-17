@@ -1,4 +1,3 @@
-// audioManager.js
 let audio;
 
 export function initializeAudio(audioPath) {

@@ -1,6 +1,6 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { playAudio, toggleAudio, isAudioCurrentlyPlaying } from '../../utils/audioManager';
+import { toggleAudio, isAudioCurrentlyPlaying } from '../../utils/audioManager';
 import muteImgPath from '../../img/mute.png';
 import soundImgPath from '../../img/sound.png';
 
@@ -53,7 +53,7 @@ const createAudioButton = () => {
   imgElement.alt = 'Audio button';
   imgElement.style.width = '40px';
   imgElement.style.height = '40px';
-  imgElement.id = 'audioButtonImg'; // Ensure to add this ID to your image element
+  imgElement.id = 'audioButtonImg';
 
   audioButton.appendChild(imgElement);
 
@@ -62,7 +62,7 @@ const createAudioButton = () => {
 
 const updateAudioButtonImage = () => {
   const imgElement = document.querySelector('#audioButtonImg');
-  
+
   if (isAudioCurrentlyPlaying()) {
     imgElement.src = soundImgPath;
   } else {
@@ -72,13 +72,13 @@ const updateAudioButtonImage = () => {
 
 const HomePage = () => {
   clearPage();
-  playAudio();
   setupNavbar();
 
   const main = document.querySelector('main');
+  const footer = document.querySelector('footer');
   const container = document.createElement('div');
   container.classList.add('container-fluid', 'full-screen-bg');
-  
+
   const row = document.createElement('div');
   row.classList.add('row');
 
@@ -96,7 +96,9 @@ const HomePage = () => {
   row.appendChild(col);
   container.appendChild(row);
   main.appendChild(container);
-  main.appendChild(audioButton);
+
+  footer.innerHTML = '';
+  footer.appendChild(audioButton);
 };
 
 export default HomePage;
