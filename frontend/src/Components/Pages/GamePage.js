@@ -1,10 +1,115 @@
+/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 // eslint-disable-next-line
 import anime from 'animejs';
+import levels from '../../../../data/level.json';
+import { clearPage } from '../../utils/render';
 
+const cardNumber = levels[0].card_number/2
+const bossLifeMax = cardNumber*10;
+let bossLife = bossLifeMax;
 const memoryTimer = 5;
 
-const handleCardClick = (card) => {
+const main = document.querySelector('main');
+
+function GamePage () {
+  clearPage()
+  /*  
+    Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
+    URL of the Code: https://codesandbox.io/u/mcfarljw
+    ligne 34 -> 47
+  */ 
+  // affichage de la barre de vie du boss
+  
+  displayBossLife();
+  // Ajout de la div pour afficher le minuteur
+  buildGamePage();
+
+  const cards = document.querySelectorAll('.card');
+  const lifeBarWrapper = document.querySelector('#LifeBar');
+  const bossLifeWrapper = document.querySelector('#bossLife');
+
+  createTimer(cards);
+
+  // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
+  cards.forEach((card) => {
+    handleCardClick(card);
+  });
+
+  // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte. Cela la retourne.
+  cards.forEach((card) =>
+    card.addEventListener('click', () => {
+      handleCardClick(card);
+      bossLife-=10;
+      bossLifeWrapper.innerText = bossLife
+      animationBossLife(lifeBarWrapper);
+    }),
+  );
+
+  
+};
+
+function displayBossLife(){
+  const div = document.createElement('div');
+  div.className = 'container text-center'
+  const divrow = document.createElement('div');
+  divrow.className = 'row align-items-center'
+  const divLife  = document.createElement('div');
+  divLife.id = 'life';
+  main.appendChild(divLife);
+
+
+  const divBossLife = document.createElement('div');
+  divBossLife.id = 'LifeBar';
+  divLife.appendChild(divBossLife);
+
+  const p = document.createElement('p');
+  p.innerText = bossLife;
+  p.id = 'bossLife';
+  p.className = 'text-center';
+  divBossLife.appendChild(p);
+  
+}
+
+function buildGamePage() {
+  let innerHTML = `<div id="memoryTimer"></div> 
+                  <div class="card-container">`;
+
+  // eslint-disable-next-line no-plusplus
+  for (let index = 0; index < cardNumber; index++) {
+    innerHTML += `<div class="card">
+                  <div class="front">
+                      ?
+                  </div>
+                  <div class="back">
+                      ${index + 1}
+                  </div>                  
+                </div>`;
+  }
+  main.innerHTML += `${innerHTML} </div>`;
+}
+
+function createTimer(cards) {
+  let secondsRemaining = memoryTimer;
+
+  // Mise en place du minuteur
+  const timerInterval = setInterval(() => {
+    document.getElementById('memoryTimer').innerText = `Temps restant : ${secondsRemaining} secondes`;
+
+    if (secondsRemaining === 0) {
+      clearInterval(timerInterval);
+      document.getElementById('memoryTimer').innerHTML = "";
+
+      // Retourner toutes les cartes après que le memoryTimer a expiré
+      cards.forEach((card) => {
+        handleCardClick(card);
+      });
+    }
+    secondsRemaining--;
+  }, 1000);
+}
+
+function handleCardClick (card)  {
   /*  
     Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
     URL of the Code: https://codesandbox.io/u/mcfarljw
@@ -20,67 +125,20 @@ const handleCardClick = (card) => {
   });
 };
 
-const GamePage = () => {
-  /*  
-    Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
-    URL of the Code: https://codesandbox.io/u/mcfarljw
-    ligne 34 -> 47
-  */ 
-  const main = document.querySelector('main');
-  
-  // Ajout de la div pour afficher le minuteur
 
-
-  let innerHTML = `<div id="memoryTimer"></div> 
-                    <div class="card-container">`;
-  
-  // eslint-disable-next-line no-plusplus
-  for (let index = 0; index < 4; index++) {
-    innerHTML += `<div class="card">
-                    <div class="front">
-                        ?
-                    </div>
-                    <div class="back">
-                        ${index + 1}
-                    </div>                  
-                  </div>`;
-  }
-  main.innerHTML = `${innerHTML} </div>`;
+function animationBossLife(lifeBarWrapper){
+  console.log((bossLife/bossLifeMax)*100);
+  anime({
+    targets:lifeBarWrapper,
+    width:`${(bossLife/bossLifeMax)*100}%`,
+    duration: 500,
+    easing:'easeInOutSine',
+    
+  })
+}
 
 
 
-  const cards = document.querySelectorAll('.card');
 
-  
-  let secondsRemaining = memoryTimer;
-
-  // Mise en place du minuteur
-  const timerInterval = setInterval(() => {
-    document.getElementById('memoryTimer').innerText = `Temps restant : ${secondsRemaining} secondes`;
-
-    if (secondsRemaining === 0) {
-      clearInterval(timerInterval);
-      document.getElementById('memoryTimer').innerHTML="";
-
-      // Retourner toutes les cartes après que le memoryTimer a expiré
-      cards.forEach((card) => {
-        handleCardClick(card);
-      });
-    }
-    secondsRemaining--;
-  }, 1000);
-
-  // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
-  cards.forEach((card) => {
-    handleCardClick(card);
-  });
-
-  // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte. Cela la retourne.
-  cards.forEach((card) =>
-    card.addEventListener('click', () => {
-      handleCardClick(card);
-    }),
-  );
-};
 
 export default GamePage;
