@@ -135,22 +135,6 @@ body {
     padding: 1vw 1vw;
     margin: 1vw 0;
   }
-  
-  #life {
-    width: 300px;
-    height: 20px;
-    border: 1px solid #000;
-    
-  }
-  
-  #LifeBar {
-    position: relative;
-    height: 100%;
-    background-color: #ff0000;
-    width: 100%;
-    
-    
-  }
 }
 
 /* Ajouté par Kusay pour avoir toute la page en noir */
@@ -177,4 +161,22 @@ body {
 #memoryTimer {
   color: #2196f3;
   font-size: large;
+
 }
+#life {
+  width: 300px;
+  height: 20px;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  
+}
+
+#LifeBar {
+  position: relative;
+  height: 100%;
+  background-color: #ff0000;
+  width: 100%;
+ }
+
+}
+

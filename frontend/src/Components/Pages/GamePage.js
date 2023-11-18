@@ -14,6 +14,11 @@ const main = document.querySelector('main');
 
 function GamePage () {
   clearPage()
+  /*  
+    Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
+    URL of the Code: https://codesandbox.io/u/mcfarljw
+    ligne 34 -> 47
+  */ 
   
   // affichage de la barre de vie du boss
   
@@ -24,6 +29,7 @@ function GamePage () {
   const cards = document.querySelectorAll('.card');
   const lifeBarWrapper = document.querySelector('#LifeBar');
   const bossLifeWrapper = document.querySelector('#bossLife');
+
 
   createTimer(memoryTimer);
 
@@ -69,7 +75,7 @@ function buildGamePage() {
   let innerHTML = `<div id="memoryTimer"></div> 
                   <div class="card-container">`;
 
-
+  // eslint-disable-next-line no-plusplus
   for (let index = 0; index < cardNumber; index++) {
     innerHTML += `<div class="card">
                   <div class="front">
@@ -82,6 +88,7 @@ function buildGamePage() {
   }
   main.innerHTML += `${innerHTML} </div>`;
 }
+
 
 
 function createTimer(timer) {
@@ -105,7 +112,7 @@ function createTimer(timer) {
     } else {
       clearInterval(timerInterval);
     }
-  }, timer * 100); // Appel de la fonction toutes les 1000 millisecondes (1 seconde)
+  }
 }
 
 function turnAllTheCards(){
@@ -125,7 +132,6 @@ function handleCardClick (card)  {
 *    Availability: https://codesandbox.io/s/e7ou1
 *
 ************************************************************************************** */
-
 
   anime({
     targets: card,
