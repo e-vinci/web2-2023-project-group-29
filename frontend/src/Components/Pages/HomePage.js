@@ -36,7 +36,6 @@ const HomePage = () => {
       duration: 500,
       easing: 'easeInOutQuad',
       complete() {
-        setTimeout(500);
         Navigate('/play');
       },
     });
