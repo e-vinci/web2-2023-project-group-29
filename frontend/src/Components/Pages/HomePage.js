@@ -1,26 +1,49 @@
+import anime from 'animejs/lib/anime.es';
+import Navigate from '../Router/Navigate';
+import { clearPage } from '../../utils/render';
+import { playAudio } from '../../utils/audioManager';
+
+const navbar = document.querySelector('#navbarWrapper');
+  navbar.style.display = 'none';
+
 const HomePage = () => {
+  clearPage();
+
   const main = document.querySelector('main');
 
-  const homePage = `
-    <div class="container-fluid" style="background-color: black;">
-      <div class="row">
-        <div class="col-12 text-center mt-5">
-          <h1 class="text-white">Bienvenue sur Remember Or Die !</h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 text-center mt-4">
-          <button type="button" class="btn btn-warning btn-lg mb-2">Jouer</button>
-        </div>
-        <div class="col-12 text-center">
-          <button type="button" class="btn   btn-warning btn-lg">Règles du Jeu</button>
-        </div>
-      </div>
-    </div>
-  `;
+  const homePage = document.createElement('div');
+  homePage.classList.add('container-fluid');
 
-  main.innerHTML = homePage;
+  const centeredDiv = document.createElement('div');
+  centeredDiv.classList.add('d-flex', 'justify-content-center', 'align-items-center');
+  centeredDiv.style.height = '100vh';
+
+  const playLink = document.createElement('div');
+  playLink.setAttribute('id', 'btnStart');
+  playLink.setAttribute('data-uri', '/play');
+  playLink.innerText = 'Start';
+
+  playLink.addEventListener('click', () => {
+    playLink.disabled = true;
+
+    playAudio();
+
+    anime({
+      targets: playLink,
+      scale: 3,
+      rotate: '1turn',
+      opacity: 0,
+      duration: 500,
+      easing: 'easeInOutQuad',
+      complete() {
+        Navigate('/play');
+      },
+    });
+  });
+
+  centeredDiv.appendChild(playLink);
+  homePage.appendChild(centeredDiv);
+  main.appendChild(homePage);
 };
 
 export default HomePage;
-
