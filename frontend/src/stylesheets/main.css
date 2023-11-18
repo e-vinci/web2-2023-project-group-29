@@ -161,6 +161,7 @@ body {
 #memoryTimer {
   color: #2196f3;
   font-size: large;
+
 }
 #life {
   width: 300px;
@@ -175,6 +176,7 @@ body {
   height: 100%;
   background-color: #ff0000;
   width: 100%;
-  
-  
+ }
+
 }
+

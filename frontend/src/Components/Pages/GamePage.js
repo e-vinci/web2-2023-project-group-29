@@ -19,6 +19,7 @@ function GamePage () {
     URL of the Code: https://codesandbox.io/u/mcfarljw
     ligne 34 -> 47
   */ 
+  
   // affichage de la barre de vie du boss
   
   displayBossLife();
@@ -29,12 +30,11 @@ function GamePage () {
   const lifeBarWrapper = document.querySelector('#LifeBar');
   const bossLifeWrapper = document.querySelector('#bossLife');
 
-  createTimer(cards);
+
+  createTimer(memoryTimer);
 
   // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
-  cards.forEach((card) => {
-    handleCardClick(card);
-  });
+  turnAllTheCards();
 
   // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte. Cela la retourne.
   cards.forEach((card) =>
@@ -89,32 +89,49 @@ function buildGamePage() {
   main.innerHTML += `${innerHTML} </div>`;
 }
 
-function createTimer(cards) {
-  let secondsRemaining = memoryTimer;
 
-  // Mise en place du minuteur
+
+function createTimer(timer) {
+  let secondsRemaining = timer;
+  
+  // Mise en place du minuteur avec setTimeout
   const timerInterval = setInterval(() => {
-    document.getElementById('memoryTimer').innerText = `Temps restant : ${secondsRemaining} secondes`;
+    if (document.getElementById('memoryTimer') !== null) {
+      // Mise à jour du texte du minuteur
+      document.getElementById('memoryTimer').innerText = `Temps restant : ${secondsRemaining} secondes`;
 
-    if (secondsRemaining === 0) {
+      // Si les secondes restante sont a 0 on efface la div memoryTimer
+      if (secondsRemaining === 0) {
+        clearInterval(timerInterval);
+        document.getElementById('memoryTimer').innerHTML = '';
+
+        // Retourner toutes les cartes après que le minuteur a expiré
+        turnAllTheCards();
+      }
+      secondsRemaining--;
+    } else {
       clearInterval(timerInterval);
-      document.getElementById('memoryTimer').innerHTML = "";
-
-      // Retourner toutes les cartes après que le memoryTimer a expiré
-      cards.forEach((card) => {
-        handleCardClick(card);
-      });
     }
-    secondsRemaining--;
-  }, 1000);
+  }
+}
+
+function turnAllTheCards(){
+  
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    handleCardClick(card);
+  });
 }
 
 function handleCardClick (card)  {
-  /*  
-    Author-> Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
-    URL of the Code: https://codesandbox.io/u/mcfarljw
-    ligne 14 -> 21
-  */
+  /** *************************************************************************************
+*    Title: flip a card with animeJS
+*    Author: Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
+*    Date: no date
+*    Code version:
+*    Availability: https://codesandbox.io/s/e7ou1
+*
+************************************************************************************** */
 
   anime({
     targets: card,
