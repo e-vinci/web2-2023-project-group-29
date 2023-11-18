@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'FantasyFont';
-  src: url('../assets/fonts/AncientModernTales-a7Po.ttf') format('truetype');
+  src: url('../assets/fonts/EightBitDragon-anqx.ttf') format('truetype');
 }
 
 head,
 body {
-  font-size: xxx-large;
+  font-size: xx-large;
   font-family: 'FantasyFont', sans-serif;
   user-select: none;
 }
