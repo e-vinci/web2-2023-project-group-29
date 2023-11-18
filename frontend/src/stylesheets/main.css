@@ -1,65 +1,179 @@
-  
-  .card-container {
-    font-family: "Open Sans", sans serif;
-    font-size: 120px;
-    font-weight: bold;
-    width: 125px;
-    height: 175px;
-    margin: 80px auto;
-    border-radius: 10px;
-    perspective: 1400px;
+@font-face {
+  font-family: 'FantasyFont';
+  src: url('../assets/fonts/AncientModernTales-a7Po.ttf') format('truetype');
+}
+
+head,
+body {
+  font-size: xxx-large;
+  font-family: 'FantasyFont', sans-serif;
+  user-select: none;
+}
+
+.card-container {
+  font-family: 'FantasyFont', sans-serif;
+  font-size: 120px;
+  font-weight: bold;
+  width: 125px;
+  height: 175px;
+  margin: 80px auto;
+  border-radius: 10px;
+  perspective: 1400px;
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  border-radius: 10px;
+  width: 100%;
+  transform-style: preserve-3d;
+}
+
+.front,
+.back {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden;
+}
+
+.front {
+  color: #fff;
+  background: #2196f3;
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: rotateY(180deg);
+
+  color: #2196f3;
+  background: #fff;
+}
+
+#btnStart {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  font-weight: bold;
+  border-radius: 10px;
+  width: 125px;
+  height: 175px;
+  color: #fff;
+  background: none;
+  backface-visibility: hidden;
+  cursor: grab;
+  transform-origin: top left;
+}
+
+#btnStart:hover {
+  background: none;
+  color: #4e5153;
+}
+
+.full-screen-bg {
+  background-image: url('../img/backgrounds/mainBg.gif');
+  background-size: 100% 100%;
+  background-position: top left;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.container-fluid {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-menu {
+  position: absolute;
+  top: 40%;
+  left: 2%;
+  width: fit-content;
+  padding: 2%;
+  background-color: #3a3a3a00;
+  user-select: none;
+}
+
+.game-menu .list-group-item {
+  background-color: #5e5e5e;
+  color: #ffffff;
+  border-radius: 20px;
+  border-color: rgba(33, 149, 243, 0);
+  padding: 1vw 2vw;
+  margin: 1vw 0;
+  text-decoration: none;
+  transition: background-color 0.5s ease-in-out;
+  background-image: url('../assets/textures/black_rock_texture.png');
+  text-align: center;
+}
+
+.game-menu .list-group-item:hover {
+  background-image: url('../assets/textures/rock_textures.png');
+}
+
+@media (max-width: 768px) {
+  .game-menu {
+    width: 20%;
+    padding: 4%;
   }
-  
-  .card {
-    position: relative;
-    height: 100%;
-    border-radius: 10px;
-    width: 100%;
-    transform-style: preserve-3d;
+
+  .game-menu .list-group-item {
+    font-size: 4vw;
+    padding: 1vw 1vw;
+    margin: 1vw 0;
   }
+}
+
+/* Ajouté par Kusay pour avoir toute la page en noir */
+body {
+  background-color: black;
+  color: white; /* Text color */
+}
+
+/* Fond orange pour la navbar */
+.bg-orange {
+  background-color: #ffa500; /* Code couleur orange */
+}
+
+/* Texte noir pour les liens de la navbar */
+.bg-orange .navbar-nav .nav-link {
+  color: #000000; /* Code couleur noir */
+}
+
+/* Texte noir au survol */
+.bg-orange .navbar-nav .nav-link:hover {
+  color: #000000; /* Code couleur noir */
+}
+
+#memoryTimer {
+  color: #2196f3;
+  font-size: large;
+}
+#life {
+  width: 300px;
+  height: 20px;
+  border: 1px solid #000;
   
-  .front,
-  .back {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    backface-visibility: hidden;
-  }
+}
+
+#LifeBar {
+  position: relative;
+  height: 100%;
+  background-color: #ff0000;
+  width: 100%;
   
-  .front {
-    color: #fff;
-    background: #2196f3;
-  }
   
-  .back {
-    position: absolute;
-    top: 0;
-    left: 0;
-  
-    transform: rotateY(180deg);
-  
-    color: #2196f3;
-    background: #fff;
-  }
-  #memoryTimer{
-    color: #2196f3;
-    font-size: large;
-  }
-  #life {
-    width: 300px;
-    height: 20px;
-    border: 1px solid #000;
-    
-  }
-  
-  #LifeBar {
-    position: relative;
-    height: 100%;
-    background-color: #ff0000;
-    width: 100%;
-    
-    
-  }
+}
