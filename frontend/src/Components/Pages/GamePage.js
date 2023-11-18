@@ -40,8 +40,11 @@ function GamePage () {
   cards.forEach((card) =>
     card.addEventListener('click', () => {
       handleCardClick(card);
-      bossLife-=10;
-      bossLifeWrapper.innerText = bossLife
+      if(bossLife>0){
+        bossLife-=10;
+        bossLifeWrapper.innerText = bossLife
+      }
+      
       animationBossLife(lifeBarWrapper);
     }),
   );
@@ -112,7 +115,7 @@ function createTimer(timer) {
     } else {
       clearInterval(timerInterval);
     }
-  }
+  },1000)
 }
 
 function turnAllTheCards(){
