@@ -6,34 +6,40 @@ const main = document.querySelector('main');
 
 function levelPage (){
     clearPage();
-    const divTitle = document.createElement('div');
-    main.appendChild(divTitle)
-    const title = document.createElement('h1');
-    title.innerText = `Image d'un monde`;
-    title.className = 'text-center';
-    divTitle.appendChild(title);
-
-    const divList = document.createElement('div');
-    
-    main.appendChild(divList);
-    const list = document.createElement('ul');
-    list.className = 'list-group'
-    divList.appendChild(list)
-
-   
-    levels.forEach(level => {
-        const rowList = document.createElement('li'); 
-        const rowListTitle = document.createElement('h2');
-        rowList.appendChild(rowListTitle);
-        rowList.className = 'list-group-item text-center'  ; 
-        rowList.id = `${level.level_id}` 
-        rowListTitle.innerText = level.name;
-        list.appendChild(rowList);
-        addEventListenerMe(rowList) ;
-    });  
+    buildLevelPage();  
 
 
 }
+function buildLevelPage() {
+    const divTitle = document.createElement('div');
+    main.appendChild(divTitle);
+
+    const title = document.createElement('h1');
+    divTitle.appendChild(title);
+    title.innerText = `Image d'un monde`;
+    title.className = 'text-center';
+    
+
+    const divList = document.createElement('div');
+    main.appendChild(divList);
+    divList.className = 'container'
+    
+
+
+    levels.forEach(level => {
+        const rowDiv = document.createElement('div');
+    
+        const rowListTitle = document.createElement('h2');
+        rowDiv.appendChild(rowListTitle);
+        rowDiv.className = 'list-group-item text-center';
+        rowDiv.id = `${level.level_id}`;
+        rowListTitle.innerText = level.name;
+        divList.appendChild(rowDiv);
+        addEventListenerMe(rowDiv);
+    });
+    main.id = 'imgLevelMap'
+}
+
 function addEventListenerMe(wrapper){
     wrapper.addEventListener('click',()=>{
         Navigate(`/game?${wrapper.id}`);

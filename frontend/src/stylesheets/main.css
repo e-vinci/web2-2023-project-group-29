@@ -48,3 +48,14 @@
     color: #2196f3;
     font-size: large;
   }
+  html,body{
+    height: 100%;
+    margin: 0;
+  }
+#imgLevelMap{
+  background-image: url(../assets/levelMapPage.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 100%;
+  
+}
