@@ -58,14 +58,9 @@ body {
 
 #btnStart {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 120px;
   font-weight: bold;
   border-radius: 10px;
-  width: 125px;
-  height: 175px;
   color: #fff;
   background: none;
   backface-visibility: hidden;
