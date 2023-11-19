@@ -3,17 +3,17 @@ import routes from './routes';
 
 const Router = () => {
   onFrontendLoad();
-  onNavBarClick();
+  changePage();
   onHistoryChange();
 };
 
-function onNavBarClick() {
-  const navbarWrapper = document.querySelector('#navbarWrapper');
+function changePage() {
+  const doc = document.querySelector('html');
 
-  navbarWrapper.addEventListener('click', (e) => {
+  doc.addEventListener('click', (e) => {
     e.preventDefault();
-    const navBarItemClicked = e.target;
-    const uri = navBarItemClicked?.dataset?.uri;
+    const itemClicked = e.target;
+    const uri = itemClicked?.dataset?.uri;
     if (uri) {
       const componentToRender = routes[uri];
       if (!componentToRender) throw Error(`The ${uri} ressource does not exist.`);

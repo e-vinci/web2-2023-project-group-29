@@ -2,7 +2,8 @@ const RegisterPage = () => {
     const main = document.querySelector('main');
   
     const registerPage = `
-      <div class="container mt-5" style="background-color: black; color: white;">
+    <div class="full-screen-bg">
+      <div class="container mt-5">
         <div class="row justify-content-center">
           <div class="col-md-6">
             <form id="registrationForm">
@@ -32,10 +33,11 @@ const RegisterPage = () => {
               </div>
   
               <br>
-              <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
+              <button type="submit" class="btn btn-warning btn-block" data-uri="/game">S'inscrire</button>
             </form>
           </div>
         </div>
+      </div>
       </div>
     `;
   
