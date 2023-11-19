@@ -1,7 +1,10 @@
+import Navigate from '../Router/Navigate';
+import { addOneUser } from '../../models/users'; // Assurez-vous d'importer correctement la fonction addOneUser
+
 const RegisterPage = () => {
-    const main = document.querySelector('main');
-  
-    const registerPage = `
+  const main = document.querySelector('main');
+
+  const registerPage = `
     <div class="full-screen-bg">
       <div class="container mt-5">
         <div class="row justify-content-center">
@@ -33,16 +36,43 @@ const RegisterPage = () => {
               </div>
   
               <br>
-              <button type="submit" class="btn btn-warning btn-block" data-uri="/game">S'inscrire</button>
+              <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
             </form>
           </div>
         </div>
       </div>
-      </div>
-    `;
+    </div>
+  `;
+
+  main.innerHTML = registerPage;
+
+  const registrationForm = document.querySelector('#registrationForm');
   
-    main.innerHTML = registerPage;
-  };
-  
-  export default RegisterPage;
-  
+  registrationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Récupérez les valeurs du formulaire
+    const username = document.querySelector('#username').value;
+    const email = document.querySelector('#email').value;
+    const password = document.querySelector('#password').value;
+    const confirmPassword = document.querySelector('#confirmPassword').value;
+    const profilePicture = document.querySelector('#profilePicture').value;
+
+    // Créez un objet avec les informations de l'utilisateur
+    const userToBeCreated = {
+      username,
+      email,
+      password,
+      confirmPassword,
+      profilePicture,
+    };
+
+    // Ajoutez l'utilisateur en utilisant la fonction réutilisable
+    addOneUser(userToBeCreated);
+
+    // Naviguez vers la page "/game" après l'inscription réussie
+    Navigate('/game');
+  });
+};
+
+export default RegisterPage;

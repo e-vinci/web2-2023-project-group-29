@@ -1,8 +1,11 @@
+import Navigate from '../Router/Navigate';
+import { verifyLogin } from '../../models/users'; // Assurez-vous d'importer correctement la fonction verifyLogin
+
 const LoginPage = () => {
   const main = document.querySelector('main');
 
   const loginPage = `
-  <div class="full-screen-bg">
+    <div class="full-screen-bg">
       <div class="container mt-5">
         <div class="row justify-content-center">
           <div class="col-md-6">
@@ -18,7 +21,7 @@ const LoginPage = () => {
               </div>
   
               <br>
-              <button type="submit" class="btn btn-warning btn-block" data-uri="/game">Se connecter</button>
+              <button type="submit" class="btn btn-warning btn-block">Se connecter</button>
               
               <p class="mt-3 text-center">
                 Vous n'avez pas de compte ? 
@@ -29,9 +32,26 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
-    `;
+  `;
 
   main.innerHTML = loginPage;
+
+  const loginForm = document.querySelector('#loginForm');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Je récupère les valeurs du formulaire
+    const email = document.querySelector('#email').value;
+    const password = document.querySelector('#password').value;
+
+    // Je vérifie la connexion en utilisant la fonction réutilisable
+    const loginSuccess = verifyLogin(email, password);
+
+    if (loginSuccess) {
+      Navigate('/game');
+    }
+  });
 };
 
 export default LoginPage;
