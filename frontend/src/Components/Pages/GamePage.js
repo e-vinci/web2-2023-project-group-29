@@ -112,7 +112,7 @@ function createTimer(timer) {
     } else {
       clearInterval(timerInterval);
     }
-  }
+  },1000);
 }
 
 function turnAllTheCards(){
