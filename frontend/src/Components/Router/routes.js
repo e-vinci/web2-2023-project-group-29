@@ -4,6 +4,7 @@ import RegisterPage from '../Pages/RegisterPage';
 import GamePage  from '../Pages/GamePage';
 import RulesPage from '../Pages/RulesPage';
 import CreditsPage from '../Pages/CreditsPage';
+import PlayPage from '../Pages/PlayPage';
 
 const routes = {
   '/': HomePage,
@@ -11,7 +12,8 @@ const routes = {
   '/register': RegisterPage, 
   '/game': GamePage,
   '/rules': RulesPage,
-  '/credits': CreditsPage
+  '/credits': CreditsPage,
+  '/play': PlayPage
 };
 
 export default routes;

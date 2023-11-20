@@ -3,8 +3,8 @@ const RulesPage = () => {
     
     const rulesPage = 
     `
-    <div class="full-screen-bg">
-        <div>
+    <div class="full-screen-bg d-flex justify-content-center align-items-center">
+        <div calss="text-center">
             <p>
                 Meme on rit.
             </p>
