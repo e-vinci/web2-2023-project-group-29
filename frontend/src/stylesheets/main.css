@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'FantasyFont';
-  src: url('../assets/fonts/AncientModernTales-a7Po.ttf') format('truetype');
+  src: url('../assets/fonts/EightBitDragon-anqx.ttf') format('truetype');
 }
 
 head,
 body {
-  font-size: xxx-large;
+  font-size: xx-large;
   font-family: 'FantasyFont', sans-serif;
   user-select: none;
 }
@@ -56,6 +56,23 @@ body {
   background: #fff;
 }
 
+#btnStart {
+  position: fixed;
+  font-size: 120px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: #fff;
+  background: none;
+  backface-visibility: hidden;
+  cursor: grab;
+  transform-origin: top left;
+}
+
+#btnStart:hover {
+  background: none;
+  color: #4e5153;
+}
+
 .full-screen-bg {
   background-image: url('../img/backgrounds/mainBg.gif');
   background-size: 100% 100%;
@@ -65,7 +82,14 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  /*z-index: -1;*/
+  z-index: -2;
+}
+
+.container-fluid {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-menu {
