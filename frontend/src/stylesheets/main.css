@@ -178,5 +178,10 @@ body {
   width: 100%;
  }
 
+ .card-found .back {
+  pointer-events: none; /* Désactive les événements de pointer (clics) sur les cartes trouvées */
+}
 
-
+.card-found .back img {
+  opacity: 1; /* Rend l'image de la carte trouvée visible */
+}
