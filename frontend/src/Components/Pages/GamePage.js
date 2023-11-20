@@ -1,30 +1,33 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 // eslint-disable-next-line
 import anime from 'animejs';
 import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
-import img1 from '../../assets/default/bomb.png'
+import img1 from '../../assets/default/bomb.png';
 import img2 from '../../assets/default/star.png';
 import img3 from '../../assets/default/dude.png';
 
 let firstCard = null; // Variable pour stocker la première carte cliquée
 
-
-const cardNumber = levels[0].card_number/2
-const bossLifeMax = cardNumber*5;
+const cardNumber = levels[0].card_number / 2;
+const bossLifeMax = cardNumber * 5;
 let bossLife = bossLifeMax;
 const memoryTimer = 5;
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickable = false;
 let cards;
+let gameSeconds = 0;
+let idGameTimer;
+let timerOfThePlayer;
 
 const main = document.querySelector('main');
 
-function GamePage () {
-  clearPage()
-  
+function GamePage() {
+  clearPage();
+
   // affichage de la barre de vie du boss
   displayBossLife();
   // Ajout de la div pour afficher le minuteur
@@ -40,33 +43,27 @@ function GamePage () {
   // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
   turnAllTheCards();
 
-
-  
-
-  // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte. 
+  // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte.
   cards.forEach((card) =>
     card.addEventListener('click', () => {
       if (clickable === true) {
-        if(!card.classList.contains('card-found')){
+        if (!card.classList.contains('card-found')) {
           handleCardClick(card);
-          checkMatchingCards(card); 
+          checkMatchingCards(card);
         }
       }
     }),
   );
+}
 
-  
-};
-
-function displayBossLife(){
+function displayBossLife() {
   const div = document.createElement('div');
-  div.className = 'container text-center'
+  div.className = 'container text-center';
   const divrow = document.createElement('div');
-  divrow.className = 'row align-items-center'
-  const divLife  = document.createElement('div');
+  divrow.className = 'row align-items-center';
+  const divLife = document.createElement('div');
   divLife.id = 'life';
   main.appendChild(divLife);
-
 
   const divBossLife = document.createElement('div');
   divBossLife.id = 'LifeBar';
@@ -77,13 +74,14 @@ function displayBossLife(){
   p.id = 'bossLife';
   p.className = 'text-center';
   divBossLife.appendChild(p);
-  
 }
 
 function buildGamePage() {
-  let innerHTML = `<div id="memoryTimer"></div> 
-                  <div class="card-container">`;
-  const arrayOfCards=initializeArray();
+  let innerHTML = `<div id="memoryTimer"></div>
+                   <br> 
+                   <div id="gameTimer"></div>
+                   <div class="card-container">`;
+  const arrayOfCards = initializeArray();
   shuffleArray(arrayOfCards);
 
   for (let index = 0; index < cardNumber; index++) {
@@ -99,50 +97,52 @@ function buildGamePage() {
   main.innerHTML += `${innerHTML} </div>`;
 }
 
-
 function createMemoryTimer(timer) {
   let secondsRemaining = timer;
-  
+
   // Mise en place du minuteur avec setTimeout
   const timerInterval = setInterval(() => {
     if (document.getElementById('memoryTimer') !== null) {
       // Mise à jour du texte du minuteur
-      document.getElementById('memoryTimer').innerText = `Temps restant : ${secondsRemaining} secondes`;
+      document.getElementById(
+        'memoryTimer',
+      ).innerText = `Temps restant : ${secondsRemaining} secondes`;
 
       // Si les secondes restante sont a 0 on efface la div memoryTimer
       if (secondsRemaining === 0) {
         clearInterval(timerInterval);
         document.getElementById('memoryTimer').innerHTML = '';
         clickable = true;
-
-        // Retourner toutes les cartes après que le minuteur a expiré
+        // Lance le chrono de la partie
+        startGameTimer();
+        // Retourner toutes les cartes après que le minuteur ai expiré
         turnAllTheCards();
       }
       secondsRemaining--;
     } else {
       clearInterval(timerInterval);
     }
-  }, 1000); // Appel de la fonction toutes les 1000 millisecondes (1 seconde)
+  }, 1000);
 }
 
-function turnAllTheCards(){
+function turnAllTheCards() {
   cards.forEach((card) => {
     handleCardClick(card);
   });
 }
 
-function handleCardClick (card)  {
+function handleCardClick(card) {
   /** *************************************************************************************
-*    Title: flip a card with animeJS
-*    Author: Joshua McFarland -> https://codesandbox.io/u/mcfarljw 
-*    Date: no date
-*    Code version:
-*    Availability: https://codesandbox.io/s/e7ou1
-*
-************************************************************************************** */
-  if(card.classList.contains('card-found')){
+   *    Title: flip a card with animeJS
+   *    Author: Joshua McFarland -> https://codesandbox.io/u/mcfarljw
+   *    Date: no date
+   *    Code version:
+   *    Availability: https://codesandbox.io/s/e7ou1
+   *
+   ************************************************************************************** */
+  if (card.classList.contains('card-found')) {
     return;
-  } 
+  }
 
   anime({
     targets: card,
@@ -151,26 +151,34 @@ function handleCardClick (card)  {
     easing: 'easeInOutSine',
     duration: 400,
   });
-};
-
+}
 
 // eslint-disable-next-line no-shadow
-function animationBossLife(lifeBarWrapper){
-  console.log((bossLife/bossLifeMax)*100);
+function animationBossLife(lifeBarWrapper) {
+  console.log((bossLife / bossLifeMax) * 100);
   anime({
-    targets:lifeBarWrapper,
-    width:`${(bossLife/bossLifeMax)*100}%`,
+    targets: lifeBarWrapper,
+    width: `${(bossLife / bossLifeMax) * 100}%`,
     duration: 500,
-    easing:'easeInOutSine',
-    
-  })
+    easing: 'easeInOutSine',
+  });
 }
-function initializeArray(){
-  const array = [img1,img1,img2,img2,img3,img3];
+function initializeArray() {
+  const array = [img1, img1, img2, img2, img3, img3];
   return array;
 }
 
 function shuffleArray(array) {
+  /** *************************************************************************************
+   *    Title: creation d'une function qui melange un tableau de cards en javascript
+   *    Author: ChatGpt -> https://chat.openai.com/
+   *    Date: no date
+   *    Code version: no code version
+   *    Availability: https://chat.openai.com/
+   *
+   ************************************************************************************** */
+
+  // Algorithme de Fisher-Yates
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     // eslint-disable-next-line no-param-reassign
@@ -179,8 +187,8 @@ function shuffleArray(array) {
 }
 
 function checkMatchingCards(card) {
-  if(firstCard==null){
-    firstCard=card;
+  if (firstCard == null) {
+    firstCard = card;
     return;
   }
   if (firstCard !== null) {
@@ -189,37 +197,71 @@ function checkMatchingCards(card) {
     const secondCardImgSrc = card.querySelector('.back img').src;
 
     if (firstCardImgSrc !== secondCardImgSrc) {
-      
       setTimeout(() => {
+
         handleCardClick(firstCard);
-        console.log("first Card= ",firstCard);
+        console.log('first Card= ', firstCard);
         handleCardClick(card);
-        console.log("second Card= ",card);
-        if(firstCard!==null){
-          firstCard=null;
+        console.log('second Card= ', card);
+
+        if (firstCard !== null) {
+          firstCard = null;
         }
-      }, 1000);
-    }else{
+      }, 850);
+    } else {
       // Si les 2 cartes sont identique alors on desactive leur ecouteurs evenements afin qu'on ne puisse plus les retourner,
       // On remet la first Card a Null et on enleve des point de vies au boss.
-      if(card.classList.contains('card-found') && firstCard.classList.contains('card-found')){
+      if (card.classList.contains('card-found') && firstCard.classList.contains('card-found')) {
         return;
-      } 
-      card.classList.add('card-found'); 
+      }
+      card.classList.add('card-found');
       firstCard.classList.add('card-found');
-      firstCard=null;
-      
-      bossLife-=10;
+      firstCard = null;
+
+      bossLife -= 10;
       bossLifeWrapper.innerText = bossLife;
       animationBossLife(lifeBarWrapper);
-      if(bossLife===0){
-        // eslint-disable-next-line no-alert
-        alert("you win");
+
+      if (bossLife === 0) {
+        stopGameTimer();
+        alert(`you win with a time of : ${timerOfThePlayer}`);
       }
     }
   }
 }
 
+function startGameTimer() {
+  /** *************************************************************************************
+   *    Title: creation d'un chronometre en javascript
+   *    Author: ChatGpt -> https://chat.openai.com/
+   *    Date: no date
+   *    Code version: no code version
+   *    Availability: https://chat.openai.com/
+   *
+   ************************************************************************************** */
+  
+  gameSeconds = 0;
+  const gameTimerElement = document.getElementById('gameTimer');
 
+  idGameTimer = setInterval(() => {
+    gameSeconds++;
+    gameTimerElement.innerText = `Temps de jeu : ${formatTime(gameSeconds)}`;
+  }, 1000);
+}
+
+function stopGameTimer() {
+  clearInterval(idGameTimer);
+}
+
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  timerOfThePlayer = `${formatANumber(minutes)}:${formatANumber(seconds)}`;
+  return `${formatANumber(minutes)}:${formatANumber(seconds)}`;
+}
+
+function formatANumber(value) {
+  return value < 10 ? `0${value}` : value;
+}
 
 export default GamePage;

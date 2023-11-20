@@ -158,11 +158,6 @@ body {
   color: #000000; /* Code couleur noir */
 }
 
-#memoryTimer {
-  color: #2196f3;
-  font-size: large;
-
-}
 #life {
   width: 300px;
   height: 20px;
