@@ -175,3 +175,17 @@ body {
 .card-found .back img {
   opacity: 1; /* Rend l'image de la carte trouvée visible */
 }
+.divHearts{
+  top: +10%;
+  right: +10%;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+ }
+ 
+ .heart ,.skull{
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+ }
+ 

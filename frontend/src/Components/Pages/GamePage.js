@@ -8,6 +8,8 @@ import { clearPage } from '../../utils/render';
 import img1 from '../../assets/default/bomb.png';
 import img2 from '../../assets/default/star.png';
 import img3 from '../../assets/default/dude.png';
+import imgheart from '../../assets/default/heart.png';
+import imgskull from '../../img/favicon.ico'
 
 let firstCard = null; // Variable pour stocker la première carte cliquée
 
@@ -23,6 +25,7 @@ let gameSeconds = 0;
 let idGameTimer;
 let timerOfThePlayer;
 
+
 const main = document.querySelector('main');
 
 function GamePage() {
@@ -30,12 +33,14 @@ function GamePage() {
 
   // affichage de la barre de vie du boss
   displayBossLife();
+  displayplayerLife();
   // Ajout de la div pour afficher le minuteur
   buildGamePage();
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
   bossLifeWrapper = document.querySelector('#bossLife');
+  
 
   // On creer le timer de memorisation
   createMemoryTimer(memoryTimer);
@@ -197,6 +202,8 @@ function checkMatchingCards(card) {
     const secondCardImgSrc = card.querySelector('.back img').src;
 
     if (firstCardImgSrc !== secondCardImgSrc) {
+      
+      animationBreakHeart();
       setTimeout(() => {
 
         handleCardClick(firstCard);
@@ -262,6 +269,28 @@ function formatTime(time) {
 
 function formatANumber(value) {
   return value < 10 ? `0${value}` : value;
+}
+function displayplayerLife(){
+  const divHeart = document.createElement('div')
+  divHeart.className = 'divHearts'
+  main.appendChild(divHeart);// container for hearts
+  for (let index = 0; index <3; index++) {
+    const heart = document.createElement('img')
+    heart.src = imgheart;
+    heart.className = 'heart'
+    divHeart.appendChild(heart)
+  }
+    
+}
+
+function animationBreakHeart(){
+  const hearts = document.querySelectorAll('.heart');
+  if(hearts){
+    const heart = hearts[hearts.length-1]
+    heart.className = 'skull';
+    heart.src=imgskull; 
+  }
+   
 }
 
 export default GamePage;
