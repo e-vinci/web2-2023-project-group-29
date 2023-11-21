@@ -1,5 +1,3 @@
-// users.js
-
 const usersDB = [];
 
 

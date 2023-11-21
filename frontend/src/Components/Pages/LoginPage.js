@@ -27,7 +27,7 @@ const LoginPage = () => {
               <br>
               <p class="mt-3 text-center">
                 N'avez-vous pas de compte ? 
-                <a href="/register" class="text-warning">S'inscrire ici</a>
+                <a id="register" class="text-warning">S'inscrire ici</a>
               </p>
             </form>
           </div>
@@ -56,6 +56,9 @@ const LoginPage = () => {
       passwordInput.value = '';
     }
   });
+
+  const register = document.querySelector("#register");
+  register.addEventListener("click", () => Navigate("/register"));
 };
 
 export default LoginPage;
