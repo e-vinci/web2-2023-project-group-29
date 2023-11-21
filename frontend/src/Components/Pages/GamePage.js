@@ -24,6 +24,8 @@ let cards;
 let gameSeconds = 0;
 let idGameTimer;
 let timerOfThePlayer;
+let countHeartPlayer = 3;
+console.log(countHeartPlayer);
 
 
 const main = document.querySelector('main');
@@ -204,6 +206,7 @@ function checkMatchingCards(card) {
     if (firstCardImgSrc !== secondCardImgSrc) {
       
       animationBreakHeart();
+      
       setTimeout(() => {
 
         handleCardClick(firstCard);
@@ -215,6 +218,8 @@ function checkMatchingCards(card) {
           firstCard = null;
         }
       }, 850);
+      
+      
     } else {
       // Si les 2 cartes sont identique alors on desactive leur ecouteurs evenements afin qu'on ne puisse plus les retourner,
       // On remet la first Card a Null et on enleve des point de vies au boss.
@@ -289,6 +294,7 @@ function animationBreakHeart(){
     const heart = hearts[hearts.length-1]
     heart.className = 'skull';
     heart.src=imgskull; 
+    countHeartPlayer--;
   }
    
 }
