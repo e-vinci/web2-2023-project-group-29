@@ -9,40 +9,37 @@ import img1 from '../../assets/default/bomb.png';
 import img2 from '../../assets/default/star.png';
 import img3 from '../../assets/default/dude.png';
 import imgheart from '../../assets/default/heart.png';
-import imgskull from '../../img/favicon.ico'
+import imgskull from '../../img/favicon.ico';
 
-let firstCard = null; // Variable pour stocker la première carte cliquée
+let firstCard = null; // Variable stockant la première carte cliquée.
 
-const cardNumber = levels[0].card_number / 2;
-const bossLifeMax = cardNumber * 5;
+const numberOfCards = levels[0].card_number / 2; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
 let bossLife = bossLifeMax;
-const memoryTimer = 5;
+const memoryTimer = 5; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
-let clickable = false;
+let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
 let cards;
-let gameSeconds = 0;
 let idGameTimer;
-let timerOfThePlayer;
-let countHeartPlayer = 3;
-console.log(countHeartPlayer);
-
+let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
+let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
 
 const main = document.querySelector('main');
 
 function GamePage() {
   clearPage();
 
-  // affichage de la barre de vie du boss
+  // Affichage de la barre de vie du boss
   displayBossLife();
+  // Affichage des vies du joueur
   displayplayerLife();
-  // Ajout de la div pour afficher le minuteur
+  // Ajouts des divs HTML du jeu (div cards, div memorytimer,div gameTimer etc...)
   buildGamePage();
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
   bossLifeWrapper = document.querySelector('#bossLife');
-  
 
   // On creer le timer de memorisation
   createMemoryTimer(memoryTimer);
@@ -53,7 +50,15 @@ function GamePage() {
   // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte.
   cards.forEach((card) =>
     card.addEventListener('click', () => {
-      if (clickable === true) {
+      const firstCardid = firstCard?.dataset?.id;
+      const secondCardid = card?.dataset?.id;
+
+      // Si le joueur a clicker sur la meme carte alors on ne fait rien
+      if (firstCardid === secondCardid) {
+        return;
+      }
+      // Si la variable est vraie, le temps de mémorisation écoulé autorise le joueur à cliquer sur les cartes
+      if (clickableWhenStartMemoryTimer === true) {
         if (!card.classList.contains('card-found')) {
           handleCardClick(card);
           checkMatchingCards(card);
@@ -83,6 +88,18 @@ function displayBossLife() {
   divBossLife.appendChild(p);
 }
 
+function displayplayerLife() {
+  const divHeart = document.createElement('div');
+  divHeart.className = 'divHearts';
+  main.appendChild(divHeart); // container for hearts
+  for (let index = 0; index < 3; index++) {
+    const heart = document.createElement('img');
+    heart.src = imgheart;
+    heart.className = 'heart';
+    divHeart.appendChild(heart);
+  }
+}
+
 function buildGamePage() {
   let innerHTML = `<div id="memoryTimer"></div>
                    <br> 
@@ -91,8 +108,8 @@ function buildGamePage() {
   const arrayOfCards = initializeArray();
   shuffleArray(arrayOfCards);
 
-  for (let index = 0; index < cardNumber; index++) {
-    innerHTML += `<div class="card">
+  for (let index = 0; index < numberOfCards; index++) {
+    innerHTML += `<div class="card" data-id=${index}>
                   <div class="front">
                       ?
                   </div>
@@ -110,18 +127,20 @@ function createMemoryTimer(timer) {
   // Mise en place du minuteur avec setTimeout
   const timerInterval = setInterval(() => {
     if (document.getElementById('memoryTimer') !== null) {
-      // Mise à jour du texte du minuteur
+      // Mise à jour du minuteur
       document.getElementById(
         'memoryTimer',
       ).innerText = `Temps restant : ${secondsRemaining} secondes`;
 
-      // Si les secondes restante sont a 0 on efface la div memoryTimer
+      // Si les secondes restante sont a 0 on efface le contenue de la div memoryTimer
       if (secondsRemaining === 0) {
         clearInterval(timerInterval);
         document.getElementById('memoryTimer').innerHTML = '';
-        clickable = true;
+        clickableWhenStartMemoryTimer = true;
+
         // Lance le chrono de la partie
         startGameTimer();
+
         // Retourner toutes les cartes après que le minuteur ai expiré
         turnAllTheCards();
       }
@@ -139,6 +158,10 @@ function turnAllTheCards() {
 }
 
 function handleCardClick(card) {
+  if (card.classList.contains('card-found')) {
+    return;
+  }
+
   /** *************************************************************************************
    *    Title: flip a card with animeJS
    *    Author: Joshua McFarland -> https://codesandbox.io/u/mcfarljw
@@ -147,10 +170,6 @@ function handleCardClick(card) {
    *    Availability: https://codesandbox.io/s/e7ou1
    *
    ************************************************************************************** */
-  if (card.classList.contains('card-found')) {
-    return;
-  }
-
   anime({
     targets: card,
     scale: [{ value: 1 }, { value: 1.4 }, { value: 1, delay: 250 }],
@@ -204,11 +223,7 @@ function checkMatchingCards(card) {
     const secondCardImgSrc = card.querySelector('.back img').src;
 
     if (firstCardImgSrc !== secondCardImgSrc) {
-      
-      animationBreakHeart();
-      
       setTimeout(() => {
-
         handleCardClick(firstCard);
         console.log('first Card= ', firstCard);
         handleCardClick(card);
@@ -218,16 +233,27 @@ function checkMatchingCards(card) {
           firstCard = null;
         }
       }, 850);
-      
-      
+
+      // Puisque les cartes clicker ne sont pas identique on enleve une vie au joueur
+      animationBreakHeart();
+
+      // Si le joueur n'as plus de vie restantes , On affiche "GAME OVER" apres un court delai.
+      // On met le popUp alert dans un setTimeout afin de laisser asser de temps au cartes de se remettre dans le bon sens
+      if (countHeartPlayer === 0) {
+        setTimeout(() => {
+          alert('GAME OVER !');
+        }, 1000);
+      }
     } else {
-      // Si les 2 cartes sont identique alors on desactive leur ecouteurs evenements afin qu'on ne puisse plus les retourner,
-      // On remet la first Card a Null et on enleve des point de vies au boss.
+      // On verifier si les cartes clicker sont pas des cartes deja trouvées
       if (card.classList.contains('card-found') && firstCard.classList.contains('card-found')) {
         return;
       }
+      // Si les 2 cartes sont identique on ajoute alors a leurs attribut class "card-found" afin de desactive leur ecouteurs evenements et donc ne plus les retourner.
       card.classList.add('card-found');
       firstCard.classList.add('card-found');
+
+      // On remet la first Card a Null et on enleve des point de vies au boss.
       firstCard = null;
 
       bossLife -= 10;
@@ -236,7 +262,9 @@ function checkMatchingCards(card) {
 
       if (bossLife === 0) {
         stopGameTimer();
-        alert(`you win with a time of : ${timerOfThePlayer}`);
+        setTimeout(() => {
+          alert(`you win with a time of : ${timerOfThePlayer}`);
+        }, 850);
       }
     }
   }
@@ -251,8 +279,8 @@ function startGameTimer() {
    *    Availability: https://chat.openai.com/
    *
    ************************************************************************************** */
-  
-  gameSeconds = 0;
+
+  let gameSeconds = 0;
   const gameTimerElement = document.getElementById('gameTimer');
 
   idGameTimer = setInterval(() => {
@@ -275,28 +303,15 @@ function formatTime(time) {
 function formatANumber(value) {
   return value < 10 ? `0${value}` : value;
 }
-function displayplayerLife(){
-  const divHeart = document.createElement('div')
-  divHeart.className = 'divHearts'
-  main.appendChild(divHeart);// container for hearts
-  for (let index = 0; index <3; index++) {
-    const heart = document.createElement('img')
-    heart.src = imgheart;
-    heart.className = 'heart'
-    divHeart.appendChild(heart)
-  }
-    
-}
 
-function animationBreakHeart(){
+function animationBreakHeart() {
   const hearts = document.querySelectorAll('.heart');
-  if(hearts){
-    const heart = hearts[hearts.length-1]
+  if (hearts) {
+    const heart = hearts[hearts.length - 1];
     heart.className = 'skull';
-    heart.src=imgskull; 
+    heart.src = imgskull;
     countHeartPlayer--;
   }
-   
 }
 
 export default GamePage;
