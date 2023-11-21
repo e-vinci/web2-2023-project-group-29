@@ -152,20 +152,36 @@ body {
 .bg-orange .navbar-nav .nav-link:hover {
   color: #000000; /* Code couleur noir */
 }
-
-#life {
-  width: 300px;
-  height: 20px;
-  border: 1px solid #ffffff;
-  background-color: #ffffff;
-  
+.divBoss{
+  position: absolute;
+  right: 0;
+  margin-right: 3%;
 }
 
+#life { 
+  width: 200px;
+  height: 10px;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  text-align: center;
+  
+}
+#bossLife{
+  position: absolute;
+  right: 50%;
+  color: #000000;
+}
 #LifeBar {
-  position: relative;
   height: 100%;
-  background-color: #ff0000;
   width: 100%;
+  background-color: #ff0000;
+  font-size: 25%;
+  
+ }
+ .imgBoss{
+    width: 200px;
+    height: auto;
+  
  }
 
  .card-found .back {
@@ -176,9 +192,7 @@ body {
   opacity: 1; /* Rend l'image de la carte trouvée visible */
 }
 .divHearts{
-  top: +10%;
-  right: +10%;
-  position: fixed;
+  
   display: flex;
   flex-direction: row;
  }
@@ -188,4 +202,5 @@ body {
     height: 30px;
     margin: 10px;
  }
+
  
