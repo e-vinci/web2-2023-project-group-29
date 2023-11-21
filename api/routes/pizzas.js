@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+  // eslint-disable-next-line no-unused-vars
   readAllPizzas,
   readOnePizza,
   createOnePizza,
@@ -7,6 +8,7 @@ const {
   updateOnePizza,
 } = require('../models/pizzas');
 const { authorize, isAdmin } = require('../utils/auths');
+const Pizza = require('../models/pizzas');
 
 const router = express.Router();
 
@@ -14,10 +16,13 @@ const router = express.Router();
    GET /pizzas?order=title : ascending order by title
    GET /pizzas?order=-title : descending order by title
 */
-router.get('/', (req, res) => {
-  const allPizzasPotentiallyOrdered = readAllPizzas(req?.query?.order);
-
-  return res.json(allPizzasPotentiallyOrdered);
+router.get('/', async (req, res) => {
+  try {
+    const allPizzasPotentiallyOrdered = await Pizza.getAllPizzas();
+    res.json(allPizzasPotentiallyOrdered);
+  } catch (error) {
+    res.status(500).json({ error: 'Une erreur s\'est produite lors de la récupération des pizzas.' });
+  }
 });
 
 // Read the pizza identified by an id in the menu
