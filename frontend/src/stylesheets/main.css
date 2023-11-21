@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'FantasyFont';
-  src: url('../assets/fonts/AncientModernTales-a7Po.ttf') format('truetype');
+  src: url('../assets/fonts/EightBitDragon-anqx.ttf') format('truetype');
 }
 
 head,
 body {
-  font-size: xxx-large;
+  font-size: xx-large;
   font-family: 'FantasyFont', sans-serif;
   user-select: none;
 }
@@ -58,14 +58,9 @@ body {
 
 #btnStart {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 120px;
   font-weight: bold;
   border-radius: 10px;
-  width: 125px;
-  height: 175px;
   color: #fff;
   background: none;
   backface-visibility: hidden;
