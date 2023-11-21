@@ -1,5 +1,7 @@
+// LoginPage.js
+
 import Navigate from '../Router/Navigate';
-import { verifyLogin } from '../../models/users'; // Assurez-vous d'importer correctement la fonction verifyLogin
+import { verifyLogin } from '../../models/users';
 
 const LoginPage = () => {
   const main = document.querySelector('main');
@@ -14,18 +16,18 @@ const LoginPage = () => {
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
               </div>
-  
+              <br>
               <div class="form-group">
                 <label for="password">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
-  
               <br>
               <button type="submit" class="btn btn-warning btn-block">Se connecter</button>
-              
+              <br>
+              <br>
               <p class="mt-3 text-center">
-                Vous n'avez pas de compte ? 
-                <a href="/inscription" class="text-warning" data-uri="/register">S'inscrire ici</a>
+                N'avez-vous pas de compte ? 
+                <a href="/register" class="text-warning">S'inscrire ici</a>
               </p>
             </form>
           </div>
@@ -40,16 +42,18 @@ const LoginPage = () => {
 
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    const emailInput = document.querySelector('#email');
+    const passwordInput = document.querySelector('#password');
+    const email = emailInput.value;
+    const password = passwordInput.value;
 
-    // Je récupère les valeurs du formulaire
-    const email = document.querySelector('#email').value;
-    const password = document.querySelector('#password').value;
-
-    // Je vérifie la connexion en utilisant la fonction réutilisable
     const loginSuccess = verifyLogin(email, password);
-
     if (loginSuccess) {
       Navigate('/game');
+    } else {
+      // Effacer les champs email et mot de passe
+      emailInput.value = '';
+      passwordInput.value = '';
     }
   });
 };

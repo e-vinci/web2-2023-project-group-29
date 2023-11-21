@@ -1,5 +1,7 @@
+// RegisterPage.js
+
 import Navigate from '../Router/Navigate';
-import { addOneUser } from '../../models/users'; // Assurez-vous d'importer correctement la fonction addOneUser
+import { addOneUser, readAllUsers } from '../../models/users';
 
 const RegisterPage = () => {
   const main = document.querySelector('main');
@@ -29,11 +31,6 @@ const RegisterPage = () => {
                 <label for="confirmPassword">Confirmer le mot de passe</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
               </div>
-
-              <div class="form-group">
-                <label for="profilePicture">Photo de profil</label>
-                <input type="file" class="form-control-file" id="profilePicture" name="profilePicture" accept="image/*" required>
-              </div>
   
               <br>
               <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
@@ -47,31 +44,37 @@ const RegisterPage = () => {
   main.innerHTML = registerPage;
 
   const registrationForm = document.querySelector('#registrationForm');
-  
+
   registrationForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Récupérez les valeurs du formulaire
     const username = document.querySelector('#username').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
     const confirmPassword = document.querySelector('#confirmPassword').value;
-    const profilePicture = document.querySelector('#profilePicture').value;
 
-    // Créez un objet avec les informations de l'utilisateur
+    // Vérification de la correspondance des mots de passe
+    if (password !== confirmPassword) {
+      alert("Les mots de passe ne correspondent pas.");
+      return;
+    }
+
+    // Vérification si l'utilisateur existe déjà
+    const existingUser = readAllUsers().find((user) => user.email === email);
+    if (existingUser) {
+      alert("Cet utilisateur existe déjà. Veuillez vous connecter.");
+      Navigate('/login');
+      return;
+    }
+
     const userToBeCreated = {
       username,
       email,
       password,
-      confirmPassword,
-      profilePicture,
     };
 
-    // Ajoutez l'utilisateur en utilisant la fonction réutilisable
     addOneUser(userToBeCreated);
-
-    // Naviguez vers la page "/game" après l'inscription réussie
-    Navigate('/game');
+    Navigate('/login');
   });
 };
 
