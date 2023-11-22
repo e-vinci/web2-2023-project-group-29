@@ -198,3 +198,8 @@ body {
 .bg-orange .navbar-nav .nav-link:hover {
   color: #000000; /* Code couleur noir */
 }
+
+/* case ajouter fichier */
+input[type="file"] {
+  height: 3rem; /* Ajustez la hauteur selon vos préférences */
+}
