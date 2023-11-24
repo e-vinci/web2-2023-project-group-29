@@ -119,6 +119,12 @@ body {
   background-image: url('../assets/textures/rock_textures.png');
 }
 
+.btn-secondary:hover {
+  background-color: lightgray;
+  border-color: lightgray;
+  color: black; 
+}
+
 @media (max-width: 768px) {
   .game-menu {
     width: 20%;
@@ -130,52 +136,6 @@ body {
     padding: 1vw 1vw;
     margin: 1vw 0;
   }
-}
-
-.card-container {
-  font-family: 'Open Sans', sans serif;
-  font-size: 120px;
-  font-weight: bold;
-  width: 125px;
-  height: 175px;
-  margin: 80px auto;
-  border-radius: 10px;
-  perspective: 1400px;
-}
-
-.card {
-  position: relative;
-  height: 100%;
-  border-radius: 10px;
-  width: 100%;
-  transform-style: preserve-3d;
-}
-
-.front,
-.back {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  justify-content: center;
-  align-items: center;
-  backface-visibility: hidden;
-}
-
-.front {
-  color: #fff;
-  background: #2196f3;
-}
-
-.back {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  transform: rotateY(180deg);
-
-  color: #2196f3;
-  background: #fff;
 }
 
 /* Ajouté par Kusay pour avoir toute la page en noir */
