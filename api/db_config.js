@@ -1,8 +1,4 @@
 const { Client } = require('pg');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const dotenv = require('dotenv');
-
-dotenv.config({ path: 'secrets.env' });
 
 const client = new Client({
   user: process.env.DB_USER,

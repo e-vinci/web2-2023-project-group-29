@@ -6,6 +6,11 @@
 
 const debug = require('debug')('api2:server');
 const http = require('http');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const client = require('../db_config');
 const app = require('../app');
 
