@@ -1,6 +1,7 @@
 import { clearPage } from '../../utils/render';
+import data from '../../data/scores.json';
 
-const LeaderbordPage = () => {
+const LeaderboardPage = () => {
   clearPage();
 
   const main = document.querySelector('main');
@@ -18,28 +19,20 @@ const LeaderbordPage = () => {
    `;
   leaderboardTable.appendChild(tableHeader);
 
-  fetch('../../data/scores.json')
-    .then((response) => response.json())
-    .then((data) => {
-      const tableBody = document.createElement('tbody');
+  const tableBody = document.createElement('tbody');
 
-      data.forEach((player, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <th scope="row">${index + 1}</th>
-        <td style="color: white">${player.name}</td>
-        <td>${player.score}</td>
+  data.forEach((player, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <th scope="row">${index + 1}</th>
+      <td>${player.name}</td>
+      <td>${player.score}</td>
     `;
-        tableBody.appendChild(row);
-      });
+    tableBody.appendChild(row);
+  });
 
-      leaderboardTable.appendChild(tableBody);
-    })
-    .catch((error) => {
-      console.error('Erreur de chargement du JSON : ', error);
-    });
-
+  leaderboardTable.appendChild(tableBody);
   main.appendChild(leaderboardTable);
 };
 
-export default LeaderbordPage;
+export default LeaderboardPage;
