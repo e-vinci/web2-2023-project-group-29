@@ -32,7 +32,7 @@ const createListGroup = () => {
   return listGroup;
 };
 
-const HomePage = () => {
+const PlayPage = () => {
   clearPage();
   setupNavbar();
 
@@ -54,4 +54,4 @@ const HomePage = () => {
   main.appendChild(container);
 };
 
-export default HomePage;
+export default PlayPage;
