@@ -5,16 +5,10 @@ node_modules
 # ignore the specific packages versions installed by the developper
 package-lock.json
 # ignore the development environment variables (if any)
-.env
+*.env
 # ignore all dist directories files (and subdirectories) from .gitignore
 dist/*
 # ignore all the JSON data files within data directories
 **/data/*.json
 # but (re)include specific dist directory files, e.g.
 #!frontend-essentials/step-1/dist
-# ignore config file
-config.js
-# ignore CA certificate
-ca.pem
-# ignore DB config file
-db_config.js

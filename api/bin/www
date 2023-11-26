@@ -6,8 +6,13 @@
 
 const debug = require('debug')('api2:server');
 const http = require('http');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const dotenv = require('dotenv');
 const client = require('../db_config');
 const app = require('../app');
+
+// Config the env file to read from secrets.env
+dotenv.config({ path: 'secrets.env' });
 
 /**
  * Get port from environment and store in Express.
