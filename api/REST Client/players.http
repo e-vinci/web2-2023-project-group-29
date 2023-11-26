@@ -1,0 +1,14 @@
+### Read all players
+GET http://localhost:3000/players
+
+### Create a new player
+POST http://localhost:3000/players
+Content-Type: application/json
+
+{
+    "email": "example@example.com",
+    "login": "example_user",
+    "password": "password123",
+    "avatarPath": "/avatars/avatar.png",
+    "xp": 100
+}

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { readOneUserFromUsername } = require('../models/users');
+const { readOneUserFromUsername } = require('../models/examples/users');
 
 const jwtSecret = 'ilovemypizza!';
 
