@@ -19,6 +19,7 @@ body {
   margin: 80px auto;
   border-radius: 10px;
   perspective: 1400px;
+  
 }
 
 .card {
@@ -27,6 +28,7 @@ body {
   border-radius: 10px;
   width: 100%;
   transform-style: preserve-3d;
+  
 }
 
 .front,
@@ -38,11 +40,13 @@ body {
   justify-content: center;
   align-items: center;
   backface-visibility: hidden;
+  
+  
 }
 
 .front {
   color: #fff;
-  background: #2196f3;
+  background: #ffa500;
 }
 
 .back {
@@ -50,10 +54,8 @@ body {
   top: 0;
   left: 0;
 
-  transform: rotateY(180deg);
-
-  color: #2196f3;
-  background: #fff;
+  transform: rotateY(180deg);  
+  background: black;
 }
 
 #btnStart {
@@ -189,3 +191,7 @@ body {
     margin: 10px;
  }
  
+.imagesOfCards {
+  width: 60%;
+  height: 50%;
+}

@@ -5,11 +5,9 @@
 import anime from 'animejs';
 import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
-import img1 from '../../assets/default/bomb.png';
-import img2 from '../../assets/default/star.png';
-import img3 from '../../assets/default/dude.png';
 import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico';
+import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
 
@@ -36,6 +34,8 @@ function GamePage() {
   displayplayerLife();
   // Ajouts des divs HTML du jeu (div cards, div memorytimer,div gameTimer etc...)
   buildGamePage();
+
+  
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
@@ -105,7 +105,7 @@ function buildGamePage() {
                    <br> 
                    <div id="gameTimer"></div>
                    <div class="card-container">`;
-  const arrayOfCards = initializeArray();
+  const arrayOfCards = initializeArrayOfCards();
   shuffleArray(arrayOfCards);
 
   for (let index = 0; index < numberOfCards; index++) {
@@ -114,7 +114,7 @@ function buildGamePage() {
                       ?
                   </div>
                   <div class="back">
-                      <img src=${arrayOfCards[index]}>
+                      <img src=${arrayOfCards[index]} class="imagesOfCards">
                   </div>                  
                 </div>`;
   }
@@ -189,12 +189,9 @@ function animationBossLife(lifeBarWrapper) {
     easing: 'easeInOutSine',
   });
 }
-function initializeArray() {
-  const array = [img1, img1, img2, img2, img3, img3];
-  return array;
-}
 
-function shuffleArray(array) {
+
+function shuffleArray(arrayOfCards) {
   /** *************************************************************************************
    *    Title: creation d'une function qui melange un tableau de cards en javascript
    *    Author: ChatGpt -> https://chat.openai.com/
@@ -205,10 +202,10 @@ function shuffleArray(array) {
    ************************************************************************************** */
 
   // Algorithme de Fisher-Yates
-  for (let i = array.length - 1; i > 0; i--) {
+  for (let i = arrayOfCards.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     // eslint-disable-next-line no-param-reassign
-    [array[i], array[j]] = [array[j], array[i]];
+    [arrayOfCards[i], arrayOfCards[j]] = [arrayOfCards[j], arrayOfCards[i]];
   }
 }
 
