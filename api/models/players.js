@@ -25,12 +25,17 @@ async function getAllPlayers() {
  * @returns {Promise<Object>} Un objet indiquant le succès de l'ajout.
  * @throws {Error} Une erreur si l'ajout échoue.
  */
-async function addPlayer(email, login, password, avatarPath, xp) {
+async function addPlayer(email, login, password, confirmPassword, avatarPath, xp) {
   try {
     // Validation d'email simple
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       throw new Error("Format d'email invalide");
+    }
+
+    // Vérification du mot de passe et de sa confirmation
+    if (password !== confirmPassword) {
+      throw new Error('Les mots de passe ne correspondent pas');
     }
 
     // Hachage du mot de passe

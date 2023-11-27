@@ -22,6 +22,7 @@ router.get('/players', async (req, res) => {
  * @param {string} email - L'adresse e-mail du joueur.
  * @param {string} login - Le nom d'utilisateur du joueur.
  * @param {string} password - Le mot de passe du joueur.
+ * @param {string} confirmPassword - La confirmation du mot de passe du joueur.
  * @param {string} avatarPath - Le chemin de l'avatar du joueur.
  * @param {number} xp - L'expérience du joueur.
  * @returns {JSON} - Une réponse JSON indiquant le succès de la création.
@@ -29,15 +30,15 @@ router.get('/players', async (req, res) => {
  */
 router.post('/players', async (req, res) => {
   const {
-    email, login, password, avatarPath, xp,
+    email, login, password, confirmPassword, avatarPath, xp,
   } = req.body;
 
-  if (!email || !login || !password || !avatarPath || xp === undefined) {
+  if (!email || !login || !password || !confirmPassword || !avatarPath || xp === undefined) {
     return res.status(400).json({ error: 'Tous les champs sont requis' });
   }
 
   try {
-    const result = await Player.addPlayer(email, login, password, avatarPath, xp);
+    const result = await Player.addPlayer(email, login, password, confirmPassword, avatarPath, xp);
     return res.status(201).json(result); // Création réussie
   } catch (error) {
     return res.status(500).json({ error: error.message });
