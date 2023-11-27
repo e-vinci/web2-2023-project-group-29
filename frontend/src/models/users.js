@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const usersDB = [];
+const usersDB = require('../data/User.json');
 
 
 const addOneUser = (user) => {

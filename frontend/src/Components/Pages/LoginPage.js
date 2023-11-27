@@ -1,7 +1,6 @@
-// LoginPage.js
-
 import Navigate from '../Router/Navigate';
 import { verifyLogin } from '../../models/users';
+// import data from '../../data/User.json'
 
 const LoginPage = () => {
   const main = document.querySelector('main');

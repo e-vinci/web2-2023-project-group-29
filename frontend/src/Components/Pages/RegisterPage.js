@@ -1,7 +1,6 @@
-// RegisterPage.js
-
 import Navigate from '../Router/Navigate';
 import { addOneUser, readAllUsers } from '../../models/users';
+// import data from '../../data/User.json'
 
 const RegisterPage = () => {
   const main = document.querySelector('main');
