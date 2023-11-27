@@ -163,6 +163,11 @@ const LoginPage = () => {
       loginError.textContent = error.message;
     }
   });
+
+  const registerLink = document.querySelector('#register');
+  registerLink.addEventListener('click', () => {
+    Navigate('/register');
+  });
 };
 
 export default LoginPage;
