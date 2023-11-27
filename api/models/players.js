@@ -62,7 +62,7 @@ async function addPlayer(email, login, password, confirmPassword, avatarPath, xp
  */
 async function logoutPlayer(playerId) {
   try {
-    const query = 'UPDATE remember_or_die.players SET connected = false WHERE id = $1';
+    const query = 'UPDATE remember_or_die.players SET connected = false WHERE player_id = $1';
     const values = [playerId];
     await client.query(query, values);
 
