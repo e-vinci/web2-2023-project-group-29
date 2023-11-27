@@ -1,6 +1,5 @@
 import Navigate from '../Router/Navigate';
-import { verifyLogin } from '../../models/users';
-// import data from '../../data/User.json'
+import data from '../../data/User.json'
 
 const LoginPage = () => {
   const main = document.querySelector('main');
@@ -57,14 +56,17 @@ const LoginPage = () => {
     const passwordInput = document.querySelector('#password');
     const email = emailInput.value;
     const password = passwordInput.value;
+    data.push({email, password});
 
-    const loginSuccess = verifyLogin(email, password);
-    if (loginSuccess) {
+
+    const error = undefined;
+    if (error  === undefined) {
       Navigate('/game');
     } else {
       // Effacer les champs email et mot de passe
       emailInput.value = '';
       passwordInput.value = '';
+      console.log(error);
     }
   });
 

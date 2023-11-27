@@ -1,6 +1,5 @@
 import Navigate from '../Router/Navigate';
-import { addOneUser, readAllUsers } from '../../models/users';
-// import data from '../../data/User.json'
+import data from '../../data/User.json'
 
 const RegisterPage = () => {
   const main = document.querySelector('main');
@@ -58,8 +57,6 @@ const RegisterPage = () => {
   main.innerHTML = registerPage;
 
   const registrationForm = document.querySelector('#registrationForm');
-  const passwordMismatchError = document.querySelector('#passwordMismatchError');
-  const existingUserError = document.querySelector('#existingUserError');
 
   // Ajout du gestionnaire d'événements pour le bouton Back
   const backButton = document.getElementById('backButton');
@@ -74,29 +71,21 @@ const RegisterPage = () => {
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
     const confirmPassword = document.querySelector('#confirmPassword').value;
+    const avatarPath = document.querySelector('#profilePicture').value;
 
-    // Vérification de la correspondance des mots de passe
     if (password !== confirmPassword) {
-      passwordMismatchError.textContent = "Les mots de passe ne correspondent pas.";
-      existingUserError.textContent = ""; // Effacer le message d'utilisateur existant s'il y en a un
-      return;
-    }
-
-    // Vérification si l'utilisateur existe déjà
-    const existingUser = readAllUsers().find((user) => user.email === email);
-    if (existingUser) {
-      existingUserError.textContent = "Cet utilisateur existe déjà. Veuillez vous connecter.";
-      passwordMismatchError.textContent = ""; // Effacer le message de mot de passe s'il y en a un
-      return;
+      console.log('Error');
     }
 
     const userToBeCreated = {
       username,
       email,
       password,
+      avatarPath
     };
 
-    addOneUser(userToBeCreated);
+    data.push(userToBeCreated);
+
     Navigate('/login');
   });
 };

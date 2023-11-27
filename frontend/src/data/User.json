@@ -4,7 +4,6 @@
     "login": "a.k.d.26",
     "password": "kusikusay",
     "avatar_path": "../src/img/users/Hitler.jpg",
-    "xp": 0,
-    "success": false
+    "xp": 0
   }
 ]
