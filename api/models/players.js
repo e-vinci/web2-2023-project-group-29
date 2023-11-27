@@ -1,5 +1,6 @@
+// Dans models/players.js
+
 const bcrypt = require('bcrypt');
-// eslint-disable-next-line import/no-unresolved, import/extensions
 const client = require('../db_config');
 
 /**
@@ -21,6 +22,7 @@ async function getAllPlayers() {
  * @param {string} email - L'adresse e-mail du joueur.
  * @param {string} login - Le nom d'utilisateur du joueur.
  * @param {string} password - Le mot de passe du joueur.
+ * @param {string} confirmPassword - La confirmation du mot de passe du joueur.
  * @param {string} avatarPath - Le chemin de l'avatar du joueur.
  * @param {number} xp - L'expérience du joueur.
  * @returns {Promise<Object>} Un objet indiquant le succès de l'ajout.
@@ -52,4 +54,22 @@ async function addPlayer(email, login, password, confirmPassword, avatarPath, xp
   }
 }
 
-module.exports = { getAllPlayers, addPlayer };
+/**
+ * Déconnecte un joueur de l'application.
+ * @param {string} playerId - L'ID du joueur à déconnecter.
+ * @returns {Promise<Object>} Un objet indiquant le succès de la déconnexion.
+ * @throws {Error} Une erreur si la déconnexion échoue.
+ */
+async function logoutPlayer(playerId) {
+  try {
+    const query = 'UPDATE remember_or_die.players SET connected = false WHERE id = $1';
+    const values = [playerId];
+    await client.query(query, values);
+
+    return { success: true, message: 'Joueur déconnecté avec succès' };
+  } catch (error) {
+    throw new Error(`Erreur lors de la déconnexion du joueur : ${error.message}`);
+  }
+}
+
+module.exports = { getAllPlayers, addPlayer, logoutPlayer };
