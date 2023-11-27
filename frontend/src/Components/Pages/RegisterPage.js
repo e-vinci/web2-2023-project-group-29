@@ -1,5 +1,5 @@
 import Navigate from '../Router/Navigate';
-import data from '../../data/User.json'
+import data from '../../data/User.json';
 
 const RegisterPage = () => {
   const main = document.querySelector('main');
@@ -7,11 +7,12 @@ const RegisterPage = () => {
   const registerPage = `
     <div class="full-screen-bg">
       <div class="container mt-5">
-        <div class="row justify-content-center">
-          <div class="col-md-15 d-flex justify-content-end">
-            <!-- Modification du style du bouton "Back" -->
-            <button id="backButton" class="btn btn-warning ml-auto">Retour</button>
+        <div class="row">
+          <div class="col-md-6">
+            <button id="backButton" class="btn btn-warning">Retour</button>
           </div>
+        </div>
+        <div class="row justify-content-center">
           <div class="col-md-6">
             <form id="registrationForm">
               <div class="form-group">
@@ -40,8 +41,8 @@ const RegisterPage = () => {
               </div>
 
               <!-- Ajout de divs pour afficher les messages d'erreur -->
-              <div id="passwordMismatchError" class="text-danger"></div>
-              <div id="existingUserError" class="text-danger"></div>
+              <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
+              <div id="existingUserError" class="text-danger mt-3 text-center"></div>
 
               <br>
               <div class="text-center">
@@ -57,11 +58,13 @@ const RegisterPage = () => {
   main.innerHTML = registerPage;
 
   const registrationForm = document.querySelector('#registrationForm');
+  const passwordMismatchError = document.querySelector('#passwordMismatchError');
+  const existingUserError = document.querySelector('#existingUserError');
 
   // Ajout du gestionnaire d'événements pour le bouton Back
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
-    Navigate('/login'); // Naviguer vers la page de connexion
+    Navigate('/login');
   });
 
   registrationForm.addEventListener('submit', (e) => {
@@ -74,14 +77,25 @@ const RegisterPage = () => {
     const avatarPath = document.querySelector('#profilePicture').value;
 
     if (password !== confirmPassword) {
-      console.log('Error');
+      passwordMismatchError.textContent = 'Les mots de passe ne correspondent pas.';
+    } else {
+      passwordMismatchError.textContent = '';
+    }
+
+    // Vérification de l'existence du nom d'utilisateur
+    const usernameExists = data.some((user) => user.login === username);
+
+    if (usernameExists) {
+      existingUserError.textContent = "Ce nom d'utilisateur existe déjà.";
+    } else {
+      existingUserError.textContent = '';
     }
 
     const userToBeCreated = {
       username,
       email,
       password,
-      avatarPath
+      avatarPath,
     };
 
     data.push(userToBeCreated);

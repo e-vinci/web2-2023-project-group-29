@@ -1,5 +1,5 @@
 import Navigate from '../Router/Navigate';
-import data from '../../data/User.json'
+import data from '../../data/User.json';
 
 const LoginPage = () => {
   const main = document.querySelector('main');
@@ -7,11 +7,12 @@ const LoginPage = () => {
   const loginPage = `
     <div class="full-screen-bg">
       <div class="container mt-5">
-        <div class="row justify-content-center">
-          <div class="col-md-15 d-flex justify-content-end">
-            <!-- Ajout du bouton "Retour" -->
-            <button id="backButton" class="btn btn-warning ml-auto">Retour</button>
+        <div class="row">
+          <div class="col-md-6">
+            <button id="backButton" class="btn btn-warning">Retour</button>
           </div>
+        </div>
+        <div class="row justify-content-center">
           <div class="col-md-6">
             <form id="loginForm">
               <div class="form-group">
@@ -23,11 +24,14 @@ const LoginPage = () => {
                 <label for="password">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
-              
+              <!-- Ajout de div pour afficher les messages d'erreur -->
+              <div id="loginError" class="text-danger mt-3 text-center"></div>
               <br>
+              
               <div class="text-center">
                 <button type="submit" class="btn btn-warning btn-block">Se connecter</button>
               </div>
+
               <br>
               <p class="mt-3 text-center">
                 N'avez-vous pas de compte ? 
@@ -43,11 +47,11 @@ const LoginPage = () => {
   main.innerHTML = loginPage;
 
   const loginForm = document.querySelector('#loginForm');
+  const loginError = document.querySelector('#loginError');
 
-  // Ajout du gestionnaire d'événements pour le bouton "Retour"
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
-    Navigate('/play'); // Naviguer vers la page de jeu
+    Navigate('/play');
   });
 
   loginForm.addEventListener('submit', (e) => {
@@ -56,17 +60,18 @@ const LoginPage = () => {
     const passwordInput = document.querySelector('#password');
     const email = emailInput.value;
     const password = passwordInput.value;
-    data.push({email, password});
 
+    // TODO: Ajouter la logique de connexion avec vérification des informations
+    const user = data.find(u => u.email === email);
 
-    const error = undefined;
-    if (error  === undefined) {
-      Navigate('/game');
+    if (user) {
+      if (user.password === password) {
+        Navigate('/game');
+      } else {
+        loginError.textContent = 'Mot de passe incorrect.';
+      }
     } else {
-      // Effacer les champs email et mot de passe
-      emailInput.value = '';
-      passwordInput.value = '';
-      console.log(error);
+      loginError.textContent = 'Aucun compte associé à cet email.';
     }
   });
 
