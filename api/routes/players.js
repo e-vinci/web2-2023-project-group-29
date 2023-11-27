@@ -1,33 +1,36 @@
 const express = require('express');
-const { getAllPlayers, addPlayer } = require('../models/Player');
 
 const router = express.Router();
+const Player = require('../models/players');
 
-router.get('/', async (req, res) => {
+// Récupérer tous les joueurs
+router.get('/players', async (req, res) => {
   try {
-    const allPlayers = await getAllPlayers();
-    res.json(allPlayers);
+    const players = await Player.getAllPlayers();
+    res.json(players);
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while fetching all players.' });
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/', async (req, res) => {
+// Créer un nouveau joueur
+router.post('/players', async (req, res) => {
   const {
     email, login, password, avatarPath, xp,
   } = req.body;
 
-  try {
-    const result = await addPlayer(email, login, password, avatarPath, xp);
+  if (!email || !login || !password || !avatarPath || xp === undefined) {
+    return res.status(400).json({ error: 'Tous les champs sont requis' });
+  }
 
-    if (result.success) {
-      res.status(201).json({ message: result.message });
-    } else {
-      res.status(400).json({ error: result.message });
-    }
+  try {
+    const result = await Player.addPlayer(email, login, password, avatarPath, xp);
+    return res.status(201).json(result); // Création réussie
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while adding a player.' });
+    return res.status(500).json({ error: error.message });
   }
 });
+
+// Ajoutez d'autres endpoints (mise à jour, suppression, etc.) au besoin
 
 module.exports = router;
