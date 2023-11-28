@@ -85,10 +85,10 @@ import img70 from '../assets/images_cards/Chevalier/level3_12Cards/skelleton_shi
 import img71 from '../assets/images_cards/Chevalier/level3_12Cards/skelleton_spear_1.png';
 import img72 from '../assets/images_cards/Chevalier/level3_12Cards/warrior_2.png';
 
+import levels from '../../../data/level.json';
 
-
-const worlds = 1;
-const level = 2;
+const worlds = levels[0].world;
+const level = levels[0].level_number;
 
 function initializeArrayOfCards() {
   let arrayOfCards;

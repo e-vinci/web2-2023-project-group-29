@@ -11,10 +11,10 @@ import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
 
-const numberOfCards = levels[0].card_number / 2; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+const numberOfCards = levels[0].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
 let bossLife = bossLifeMax;
-const memoryTimer = 5; // Variable stockant en fonction des niveaux le temps de memorisation
+const memoryTimer = levels[0].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
