@@ -6,7 +6,8 @@ import anime from 'animejs';
 import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
-import imgskull from '../../img/favicon.ico';
+import imgskull from '../../img/favicon.ico'
+import imgBoss from '../../assets/default/the_Taurus_King.png'
 import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
@@ -29,7 +30,7 @@ function GamePage() {
   clearPage();
 
   // Affichage de la barre de vie du boss
-  displayBossLife();
+  displayBoss();
   // Affichage des vies du joueur
   displayplayerLife();
   // Ajouts des divs HTML du jeu (div cards, div memorytimer,div gameTimer etc...)
@@ -68,15 +69,27 @@ function GamePage() {
   );
 }
 
-function displayBossLife() {
-  const div = document.createElement('div');
-  div.className = 'container text-center';
-  const divrow = document.createElement('div');
-  divrow.className = 'row align-items-center';
+function displayBoss(){
+  const div = document.createElement('div')
+  div.className = 'divBoss'
+  main.appendChild(div)
+  const boss = document.createElement('div');
+  boss.className = 'boss';
+  div.appendChild(boss);
+  const imgWrapperBoss = document.createElement('img');
+  imgWrapperBoss.src = imgBoss;
+  imgWrapperBoss.className = 'imgBoss'
+  boss.appendChild(imgWrapperBoss);
+  displayBossLife(boss)
+}
+
+function displayBossLife(bossWrapper) {
+  
+
   const divLife = document.createElement('div');
   divLife.id = 'life';
-  main.appendChild(divLife);
-
+  divLife.className = 'boss'
+  bossWrapper.appendChild(divLife);
   const divBossLife = document.createElement('div');
   divBossLife.id = 'LifeBar';
   divLife.appendChild(divBossLife);
@@ -84,7 +97,6 @@ function displayBossLife() {
   const p = document.createElement('p');
   p.innerText = bossLife;
   p.id = 'bossLife';
-  p.className = 'text-center';
   divBossLife.appendChild(p);
 }
 
