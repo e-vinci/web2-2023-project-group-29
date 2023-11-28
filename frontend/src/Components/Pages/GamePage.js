@@ -85,7 +85,6 @@ function displayBossLife(bossWrapper) {
   divLife.id = 'life';
   divLife.className = 'boss'
   bossWrapper.appendChild(divLife);
-
   const divBossLife = document.createElement('div');
   divBossLife.id = 'LifeBar';
   divLife.appendChild(divBossLife);
