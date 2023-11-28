@@ -28,6 +28,7 @@ app.use(cors(corsOptions));
 app.use('/users', usersRouter);
 app.use('/pizzas', pizzaRouter);
 app.use('/auths', authsRouter);
+app.use('/players', playersRouter);
 
 // Remember or Die
 app.use('/players', playersRouter);

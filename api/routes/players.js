@@ -1,32 +1,47 @@
 const express = require('express');
-const { getAllPlayers, addPlayer } = require('../models/Player');
 
 const router = express.Router();
+const Player = require('../models/players');
 
-router.get('/', async (req, res) => {
+/**
+ * Récupère tous les joueurs.
+ * @returns {JSON} - Un tableau JSON représentant les joueurs.
+ * @throws {JSON} - Une réponse JSON d'erreur en cas d'échec.
+ */
+router.get('/players', async (req, res) => {
   try {
-    const allPlayers = await getAllPlayers();
-    res.json(allPlayers);
+    const players = await Player.getAllPlayers();
+    res.json(players);
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while fetching all players.' });
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/', async (req, res) => {
+/**
+ * Crée un nouveau joueur.
+ * @param {string} email - L'adresse e-mail du joueur.
+ * @param {string} login - Le nom d'utilisateur du joueur.
+ * @param {string} password - Le mot de passe du joueur.
+ * @param {string} confirmPassword - La confirmation du mot de passe du joueur.
+ * @param {string} avatarPath - Le chemin de l'avatar du joueur.
+ * @param {number} xp - L'expérience du joueur.
+ * @returns {JSON} - Une réponse JSON indiquant le succès de la création.
+ * @throws {JSON} - Une réponse JSON d'erreur en cas d'échec.
+ */
+router.post('/players', async (req, res) => {
   const {
-    email, login, password, avatarPath, xp,
+    email, login, password, confirmPassword, avatarPath, xp,
   } = req.body;
 
-  try {
-    const result = await addPlayer(email, login, password, avatarPath, xp);
+  if (!email || !login || !password || !confirmPassword || !avatarPath || xp === undefined) {
+    return res.status(400).json({ error: 'Tous les champs sont requis' });
+  }
 
-    if (result.success) {
-      res.status(201).json({ message: result.message });
-    } else {
-      res.status(400).json({ error: result.message });
-    }
+  try {
+    const result = await Player.addPlayer(email, login, password, confirmPassword, avatarPath, xp);
+    return res.status(201).json(result); // Création réussie
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while adding a player.' });
+    return res.status(500).json({ error: error.message });
   }
 });
 

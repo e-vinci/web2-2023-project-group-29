@@ -9,11 +9,11 @@ import PlayPage from '../Pages/PlayPage';
 const routes = {
   '/': HomePage,
   '/login': LoginPage,
-  '/register': RegisterPage, 
+  '/register': RegisterPage,
   '/game': GamePage,
   '/rules': RulesPage,
   '/credits': CreditsPage,
-  '/play': PlayPage
+  '/play': PlayPage,
 };
 
 export default routes;

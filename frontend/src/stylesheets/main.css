@@ -175,3 +175,7 @@ body {
 .card-found .back img {
   opacity: 1; /* Rend l'image de la carte trouvée visible */
 }
+/* case ajouter fichier */
+input[type="file"] {
+  height: 3rem; /* Ajustez la hauteur selon vos préférences */
+}
