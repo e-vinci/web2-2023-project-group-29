@@ -72,8 +72,11 @@ const RegisterPage = () => {
     const password = document.querySelector('#password').value;
     const avatarPath = document.querySelector('#profilePicture').value;
 
+    // eslint-disable-next-line no-console
+    console.log(username, email, password, avatarPath);
+
     try {
-      const response = await fetch('http://votre-backend-api.com/players/register', {
+      const response = await fetch('http://localhost:3000/players', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,6 +85,7 @@ const RegisterPage = () => {
       });
 
       if (!response.ok) {
+        console.log(response.body);
         const errorData = await response.json();
         throw new Error(errorData.message);
       }

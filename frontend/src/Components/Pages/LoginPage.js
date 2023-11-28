@@ -61,7 +61,7 @@ const LoginPage = () => {
     const password = passwordInput.value;
 
     try {
-      const response = await fetch('http://votre-backend-api.com/players/login', {
+      const response = await fetch('http://localhost:3000/players', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
