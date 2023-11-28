@@ -1,5 +1,3 @@
-// Dans models/players.js
-
 const bcrypt = require('bcrypt');
 const client = require('../db_config');
 
@@ -54,22 +52,4 @@ async function addPlayer(email, login, password, confirmPassword, avatarPath, xp
   }
 }
 
-/**
- * Déconnecte un joueur de l'application.
- * @param {string} playerId - L'ID du joueur à déconnecter.
- * @returns {Promise<Object>} Un objet indiquant le succès de la déconnexion.
- * @throws {Error} Une erreur si la déconnexion échoue.
- */
-async function logoutPlayer(playerId) {
-  try {
-    const query = 'UPDATE remember_or_die.players SET connected = false WHERE player_id = $1';
-    const values = [playerId];
-    await client.query(query, values);
-
-    return { success: true, message: 'Joueur déconnecté avec succès' };
-  } catch (error) {
-    throw new Error(`Erreur lors de la déconnexion du joueur : ${error.message}`);
-  }
-}
-
-module.exports = { getAllPlayers, addPlayer, logoutPlayer };
+module.exports = { getAllPlayers, addPlayer };

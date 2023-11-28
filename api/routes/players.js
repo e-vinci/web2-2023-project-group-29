@@ -1,6 +1,5 @@
-// Dans routes/players.js
-
 const express = require('express');
+
 const router = express.Router();
 const Player = require('../models/players');
 
@@ -41,27 +40,6 @@ router.post('/players', async (req, res) => {
   try {
     const result = await Player.addPlayer(email, login, password, confirmPassword, avatarPath, xp);
     return res.status(201).json(result); // Création réussie
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-});
-
-/**
- * Déconnecte un joueur.
- * @param {string} playerId - L'ID du joueur à déconnecter.
- * @returns {JSON} - Une réponse JSON indiquant le succès de la déconnexion.
- * @throws {JSON} - Une réponse JSON d'erreur en cas d'échec.
- */
-router.post('/players/logout', async (req, res) => {
-  const { playerId } = req.body;
-
-  if (!playerId) {
-    return res.status(400).json({ error: 'L\'ID du joueur est requis' });
-  }
-
-  try {
-    const result = await Player.logoutPlayer(playerId);
-    return res.json(result); // Déconnexion réussie
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
