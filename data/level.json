@@ -1,20 +1,84 @@
 [
   {
-    "level_id": "easy1",
+    
+    "level_id": 1,
     "name": "easy level 1",
-    "memorisation_time": 2,
+    "memorisation_time": 20,
     "boss": "peter parker",
-    "card_number": 12,
-    "world": "easy",
+    "card_number": 8,
+    "world": 1,
+    "level_number": 1
+  },
+  {
+    "level_id": 2,
+    "name": "easy level 2",
+    "memorisation_time": 10,
+    "boss": "peter parker",
+    "card_number": 8,
+    "world": 1,
+    "level_number": 2
+  },
+  {
+    "level_id": 3,
+    "name": "easy level 3",
+    "memorisation_time": 5,
+    "boss": "peter parker",
+    "card_number": 8,
+    "world": 1,
     "level_number": 3
   },
   {
-    "level_id": "easy2",
-    "name": "easy level 2",
-    "memorisation_time": 2,
+    "level_id": 1,
+    "name": "medium level 1",
+    "memorisation_time": 20,
     "boss": "peter parker",
-    "card_number": 12,
-    "world": "easy",
+    "card_number": 16,
+    "world": 2,
+    "level_number": 1
+  },
+  {
+    "level_id": 2,
+    "name": "medium level 2",
+    "memorisation_time": 20,
+    "boss": "peter parker",
+    "card_number": 16,
+    "world": 2,
+    "level_number": 2
+  },
+  {
+    "level_id": 3,
+    "name": "medium level 3",
+    "memorisation_time": 10,
+    "boss": "peter parker",
+    "card_number": 16,
+    "world": 2,
+    "level_number": 3
+  },
+  {
+    "level_id": 3,
+    "name": "hard level 3",
+    "memorisation_time": 20,
+    "boss": "peter parker",
+    "card_number": 24,
+    "world": 3,
+    "level_number": 1
+  },
+  {
+    "level_id": 3,
+    "name": "hard level 3",
+    "memorisation_time": 10,
+    "boss": "peter parker",
+    "card_number": 24,
+    "world": 3,
+    "level_number": 2
+  },
+  {
+    "level_id": 3,
+    "name": "hard level 3",
+    "memorisation_time": 5,
+    "boss": "peter parker",
+    "card_number": 24,
+    "world": 3,
     "level_number": 3
   }
 ]
