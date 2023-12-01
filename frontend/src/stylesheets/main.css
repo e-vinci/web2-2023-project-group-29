@@ -121,6 +121,12 @@ body {
   background-image: url('../assets/textures/rock_textures.png');
 }
 
+.btn-secondary:hover {
+  background-color: lightgray;
+  border-color: lightgray;
+  color: black; 
+}
+
 @media (max-width: 768px) {
   .game-menu {
     width: 20%;

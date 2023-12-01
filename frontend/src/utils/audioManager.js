@@ -9,14 +9,12 @@ export const createAudioButton = () => {
   const audioButton = document.createElement('button');
   audioButton.classList.add(
     'btn',
-    'btn-outline-primary',
+    'btn-secondary',
     'position-fixed',
     'bottom-0',
     'end-0',
     'm-5',
   );
-  audioButton.style.backgroundColor = 'rgba(58, 60, 61, 0.300)';
-  audioButton.style.borderColor = 'rgba(58, 60, 61, 0)';
 
   const imgElement = document.createElement('img');
   imgElement.src = soundImgPath;
