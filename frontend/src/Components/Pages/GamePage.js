@@ -7,15 +7,15 @@ import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico'
-import imgBoss from '../../assets/default/the_Taurus_King.png'
+import imgBoss from '../../assets/images_boss/boss4.png';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
 
-const numberOfCards = levels[0].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+const numberOfCards = levels[2].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
 let bossLife = bossLifeMax;
-const memoryTimer = levels[0].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
+const memoryTimer = levels[2].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
@@ -113,6 +113,7 @@ function displayplayerLife() {
 }
 
 function buildGamePage() {
+  const numberOfColumns = Math.ceil(Math.sqrt(numberOfCards))+1;
   let innerHTML = `<div id="memoryTimer"></div>
                    <br> 
                    <div id="gameTimer"></div>
@@ -131,6 +132,11 @@ function buildGamePage() {
                 </div>`;
   }
   main.innerHTML += `${innerHTML} </div>`;
+  const cardContainer = document.querySelector('.card-container');
+  cardContainer.style.display = 'grid';
+  cardContainer.style.gridTemplateColumns = `repeat(${numberOfColumns}, 1fr)`;
+  cardContainer.style.width='1000px';
+  cardContainer.style.height='600px';
 }
 
 function createMemoryTimer(timer) {
