@@ -1,4 +1,10 @@
+import { makeDisappearNavbar } from "../../utils/navbarSetup";
+import { clearPage } from "../../utils/render";
+
 const RegisterPage = () => {
+  clearPage();
+  makeDisappearNavbar();
+  
     const main = document.querySelector('main');
   
     const registerPage = `

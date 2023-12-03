@@ -175,3 +175,8 @@ body {
 .card-found .back img {
   opacity: 1; /* Rend l'image de la carte trouvée visible */
 }
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
