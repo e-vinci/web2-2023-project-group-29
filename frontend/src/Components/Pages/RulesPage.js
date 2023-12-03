@@ -1,8 +1,13 @@
+import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import { clearPage } from '../../utils/render';
+
+clearPage();
+makeDisappearNavbar(true);
+
 const RulesPage = () => {
-    const main = document.querySelector("main");
-    
-    const rulesPage = 
-    `
+  const main = document.querySelector('main');
+
+  const rulesPage = `
     <div class="full-screen-bg d-flex justify-content-center align-items-center">
         <div class="text-center">
             <p>
@@ -10,9 +15,9 @@ const RulesPage = () => {
             </p>
         </div>
     </div>
-    `
+    `;
 
-    main.innerHTML = rulesPage;
-}
+  main.innerHTML = rulesPage;
+};
 
 export default RulesPage;

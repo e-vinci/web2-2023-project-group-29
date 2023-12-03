@@ -1,10 +1,6 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-
-const setupNavbar = () => {
-  const navbar = document.querySelector('#navbarWrapper');
-  navbar.style.display = 'none';
-};
+import { makeDisappearNavbar } from '../../utils/navbarSetup';
 
 const createListGroup = () => {
   const links = [
@@ -32,9 +28,9 @@ const createListGroup = () => {
   return listGroup;
 };
 
-const HomePage = () => {
+const PlayPage = () => {
   clearPage();
-  setupNavbar();
+  makeDisappearNavbar(true);
 
   const main = document.querySelector('main');
   const container = document.createElement('div');
@@ -54,4 +50,4 @@ const HomePage = () => {
   main.appendChild(container);
 };
 
-export default HomePage;
+export default PlayPage;
