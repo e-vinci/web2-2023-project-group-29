@@ -1,3 +1,4 @@
+import Navigate from '../Router/Navigate';
 import { makeDisappearNavbar } from "../../utils/navbarSetup";
 import { clearPage } from "../../utils/render";
 
@@ -8,6 +9,13 @@ const CreditsPage = () => {
   const main = document.querySelector('main');
 
   const creditsPage = `
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <button id="backButton" class="btn btn-warning">Back</button>
+        </div>
+      </div>
+    </div>
     <div class="full-screen-bg d-flex justify-content-center align-items-center">
         <div class="text-center">
             <p><b>Sound Icons :</b> Hamstring, freepik.com</p>
@@ -22,6 +30,11 @@ const CreditsPage = () => {
     `;
 
   main.innerHTML = creditsPage;
+
+  const backButton = document.getElementById('backButton');
+  backButton.addEventListener('click', () => {
+    Navigate('/play');
+  });
 };
 
 export default CreditsPage;
