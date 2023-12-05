@@ -1,14 +1,10 @@
 const express = require('express');
+const Player = require('../models/players');
+const { authenticate } = require('../utils/auths');
 
 const router = express.Router();
-const Player = require('../models/players');
 
-/**
- * Récupère tous les joueurs.
- * @returns {JSON} - Un tableau JSON représentant les joueurs.
- * @throws {JSON} - Une réponse JSON d'erreur en cas d'échec.
- */
-router.get('/players', async (req, res) => {
+router.get('/', authenticate, async (req, res) => {
   try {
     const players = await Player.getAllPlayers();
     res.json(players);
@@ -17,29 +13,38 @@ router.get('/players', async (req, res) => {
   }
 });
 
-/**
- * Crée un nouveau joueur.
- * @param {string} email - L'adresse e-mail du joueur.
- * @param {string} login - Le nom d'utilisateur du joueur.
- * @param {string} password - Le mot de passe du joueur.
- * @param {string} confirmPassword - La confirmation du mot de passe du joueur.
- * @param {string} avatarPath - Le chemin de l'avatar du joueur.
- * @param {number} xp - L'expérience du joueur.
- * @returns {JSON} - Une réponse JSON indiquant le succès de la création.
- * @throws {JSON} - Une réponse JSON d'erreur en cas d'échec.
- */
-router.post('/players', async (req, res) => {
+router.post('/register', async (req, res) => {
   const {
-    email, login, password, confirmPassword, avatarPath, xp,
+    email, login, password, avatarPath, xp,
   } = req.body;
 
-  if (!email || !login || !password || !confirmPassword || !avatarPath || xp === undefined) {
+  if (!email || !login || !password || !avatarPath || xp === undefined) {
     return res.status(400).json({ error: 'Tous les champs sont requis' });
   }
 
   try {
-    const result = await Player.addPlayer(email, login, password, confirmPassword, avatarPath, xp);
-    return res.status(201).json(result); // Création réussie
+    const result = await Player.addPlayer(email, login, password, avatarPath, xp);
+    return res.status(201).json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
+  }
+
+  try {
+    const authenticatedUser = await Player.loginPlayer(email, password);
+
+    if (!authenticatedUser) {
+      return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+    }
+
+    return res.json(authenticatedUser);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

@@ -1,34 +1,31 @@
 const jwt = require('jsonwebtoken');
-const { readOneUserFromUsername } = require('../models/examples/users');
+const { readOneUserFromUsername } = require('../models/players');
 
-const jwtSecret = 'ilovemypizza!';
+const jwtSecret = 'rememberOrDie';
 
-const authorize = (req, res, next) => {
+const authenticate = async (req, res, next) => {
   const token = req.get('authorization');
-  if (!token) return res.sendStatus(401);
+
+  if (!token) {
+    return res.status(401).json({ error: 'Token non fourni' });
+  }
 
   try {
     const decoded = jwt.verify(token, jwtSecret);
-    console.log('decoded', decoded);
-    const { username } = decoded;
+    const { login } = decoded;
 
-    const existingUser = readOneUserFromUsername(username);
+    const existingUser = await readOneUserFromUsername(login);
 
-    if (!existingUser) return res.sendStatus(401);
+    if (!existingUser) {
+      return res.status(401).json({ error: 'Utilisateur non trouvé' });
+    }
 
-    req.user = existingUser; // request.user object is available in all other middleware functions
+    req.user = existingUser;
     return next();
   } catch (err) {
-    console.error('authorize: ', err);
-    return res.sendStatus(401);
+    console.error('Erreur d\'authentification :', err);
+    return res.status(401).json({ error: 'Token invalide' });
   }
 };
 
-const isAdmin = (req, res, next) => {
-  const { username } = req.user;
-
-  if (username !== 'admin') return res.sendStatus(403);
-  return next();
-};
-
-module.exports = { authorize, isAdmin };
+module.exports = { authenticate };
