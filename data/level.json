@@ -1,82 +1,72 @@
 [
   {
-    
-    "level_id": 1,
     "name": "easy level 1",
     "memorisation_time": 20,
-    "boss": "peter parker",
+    "boss": "../../assets/images_boss/boss1.png",
     "card_number": 8,
     "world": 1,
     "level_number": 1
   },
   {
-    "level_id": 2,
     "name": "easy level 2",
-    "memorisation_time": 10,
-    "boss": "peter parker",
+    "memorisation_time": 15,
+    "boss": "../../assets/images_boss/boss2.png",
     "card_number": 8,
     "world": 1,
     "level_number": 2
   },
   {
-    "level_id": 3,
     "name": "easy level 3",
-    "memorisation_time": 5,
-    "boss": "peter parker",
+    "memorisation_time": 10,
+    "boss": "../../assets/images_boss/boss3.png",
     "card_number": 8,
     "world": 1,
     "level_number": 3
   },
   {
-    "level_id": 1,
     "name": "medium level 1",
     "memorisation_time": 20,
-    "boss": "peter parker",
+    "boss": "../../assets/images_boss/boss4.png",
     "card_number": 16,
     "world": 2,
     "level_number": 1
   },
   {
-    "level_id": 2,
     "name": "medium level 2",
-    "memorisation_time": 20,
-    "boss": "peter parker",
+    "memorisation_time": 15,
+    "boss": "../../assets/images_boss/boss5.png",
     "card_number": 16,
     "world": 2,
     "level_number": 2
   },
   {
-    "level_id": 3,
     "name": "medium level 3",
     "memorisation_time": 10,
-    "boss": "peter parker",
+    "boss": "../../assets/images_boss/boss6.png",
     "card_number": 16,
     "world": 2,
     "level_number": 3
   },
   {
-    "level_id": 3,
-    "name": "hard level 3",
+    "name": "hard level 1",
     "memorisation_time": 20,
-    "boss": "peter parker",
+    "boss": "../../assets/images_boss/boss7.png",
     "card_number": 24,
     "world": 3,
     "level_number": 1
   },
   {
-    "level_id": 3,
-    "name": "hard level 3",
-    "memorisation_time": 10,
-    "boss": "peter parker",
+    "name": "hard level 2",
+    "memorisation_time": 15,
+    "boss": "../../assets/images_boss/boss8.png",
     "card_number": 24,
     "world": 3,
     "level_number": 2
   },
   {
-    "level_id": 3,
     "name": "hard level 3",
-    "memorisation_time": 5,
-    "boss": "peter parker",
+    "memorisation_time": 10,
+    "boss": "../../assets/images_boss/boss9.png",
     "card_number": 24,
     "world": 3,
     "level_number": 3
