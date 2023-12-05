@@ -27,21 +27,13 @@ let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du jo
 const main = document.querySelector('main');
 
 const divBossAndPlayer = document.createElement('div');
+divBossAndPlayer.className = 'bossAndPlayer';
 
 function GamePage() {
   clearPage();
-  main.appendChild(divBossAndPlayer);
-  const divVersusTitle = document.createElement('div')
-  divVersusTitle.id = 'divVersus'
- 
-  divBossAndPlayer.appendChild(divVersusTitle);
 
-  const versusTitle = document.createElement('h1');
-  versusTitle.innerText = 'VS'
-  versusTitle.id = 'versus'
-
-  divVersusTitle.appendChild(versusTitle);
-  divBossAndPlayer.className = 'bossAndPlayer';
+  // Affichage du monde , du niveau et du logo VS
+  displayVSAndTitle();
   // Affichage de la barre de vie du boss
   displayBoss();
   // Affichage des vies du joueur
@@ -82,6 +74,30 @@ function GamePage() {
   );
 }
 
+function displayVSAndTitle(){
+  main.appendChild(divBossAndPlayer);
+  const divTitle = document.createElement('div');
+
+  const divVersusTitle = document.createElement('div')
+  divVersusTitle.id = 'divVersus'
+  divVersusTitle.style.textAlign='center';
+  divVersusTitle.style.marginTop='5%';
+ 
+  divBossAndPlayer.appendChild(divVersusTitle);
+
+  const showWorldAndLevel=document.createElement('h3');
+  showWorldAndLevel.innerText= `World ${1} Level ${3}`;
+
+  const versusTitle = document.createElement('h1');
+  versusTitle.innerText = 'VS'
+  versusTitle.id = 'versus'
+  versusTitle.style.marginTop='5%';
+  
+  divTitle.appendChild(showWorldAndLevel);
+  divVersusTitle.appendChild(divTitle);
+  divVersusTitle.appendChild(versusTitle);
+  
+}
 function displayBoss(){
   const div = document.createElement('div')
   div.className = 'divBoss'
