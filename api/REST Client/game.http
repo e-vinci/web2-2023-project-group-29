@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3000
+
+### Read all levels
+GET {{baseUrl}}/game
+
+### Get level by ID
+GET {{baseUrl}}/game/1

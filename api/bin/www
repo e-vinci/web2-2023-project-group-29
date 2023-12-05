@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console */
+
 /**
  * Module dependencies.
  */
 
 const debug = require('debug')('api2:server');
 const http = require('http');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -76,12 +77,10 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      // eslint-disable-next-line no-console
       console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      // eslint-disable-next-line no-console
       console.error(`${bind} is already in use`);
       process.exit(1);
       break;
