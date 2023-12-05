@@ -26,9 +26,22 @@ let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du jo
 
 const main = document.querySelector('main');
 
+const divBossAndPlayer = document.createElement('div');
+
 function GamePage() {
   clearPage();
+  main.appendChild(divBossAndPlayer);
+  const divVersusTitle = document.createElement('div')
+  divVersusTitle.id = 'divVersus'
+ 
+  divBossAndPlayer.appendChild(divVersusTitle);
 
+  const versusTitle = document.createElement('h1');
+  versusTitle.innerText = 'VS'
+  versusTitle.id = 'versus'
+
+  divVersusTitle.appendChild(versusTitle);
+  divBossAndPlayer.className = 'bossAndPlayer';
   // Affichage de la barre de vie du boss
   displayBoss();
   // Affichage des vies du joueur
@@ -72,7 +85,7 @@ function GamePage() {
 function displayBoss(){
   const div = document.createElement('div')
   div.className = 'divBoss'
-  main.appendChild(div)
+  divBossAndPlayer.appendChild(div)
   const boss = document.createElement('div');
   boss.className = 'boss';
   div.appendChild(boss);
@@ -84,8 +97,6 @@ function displayBoss(){
 }
 
 function displayBossLife(bossWrapper) {
-  
-
   const divLife = document.createElement('div');
   divLife.id = 'life';
   divLife.className = 'boss'
@@ -101,9 +112,12 @@ function displayBossLife(bossWrapper) {
 }
 
 function displayplayerLife() {
+  const hearts = document.createElement('div');
+  hearts.className = 'hearts';
   const divHeart = document.createElement('div');
   divHeart.className = 'divHearts';
-  main.appendChild(divHeart); // container for hearts
+  divBossAndPlayer.appendChild(hearts); // container for hearts
+  hearts.appendChild(divHeart);
   for (let index = 0; index < 3; index++) {
     const heart = document.createElement('img');
     heart.src = imgheart;
