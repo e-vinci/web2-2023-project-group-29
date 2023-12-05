@@ -7,15 +7,15 @@ import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico'
-import imgBoss from '../../assets/default/the_Taurus_King.png'
+import imgBoss from '../../assets/images_boss/boss4.png';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
 
-const numberOfCards = levels[0].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+const numberOfCards = levels[2].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
 let bossLife = bossLifeMax;
-const memoryTimer = levels[0].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
+const memoryTimer = levels[2].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
@@ -26,9 +26,14 @@ let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du jo
 
 const main = document.querySelector('main');
 
+const divBossAndPlayer = document.createElement('div');
+divBossAndPlayer.className = 'bossAndPlayer';
+
 function GamePage() {
   clearPage();
 
+  // Affichage du monde , du niveau et du logo VS
+  displayVSAndTitle();
   // Affichage de la barre de vie du boss
   displayBoss();
   // Affichage des vies du joueur
@@ -69,10 +74,34 @@ function GamePage() {
   );
 }
 
+function displayVSAndTitle(){
+  main.appendChild(divBossAndPlayer);
+  const divTitle = document.createElement('div');
+
+  const divVersusTitle = document.createElement('div')
+  divVersusTitle.id = 'divVersus'
+  divVersusTitle.style.textAlign='center';
+  divVersusTitle.style.marginTop='5%';
+ 
+  divBossAndPlayer.appendChild(divVersusTitle);
+
+  const showWorldAndLevel=document.createElement('h3');
+  showWorldAndLevel.innerText= `World ${1} Level ${3}`;
+
+  const versusTitle = document.createElement('h1');
+  versusTitle.innerText = 'VS'
+  versusTitle.id = 'versus'
+  versusTitle.style.marginTop='5%';
+  
+  divTitle.appendChild(showWorldAndLevel);
+  divVersusTitle.appendChild(divTitle);
+  divVersusTitle.appendChild(versusTitle);
+  
+}
 function displayBoss(){
   const div = document.createElement('div')
   div.className = 'divBoss'
-  main.appendChild(div)
+  divBossAndPlayer.appendChild(div)
   const boss = document.createElement('div');
   boss.className = 'boss';
   div.appendChild(boss);
@@ -84,8 +113,6 @@ function displayBoss(){
 }
 
 function displayBossLife(bossWrapper) {
-  
-
   const divLife = document.createElement('div');
   divLife.id = 'life';
   divLife.className = 'boss'
@@ -101,9 +128,12 @@ function displayBossLife(bossWrapper) {
 }
 
 function displayplayerLife() {
+  const hearts = document.createElement('div');
+  hearts.className = 'hearts';
   const divHeart = document.createElement('div');
   divHeart.className = 'divHearts';
-  main.appendChild(divHeart); // container for hearts
+  divBossAndPlayer.appendChild(hearts); // container for hearts
+  hearts.appendChild(divHeart);
   for (let index = 0; index < 3; index++) {
     const heart = document.createElement('img');
     heart.src = imgheart;
@@ -113,6 +143,7 @@ function displayplayerLife() {
 }
 
 function buildGamePage() {
+  const numberOfColumns = Math.ceil(Math.sqrt(numberOfCards))+1;
   let innerHTML = `<div id="memoryTimer"></div>
                    <br> 
                    <div id="gameTimer"></div>
@@ -131,6 +162,11 @@ function buildGamePage() {
                 </div>`;
   }
   main.innerHTML += `${innerHTML} </div>`;
+  const cardContainer = document.querySelector('.card-container');
+  cardContainer.style.display = 'grid';
+  cardContainer.style.gridTemplateColumns = `repeat(${numberOfColumns}, 1fr)`;
+  cardContainer.style.width='1000px';
+  cardContainer.style.height='600px';
 }
 
 function createMemoryTimer(timer) {

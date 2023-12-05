@@ -87,8 +87,8 @@ import img72 from '../assets/images_cards/Chevalier/level3_12Cards/warrior_2.png
 
 import levels from '../../../data/level.json';
 
-const worlds = levels[0].world;
-const level = levels[0].level_number;
+const worlds = levels[1].world;
+const level = levels[2].level_number;
 
 function initializeArrayOfCards() {
   let arrayOfCards;
