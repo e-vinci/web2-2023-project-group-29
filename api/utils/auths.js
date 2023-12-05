@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { readOneUserFromUsername } = require('../models/players');
 
-const jwtSecret = 'rememberOrDie';
+const jwtSecret = process.env.JWT_SECRET;
 
 const authenticate = async (req, res, next) => {
   const token = req.get('authorization');
@@ -11,10 +11,13 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
+    console.log('before');
     const decoded = jwt.verify(token, jwtSecret);
-    const { login } = decoded;
+    const { email } = decoded;
+    console.log('after');
+    console.log(decoded);
 
-    const existingUser = await readOneUserFromUsername(login);
+    const existingUser = await readOneUserFromUsername(email);
 
     if (!existingUser) {
       return res.status(401).json({ error: 'Utilisateur non trouvé' });

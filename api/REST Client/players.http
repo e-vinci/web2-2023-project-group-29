@@ -1,6 +1,6 @@
 ### Read all players
 GET http://localhost:3000/players/
-Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMTc3MTY2OCwiZXhwIjoxNzg4MTcxNjY4fQ.SKLzkfQRVTEGhM9ZhIDBEzxGWrFwr0LLT_vIkssVEzs"
+Authorization: {{player.response.body.token}}
 
 ### Create a new player
 POST http://localhost:3000/players/register
@@ -15,6 +15,7 @@ Content-Type: application/json
 }
 
 ### Login as a player
+# @name player
 POST http://localhost:3000/players/login
 Content-Type: application/json
     

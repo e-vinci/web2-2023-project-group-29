@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const client = require('../db_config');
 
-const jwtSecret = 'rememberOrDie';
+const jwtSecret = process.env.JWT_SECRET;
 const lifetimeJwt = 24 * 60 * 60 * 1000; // in ms : 24 * 60 * 60 * 1000 = 24h
 
 const saltRounds = 10;
@@ -80,4 +80,20 @@ async function addPlayer(email, login, password, avatarPath, xp) {
   }
 }
 
-module.exports = { getAllPlayers, addPlayer, loginPlayer };
+async function readOneUserFromUsername(email) {
+  try {
+    const result = await client.query('SELECT * FROM remember_or_die.players WHERE email = $1', [email]);
+
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    }
+
+    return null;
+  } catch (error) {
+    throw new Error(`Erreur lors de la récupération de l'utilisateur par email : ${error.message}`);
+  }
+}
+
+module.exports = {
+  getAllPlayers, addPlayer, loginPlayer, readOneUserFromUsername,
+};
