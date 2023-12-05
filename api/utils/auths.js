@@ -23,7 +23,6 @@ const authenticate = async (req, res, next) => {
     req.user = existingUser;
     return next();
   } catch (err) {
-    console.error('Erreur d\'authentification :', err);
     return res.status(401).json({ error: 'Token invalide' });
   }
 };
