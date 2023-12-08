@@ -3,10 +3,6 @@ const { getLastLevel, getBestScoresByWorldId } = require('../models/Score');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  res.json('Suka');
-});
-
 router.get('/lastLevel/:id', async (req, res) => {
   const playerId = req.params.id;
 

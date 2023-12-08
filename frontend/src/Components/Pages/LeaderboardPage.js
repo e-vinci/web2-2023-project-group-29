@@ -31,6 +31,7 @@ const LeaderboardPage = () => {
         leaderboardTable.appendChild(row);
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('There was a problem with the fetch request:', error);
     }
   };
