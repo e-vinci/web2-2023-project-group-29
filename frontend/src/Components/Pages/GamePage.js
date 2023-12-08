@@ -12,10 +12,10 @@ import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
 
-const numberOfCards = levels[2].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+const numberOfCards = levels[7].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
 let bossLife = bossLifeMax;
-const memoryTimer = levels[2].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
+const memoryTimer = 20; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
@@ -143,11 +143,11 @@ function displayplayerLife() {
 }
 
 function buildGamePage() {
-  const numberOfColumns = Math.ceil(Math.sqrt(numberOfCards))+1;
-  let innerHTML = `<div id="memoryTimer"></div>
-                   <br> 
-                   <div id="gameTimer"></div>
-                   <div class="card-container">`;
+ 
+  let innerHTML = `
+                  <div id="memoryTimer"></div>
+                    <div id="gameTimer"></div>
+                      <div class="card-container">`;
   const arrayOfCards = initializeArrayOfCards();
   shuffleArray(arrayOfCards);
 
@@ -164,9 +164,35 @@ function buildGamePage() {
   main.innerHTML += `${innerHTML} </div>`;
   const cardContainer = document.querySelector('.card-container');
   cardContainer.style.display = 'grid';
-  cardContainer.style.gridTemplateColumns = `repeat(${numberOfColumns}, 1fr)`;
-  cardContainer.style.width='1000px';
-  cardContainer.style.height='600px';
+
+  if(numberOfCards === 8 ){
+    cardContainer.style.gridTemplateColumns = `repeat(4, auto)`;
+    cardContainer.style.gap='40px';
+    cardContainer.style.width='600px';
+    cardContainer.style.height='60%';
+    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
+  }
+  if(numberOfCards=== 16){
+    cardContainer.style.gridTemplateColumns = `repeat(4, auto)`;
+    cardContainer.style.gap='30px';
+    cardContainer.style.width='600px';
+    cardContainer.style.height='60%';
+    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
+  }
+  if(numberOfCards===24){
+    cardContainer.style.gridTemplateColumns = `repeat(6, auto)`;
+    cardContainer.style.margin='0 20%';
+    cardContainer.style.gap='30px';
+    cardContainer.style.width='900px';
+    cardContainer.style.height='60%';
+    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
+    }
+  
+  
+ 
+  
+  
+  
 }
 
 function createMemoryTimer(timer) {
