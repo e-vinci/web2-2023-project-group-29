@@ -26,7 +26,7 @@ const LeaderboardPage = () => {
         row.innerHTML = `
           <th scope="row" style="text-align: center">${index + 1}</th>
           <td style="text-align: center">${o.player}</td>
-          <td style="text-align: center">${o.total_score}</td>
+          <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
         `;
         leaderboardTable.appendChild(row);
       });
@@ -80,7 +80,7 @@ const LeaderboardPage = () => {
        <tr style="text-align: center">
            <th scope="col" style="width: 20%">#</th>
            <th scope="col" style="width: 40%">Player</th>
-           <th scope="col" style="width: 40%">Score</th>
+           <th scope="col" style="width: 40%">Time (m:s)</th>
        </tr>
    `;
   leaderboardTable.appendChild(tableHeader);
@@ -94,5 +94,16 @@ const LeaderboardPage = () => {
 
   updateTable();
 };
+
+function secondsToMinutesSeconds(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  
+  const formattedMinutes = (`0${  minutes}`).slice(-2);
+  const formattedSeconds = (`0${  remainingSeconds}`).slice(-2);
+  
+  const result = `${formattedMinutes  }:${  formattedSeconds}`;
+  return result;
+}
 
 export default LeaderboardPage;
