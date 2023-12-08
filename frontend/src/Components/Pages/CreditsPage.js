@@ -13,13 +13,16 @@ const CreditsPage = () => {
     </div>
     <div class="full-screen-bg d-flex justify-content-center align-items-center">
         <div class="text-center">
+            <p><b>Assets :</b> craftpix.net</p>
             <p><b>Sound Icons :</b> Hamstring, freepik.com</p>
             <p><b>Main Menu Background :</b> Vertilirdo, deviantart.com</p>
             <p><b>Main Menu Music :</b> Noru, pixabay.com</p>
             <p><b>Textures :</b> PiiiXL, itch.io</p>
             <p><b>Font :</b> Chequered, fontspace.com</p>
+            <br>
             <p><b>Dev Team :</b></p>
-            <p>Budak Melik, Ciborowski Dawid, Demir Ahmet Kusay, Garcia Alexandre, Koubai Omar</p>
+            <p>Budak Melik, Ciborowski Dawid, Demir Ahmet Kusay, <br>
+            Garcia Alexandre, Koubai Omar</p>
         </div>
     </div>
     `;
