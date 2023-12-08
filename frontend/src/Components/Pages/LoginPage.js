@@ -1,5 +1,17 @@
 import Navigate from '../Router/Navigate';
 
+const handleLoginResponse = async (response) => {
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error);
+  }
+
+  const { token } = await response.json();
+  localStorage.setItem('token', token);
+
+  Navigate('/game');
+};
+
 const LoginPage = () => {
   const main = document.querySelector('main');
 
@@ -61,7 +73,7 @@ const LoginPage = () => {
     const password = passwordInput.value;
 
     try {
-      const response = await fetch('http://localhost:3000/players', {
+      const response = await fetch('http://localhost:3000/players/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,12 +81,7 @@ const LoginPage = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
-      }
-
-      Navigate('/game');
+      await handleLoginResponse(response);
     } catch (error) {
       loginError.textContent = error.message;
     }

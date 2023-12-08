@@ -35,11 +35,15 @@ const RegisterPage = () => {
               </div>
 
               <div class="form-group">
-                <label for="profilePicture">Photo de profil</label>
-                <input type="file" class="form-control-file" id="profilePicture" name="profilePicture" accept="image/*" required>
+                <label for="avatar">Choisissez votre avatar :</label>
+                <div id="avatarOptions" class="d-flex flex-wrap">
+                  <img src="../../img/players/GraveRobber.png" class="avatar-option" data-avatar="GraveRobber.png">
+                  <img src="../../img/players/SteamMan.png" class="avatar-option" data-avatar="SteamMan.png">
+                  <img src="../../img/players/Woodcutter.png" class="avatar-option" data-avatar="Woodcutter.png">
+                </div>
               </div>
+              <input type="hidden" id="selectedAvatar" name="selectedAvatar"> <!-- Nouveau: élément caché pour stocker l'avatar sélectionné -->
 
-              <!-- Ajout de divs pour afficher les messages d'erreur -->
               <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
               <div id="existingUserError" class="text-danger mt-3 text-center"></div>
 
@@ -58,10 +62,20 @@ const RegisterPage = () => {
 
   const registrationForm = document.querySelector('#registrationForm');
   const passwordMismatchError = document.querySelector('#passwordMismatchError');
+  const avatarOptions = document.querySelector('#avatarOptions');
+  const selectedAvatarInput = document.querySelector('#selectedAvatar'); // Nouveau: élément pour stocker l'avatar sélectionné
 
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
     Navigate('/login');
+  });
+
+  avatarOptions.addEventListener('click', (e) => {
+    const selectedAvatar = e.target.dataset.avatar;
+    if (selectedAvatar) {
+      console.log('Avatar sélectionné :', selectedAvatar);
+      selectedAvatarInput.value = selectedAvatar; // Mettez à jour la valeur de l'élément caché
+    }
   });
 
   registrationForm.addEventListener('submit', async (e) => {
@@ -70,13 +84,12 @@ const RegisterPage = () => {
     const username = document.querySelector('#username').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
-    const avatarPath = document.querySelector('#profilePicture').value;
+    const avatarPath = selectedAvatarInput.value; // Utilisez la valeur de l'élément caché
 
-    // eslint-disable-next-line no-console
     console.log(username, email, password, avatarPath);
 
     try {
-      const response = await fetch('http://localhost:3000/players', {
+      const response = await fetch('http://localhost:3000/players/register', { // Endpoint mis à jour
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,4 +111,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
