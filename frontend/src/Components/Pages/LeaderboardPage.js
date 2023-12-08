@@ -39,7 +39,7 @@ const LeaderboardPage = () => {
   const main = document.querySelector('main');
 
   const title = document.createElement('h1');
-  title.textContent = 'Leaderboard';
+  title.textContent = 'Chroniques des Braves';
 
   const filterContainer = document.createElement('div');
   filterContainer.classList.add('d-flex', 'justify-content-center', 'my-4');
