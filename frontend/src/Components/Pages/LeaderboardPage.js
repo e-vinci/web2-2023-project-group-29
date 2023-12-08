@@ -1,30 +1,39 @@
 import { clearPage } from '../../utils/render';
-import data from '../../data/scores.json';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
 
 const LeaderboardPage = () => {
   clearPage();
   makeDisappearNavbar(false);
 
-  const filterOptions = ['All', 'World 1', 'World 2', 'World 3'];
-  let currentOption = 'All';
+  const filterOptions = ['World 1', 'World 2', 'World 3'];
+  const optionValues = [1, 2, 3];
+  let currentOption = optionValues[0];
 
-  const updateTable = () => {
-    const main = document.querySelector('main');
-    const leaderboardTable = main.querySelector('table tbody');
-    leaderboardTable.innerHTML = '';
+  const updateTable = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/scores/bestScores/${currentOption}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
 
-    const filteredData = (currentOption === 'All') ? data : data.filter(player => `World ${player.world}` === currentOption);
+      const main = document.querySelector('main');
+      const leaderboardTable = main.querySelector('table tbody');
+      leaderboardTable.innerHTML = '';
 
-    filteredData.forEach((player, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <th scope="row" style="text-align: center">${index + 1}</th>
-        <td style="text-align: center">${player.name}</td>
-        <td style="text-align: center">${player.score}</td>
-      `;
-      leaderboardTable.appendChild(row);
-    });
+      data.forEach((o, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <th scope="row" style="text-align: center">${index + 1}</th>
+          <td style="text-align: center">${o.player}</td>
+          <td style="text-align: center">${o.total_score}</td>
+        `;
+        leaderboardTable.appendChild(row);
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('There was a problem with the fetch request:', error);
+    }
   };
 
   const main = document.querySelector('main');
@@ -38,15 +47,15 @@ const LeaderboardPage = () => {
   const filterGroup = document.createElement('div');
   filterGroup.classList.add('btn-group');
 
-  filterOptions.forEach((option) => {
+  filterOptions.forEach((option, index) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn', 'btn-secondary');
     button.textContent = option;
-    
-    button.addEventListener('click', () => {
-      currentOption = option;
-      updateTable();
+
+    button.addEventListener('click', async () => {
+      currentOption = optionValues[index];
+      await updateTable();
     });
 
     filterGroup.appendChild(button);

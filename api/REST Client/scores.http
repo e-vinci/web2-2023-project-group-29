@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3000/scores
+
+### Get score by ID
+GET {{baseUrl}}/lastLevel/1
+
+### Get all best scores
+GET {{baseUrl}}/bestScores/1
