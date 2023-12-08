@@ -8,7 +8,8 @@ const corsOptions = {
 };
 
 const playersRouter = require('./routes/players');
-const gameRouter = require('./routes/game');
+const levelsRouter = require('./routes/levels');
+const scoresRouter = require('./routes/scores');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use('/players', playersRouter);
-app.use('/game', gameRouter);
+app.use('/levels', levelsRouter);
+app.use('/scores', scoresRouter);
 
 module.exports = app;
