@@ -105,5 +105,5 @@ async function readOneUserFromUsername(email) {
 }
 
 module.exports = {
-  getAllPlayers, addPlayer, loginPlayer, readOneUserFromUsername,
+  getAllPlayers, addPlayer, loginPlayer, readOneUserFromUsername, lifetimeJwt,
 };

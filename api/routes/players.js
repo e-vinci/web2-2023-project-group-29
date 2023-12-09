@@ -1,8 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
+const cookie = require('cookie');
 const Player = require('../models/players');
 const { authenticate } = require('../utils/auths');
 
 const router = express.Router();
+const { lifetimeJwt } = require('../models/players');
 
 router.get('/', authenticate, async (req, res) => {
   try {
@@ -43,6 +46,16 @@ router.post('/login', async (req, res) => {
     if (!authenticatedUser) {
       return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
+
+    const { token } = authenticatedUser;
+
+    // Stocker le jeton dans un cookie HTTP
+    res.setHeader('Set-Cookie', cookie.serialize('token', token, {
+      httpOnly: true,
+      maxAge: lifetimeJwt / 1000, // La durée de vie du cookie en secondes
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production', // Assurez-vous d'utiliser HTTPS en production
+    }));
 
     return res.json(authenticatedUser);
   } catch (error) {
