@@ -3,6 +3,17 @@ import Navigate from '../Router/Navigate';
 const RegisterPage = () => {
   const main = document.querySelector('main');
 
+  const generateAvatarOptions = () => {
+    const avatarFolder = '../img/players';
+    const avatarFiles = ['image1.png', 'image2.png', 'image3.png', 'image4.png', 'image5.png', 'image6.png', 'image7.png', 'image8.png'];
+  
+    return avatarFiles.map((avatar) => {
+      const imagePath = `${avatarFolder}/${avatar}`;
+      console.log('Image path:', imagePath); // Ajoutez cette ligne pour débugger
+      return `<img src="${imagePath}" class="avatar-option" data-avatar="${avatar}">`;
+    }).join('');
+  };
+
   const registerPage = `
     <div class="full-screen-bg">
       <div class="container mt-5">
@@ -37,12 +48,10 @@ const RegisterPage = () => {
               <div class="form-group">
                 <label for="avatar">Choisissez votre avatar :</label>
                 <div id="avatarOptions" class="d-flex flex-wrap">
-                  <img src="../../img/players/GraveRobber.png" class="avatar-option" data-avatar="GraveRobber.png">
-                  <img src="../../img/players/SteamMan.png" class="avatar-option" data-avatar="SteamMan.png">
-                  <img src="../../img/players/Woodcutter.png" class="avatar-option" data-avatar="Woodcutter.png">
+                  ${generateAvatarOptions()}
                 </div>
               </div>
-              <input type="hidden" id="selectedAvatar" name="selectedAvatar"> <!-- Nouveau: élément caché pour stocker l'avatar sélectionné -->
+              <input type="hidden" id="selectedAvatar" name="selectedAvatar">
 
               <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
               <div id="existingUserError" class="text-danger mt-3 text-center"></div>
@@ -63,7 +72,7 @@ const RegisterPage = () => {
   const registrationForm = document.querySelector('#registrationForm');
   const passwordMismatchError = document.querySelector('#passwordMismatchError');
   const avatarOptions = document.querySelector('#avatarOptions');
-  const selectedAvatarInput = document.querySelector('#selectedAvatar'); // Nouveau: élément pour stocker l'avatar sélectionné
+  const selectedAvatarInput = document.querySelector('#selectedAvatar');
 
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
@@ -73,8 +82,7 @@ const RegisterPage = () => {
   avatarOptions.addEventListener('click', (e) => {
     const selectedAvatar = e.target.dataset.avatar;
     if (selectedAvatar) {
-      console.log('Avatar sélectionné :', selectedAvatar);
-      selectedAvatarInput.value = selectedAvatar; // Mettez à jour la valeur de l'élément caché
+      selectedAvatarInput.value = selectedAvatar;
     }
   });
 
@@ -84,12 +92,10 @@ const RegisterPage = () => {
     const username = document.querySelector('#username').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
-    const avatarPath = selectedAvatarInput.value; // Utilisez la valeur de l'élément caché
-
-    console.log(username, email, password, avatarPath);
+    const avatarPath = selectedAvatarInput.value;
 
     try {
-      const response = await fetch('http://localhost:3000/players/register', { // Endpoint mis à jour
+      const response = await fetch('http://localhost:3000/players/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,9 +104,8 @@ const RegisterPage = () => {
       });
 
       if (!response.ok) {
-        console.log(response.body);
         const errorData = await response.json();
-        throw new Error(errorData.message);
+        throw new Error(errorData.error);
       }
 
       Navigate('/login');

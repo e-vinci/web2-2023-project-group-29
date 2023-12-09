@@ -7,9 +7,9 @@ POST http://localhost:3000/players/register
 Content-Type: application/json
 
 {
-    "email": "kusay@gmail.com",
-    "login": "kusay",
-    "password": "kusikusay",
+    "email": "nevzat@gmail.com",
+    "login": "nevzat",
+    "password": "nevzat",
     "avatarPath": "/avatars/avatar.png",
     "xp": 0
 }
@@ -20,6 +20,10 @@ POST http://localhost:3000/players/login
 Content-Type: application/json
     
 {
-    "email": "kusay@gmail.com",
-    "password": "kusikusay"
+    "email": "nevzat@gmail.com",
+    "password": "nevzat"
 }
+
+### Déconnexion
+POST http://localhost:3000/players/logout
+Authorization: {{player.response.body.token}}

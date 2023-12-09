@@ -2,7 +2,7 @@
 const express = require('express');
 const cookie = require('cookie');
 const Player = require('../models/players');
-const { authenticate } = require('../utils/auths');
+const { authenticate, logout } = require('../utils/auths');
 
 const router = express.Router();
 const { lifetimeJwt } = require('../models/players');
@@ -62,5 +62,7 @@ router.post('/login', async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 });
+
+router.post('/logout', authenticate, logout);
 
 module.exports = router;
