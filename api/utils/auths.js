@@ -11,11 +11,10 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
-    console.log('before');
     const decoded = jwt.verify(token, jwtSecret);
-    const { email } = decoded;
-    console.log('after');
-    console.log(decoded);
+    const {
+      email, playerId, login, avatarPath, xp,
+    } = decoded;
 
     const existingUser = await readOneUserFromUsername(email);
 
@@ -23,7 +22,13 @@ const authenticate = async (req, res, next) => {
       return res.status(401).json({ error: 'Utilisateur non trouvé' });
     }
 
-    req.user = existingUser;
+    req.user = {
+      email,
+      playerId,
+      login,
+      avatarPath,
+      xp,
+    };
     return next();
   } catch (err) {
     return res.status(401).json({ error: 'Token invalide' });

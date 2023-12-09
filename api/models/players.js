@@ -32,13 +32,23 @@ async function loginPlayer(email, password) {
     }
 
     const token = jwt.sign(
-      { email },
+      {
+        playerId: userFound.player_id,
+        email: userFound.email,
+        login: userFound.login,
+        avatarPath: userFound.avatar_path,
+        xp: userFound.xp,
+      },
       jwtSecret,
       { expiresIn: lifetimeJwt },
     );
 
     const authenticatedUser = {
-      email,
+      playerId: userFound.player_id,
+      email: userFound.email,
+      login: userFound.login,
+      avatarPath: userFound.avatar_path,
+      xp: userFound.xp,
       token,
     };
 
