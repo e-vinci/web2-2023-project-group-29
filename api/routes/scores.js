@@ -1,10 +1,5 @@
 const express = require('express');
-const {
-  getLastLevel,
-  getBestScoresByWorldId,
-  getFriendsBestScoresByWorldId,
-} = require('../models/Score');
-const { getAllLevels } = require('../models/Level');
+const { getLastLevel, getBestScoresByWorldId } = require('../models/Score');
 const { getAllies } = require('../models/Alliance');
 
 const router = express.Router();

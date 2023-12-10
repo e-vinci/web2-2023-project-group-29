@@ -15,14 +15,14 @@ const LeaderboardPage = () => {
 
   const fetchScores = async (world, option) => {
     try {
-      let endpoint = 'bestScores';
+      let route = '';
       if (isFriendsSelected) {
-        endpoint = `friendsBestScores/${THIS_PLAYER}/${world}/${option}`;
+        route = `friendsBestScores/${THIS_PLAYER}/${world}/${option}`;
       } else {
-        endpoint = `bestScores/${world}`; // Mettre à jour l'endpoint pour les scores généraux
+        route = `bestScores/${world}`;
       }
   
-      const response = await fetch(`http://localhost:3000/scores/${endpoint}`);
+      const response = await fetch(`http://localhost:3000/scores/${route}`);
       if (!response.ok) {
         throw new Error('Réponse Network pas ok');
       }
@@ -82,11 +82,13 @@ const LeaderboardPage = () => {
   const filterOptions = ['World 1', 'World 2', 'World 3', 'Friends'];
   const filterContainer = document.createElement('div');
   filterContainer.classList.add('d-flex', 'justify-content-center', 'my-4');
+  const filterGroup = document.createElement('div');
+  filterGroup.classList.add('btn-group');
 
   filterOptions.forEach((option, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.classList.add('btn');
+    button.classList.add('btn', 'btn-secondary');
     button.textContent = option;
 
     if (option === 'Friends') {
@@ -95,8 +97,10 @@ const LeaderboardPage = () => {
       button.addEventListener('click', () => switchToWorld(index + 1));
     }
 
-    filterContainer.appendChild(button);
+    filterGroup.appendChild(button);
   });
+
+  filterContainer.appendChild(filterGroup);
 
   const leaderboardTable = document.createElement('table');
   leaderboardTable.classList.add('table', 'table-striped', 'general-table', 'my-4');
@@ -111,8 +115,8 @@ const LeaderboardPage = () => {
    `;
   leaderboardTable.appendChild(tableHeader);
 
-  const tableBody = document.createElement('tbody'); // Création du tbody
-  leaderboardTable.appendChild(tableBody); // Ajout du tbody au tableau
+  const tableBody = document.createElement('tbody');
+  leaderboardTable.appendChild(tableBody);
 
   main.appendChild(title);
   main.appendChild(filterContainer);
@@ -129,7 +133,6 @@ const LeaderboardPage = () => {
     return result;
   };
 
-  // Afficher les scores initiaux au chargement de la page
   updateTable();
 };
 
