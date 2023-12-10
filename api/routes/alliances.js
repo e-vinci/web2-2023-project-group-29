@@ -66,7 +66,13 @@ router.delete('/:id/:ally', async (req, res) => {
   const playerId = req.params.id;
   const allyToBeRemoved = req.params.ally;
 
-  const ally = await searchPlayerByLogin(allyToBeRemoved);
+  let ally = null;
+
+  try {
+    ally = await searchPlayerByLogin(allyToBeRemoved);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 
   try {
     const resultToBeRemoved = await removeAlly(playerId, ally.player_id);
