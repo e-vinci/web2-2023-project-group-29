@@ -7,17 +7,19 @@ GET {{baseUrl}}/alliances/allies/1
 GET {{baseUrl}}/alliances/invitations/1
 
 ### Add Ally
-POST http://localhost:3000/alliances/5
+POST {{baseUrl}}/alliances/1
 Content-Type: application/json
 
 {
-    "allyToBeAdded": "admin"
+    "allyToBeAdded": "Alice94"
 }
 
 ### Remove Ally
-DELETE http://localhost:3000/alliances/1
-Content-Type: application/json
+DELETE {{baseUrl}}/alliances/1/Alice94
 
-{
-    "allyToBeRemoved": "Alice94"
-}
+### Accept invitation
+PUT {{baseUrl}}/alliances/2/admin?action=accept
+
+### Reject invitation
+PUT {{baseUrl}}/alliances/2/admin?action=reject
+

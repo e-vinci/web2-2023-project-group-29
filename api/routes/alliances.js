@@ -1,6 +1,11 @@
 const express = require('express');
 const {
-  getInvitations, getAllies, addAlly, removeAlly,
+  getInvitations,
+  getAllies,
+  addAlly,
+  removeAlly,
+  acceptAlly,
+  rejectAlly,
 } = require('../models/Alliance');
 const { searchPlayerByLogin } = require('../models/Player');
 
@@ -30,32 +35,78 @@ router.post('/:id', async (req, res) => {
   const playerId = req.params.id;
   const { allyToBeAdded } = req.body;
 
-  const player = await searchPlayerByLogin(allyToBeAdded);
+  let ally = null;
+
+  try {
+    ally = await searchPlayerByLogin(allyToBeAdded);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
+  if (ally === undefined || ally === null) {
+    res.status(404).json(`Player ${allyToBeAdded} not found.`);
+  }
 
   // eslint-disable-next-line eqeqeq
-  if (playerId == player.player_id) {
-    res.status(500).json({ error: "Ah ! Tenter de t'ajouter en tant qu'allié ? D'accord Narcisse, tu t'es déjà !" });
-  } else {
-    try {
-      const resultToBeAdded = await addAlly(playerId, player.player_id);
-      res.json(resultToBeAdded);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+  if (playerId == ally.player_id) {
+    res.status(500).json({
+      error: "Ah ! Tenter de t'ajouter en tant qu'allié ? D'accord Narcisse, tu t'es déjà !",
+    });
+  }
+
+  try {
+    const response = await addAlly(playerId, ally.player_id);
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id/:ally', async (req, res) => {
   const playerId = req.params.id;
-  const { allyToBeRemoved } = req.body;
+  const allyToBeRemoved = req.params.ally;
 
-  const player = await searchPlayerByLogin(allyToBeRemoved);
+  const ally = await searchPlayerByLogin(allyToBeRemoved);
 
   try {
-    const resultToBeRemoved = await removeAlly(playerId, player.player_id);
+    const resultToBeRemoved = await removeAlly(playerId, ally.player_id);
     res.json(resultToBeRemoved);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.put('/:id/:sender', async (req, res) => {
+  const playerId = req.params.id;
+  const { sender } = req.params;
+  const { action } = req.query;
+
+  console.log(action);
+
+  let ally = null;
+
+  try {
+    ally = await searchPlayerByLogin(sender);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
+  if (action === 'accept') {
+    try {
+      const response = await acceptAlly(playerId, ally.player_id);
+      res.json(response);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  } else if (action === 'reject') {
+    try {
+      const response = await rejectAlly(playerId, ally.player_id);
+      res.json(response);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  } else {
+    res.status(400).json({ error: 'Action invalide.' });
   }
 });
 
