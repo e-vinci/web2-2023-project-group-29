@@ -11,5 +11,13 @@ POST http://localhost:3000/alliances/5
 Content-Type: application/json
 
 {
-    "login": "admin"
+    "allyToBeAdded": "admin"
+}
+
+### Remove Ally
+DELETE http://localhost:3000/alliances/1
+Content-Type: application/json
+
+{
+    "allyToBeRemoved": "Alice94"
 }

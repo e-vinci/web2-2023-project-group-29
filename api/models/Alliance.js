@@ -30,8 +30,8 @@ async function getInvitations(playerId) {
 
 async function addAlly(playerId, allyId) {
   try {
-    const stmt = await client.query('SELECT remember_or_die.add_ally($1, $2);', [playerId, allyId]);
-    return stmt.rows;
+    await client.query('SELECT remember_or_die.add_ally($1, $2);', [playerId, allyId]);
+    return { success: true, message: 'Allié ajouté avec succès !' };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -39,11 +39,11 @@ async function addAlly(playerId, allyId) {
 
 async function removeAlly(playerId, allyId) {
   try {
-    const stmt = await client.query('SELECT remember_or_die.remove_ally($1, $2);', [
+    await client.query('SELECT remember_or_die.remove_ally($1, $2);', [
       playerId,
       allyId,
     ]);
-    return stmt.rows;
+    return { success: true, message: 'Allié retiré avec succès !' };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -51,11 +51,11 @@ async function removeAlly(playerId, allyId) {
 
 async function acceptAlly(playerId, allyId) {
   try {
-    const stmt = await client.query('SELECT remember_or_die.accept_ally($1, $2);', [
+    await client.query('SELECT remember_or_die.accept_ally($1, $2);', [
       playerId,
       allyId,
     ]);
-    return stmt.rows;
+    return { success: true, message: 'Allié accepté avec succès !' };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -63,11 +63,11 @@ async function acceptAlly(playerId, allyId) {
 
 async function rejectAlly(playerId, allyId) {
   try {
-    const stmt = await client.query('SELECT remember_or_die.reject_ally($1, $2);', [
+    await client.query('SELECT remember_or_die.reject_ally($1, $2);', [
       playerId,
       allyId,
     ]);
-    return stmt.rows;
+    return { success: true, message: 'Allié refusé avec succès !' };
   } catch (error) {
     throw new Error(error.message);
   }

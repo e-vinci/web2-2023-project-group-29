@@ -25,10 +25,11 @@ async function addPlayer(email, login, password, avatarPath, xp) {
 
 async function searchPlayerByLogin(login) {
   try {
-    const stmt = await client.query('SELECT * FROM remember_or_die.players_vw WHERE login = $1', [
-      login,
-    ]);
-    return stmt.rows;
+    const stmt = await client.query(
+      'SELECT player_id, email, login, avatar_path, xp FROM remember_or_die.players_vw WHERE login = $1',
+      [login],
+    );
+    return stmt.rows[0];
   } catch (error) {
     throw new Error(`Error fetching player (login = ${login}): ${error.message}`);
   }

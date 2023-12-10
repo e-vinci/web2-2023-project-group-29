@@ -73,12 +73,12 @@ const createInvitationsList = async () => {
         'justify-content-between',
         'align-items-center',
       );
-      inviteItem.textContent = `Invitation de ${invitation.name}`;
+      inviteItem.textContent = `Invitation de ${invitation.initiator_login}`;
 
       const acceptButton = document.createElement('button');
       acceptButton.classList.add('btn', 'btn-sm');
 
-      if (invitation.accepted) {
+      if (invitation.state === 'accepted') {
         acceptButton.classList.add('btn-secondary', 'disabled');
         acceptButton.textContent = 'Acceptée';
         acceptButton.disabled = true;
@@ -88,8 +88,8 @@ const createInvitationsList = async () => {
 
         acceptButton.addEventListener('click', () => {
           // eslint-disable-next-line no-console
-          console.log(`Invitation de ${invitation.name} acceptée.`);
-          acceptInvitation(invitation.id);
+          console.log(`Invitation de ${invitation.initiator_login} acceptée.`);
+          acceptInvitation(invitation.initiator_login);
           acceptButton.classList.add('btn-secondary', 'disabled');
           acceptButton.textContent = 'Acceptée';
           acceptButton.disabled = true;
@@ -123,7 +123,7 @@ const createAlliesList = async () => {
         'justify-content-between',
         'align-items-center',
       );
-      allyItem.textContent = `${ally.name}`;
+      allyItem.textContent = `${ally.login}`;
 
       const deleteButton = document.createElement('button');
       deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
@@ -131,8 +131,8 @@ const createAlliesList = async () => {
 
       deleteButton.addEventListener('click', () => {
         // eslint-disable-next-line no-console
-        console.log(`Allié ${ally.name} supprimé.`);
-        removeAlly(ally.id);
+        console.log(`Allié ${ally.login} supprimé.`);
+        removeAlly(ally.login);
         allyItem.remove();
       });
 
@@ -223,18 +223,18 @@ const AlliesPage = async () => {
     formMessage.classList.add('mt-3', 'text-center');
 
     allyForm.addEventListener('submit', async (event) => {
-      event.preventDefault();/*
+      event.preventDefault();
+      /*
       if (allyForm.checkValidity()) {
-        const formData = new FormData(allyForm);
-        try { /*
+        try {
           const response = await fetch(`http://localhost:3000/alliances/${localStorage.getItem('token').player_id}`, {
             method: 'POST',
-            body: formData
+            body: allyToBeAdded
           });
 
           if (response.ok) {
             formMessage.classList.add('text-success');
-            formMessage.innerText = `${formData.allyToBeAdded} ajouté avec succès à vos alliés !`
+            formMessage.innerText = `${allyToBeAdded} ajouté avec succès à vos alliés !`
           } else {
             formMessage.classList.add('text-danger');
             formMessage.innerText = 'Une erreur est survenue.'
@@ -245,7 +245,8 @@ const AlliesPage = async () => {
         }
       } else {
         event.stopPropagation();
-      } */
+      } 
+      */
     });
 
     allyForm.appendChild(nameLabel);
