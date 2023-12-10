@@ -1,162 +1,181 @@
 import { clearPage } from '../../utils/render';
 
+const THIS_PLAYER = 1;
+
 const fetchInvitations = async () => {
   try {
-    const response = await fetch('TON_ENDPOINT_API/invitations');
+    const response = await fetch(`http://localhost:3000/alliances/invitations/${THIS_PLAYER}`);
     const data = await response.json();
-    return data.invitations;
+    return data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Erreur lors de la récupération des invitations :', error);
+    console.error('Erreur lors de la récupération des invitations: ', error);
     return [];
   }
 };
 
 const fetchAllies = async () => {
   try {
-    const response = await fetch('TON_ENDPOINT_API/allies');
+    const response = await fetch(`http://localhost:3000/alliances/allies/${THIS_PLAYER}`);
     const data = await response.json();
-    return data.allies;
+    return data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Erreur lors de la récupération des alliés :', error);
+    console.error('Erreur lors de la récupération des alliés: ', error);
     return [];
   }
 };
 
-const acceptInvitation = async (invitationId) => {
-  // Appel à l'API pour accepter une invitation dans la base de données
+const acceptInvitation = async (sender) => {
   try {
-    await fetch(`TON_ENDPOINT_API/invitations/${invitationId}/accept`, {
-      method: 'POST',
-      // ... autres options de requête (headers, etc.)
+    await fetch(`http://localhost:3000/alliances/${THIS_PLAYER}/${sender}?action=accept`, {
+      method: 'PUT',
     });
-    // Peut-être que tu veux recharger les données après l'acceptation
-    // fetchInvitations();
+    fetchAllies();
+    fetchInvitations();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("Erreur lors de l'acceptation de l'invitation :", error);
+    console.error("Erreur lors de l'acceptation de l'invitation: ", error);
   }
 };
 
-const removeAlly = async (allyId) => {
-  // Appel à l'API pour supprimer un allié de la base de données
+const removeAlly = async (ally) => {
   try {
-    await fetch(`TON_ENDPOINT_API/allies/${allyId}`, {
+    await fetch(`http://localhost:3000/alliances/${THIS_PLAYER}/${ally}`, {
       method: 'DELETE',
-      // ... autres options de requête (headers, etc.)
     });
-    // Peut-être que tu veux recharger les données après la suppression
-    // fetchAllies();
+    fetchAllies();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("Erreur lors de la suppression de l'allié :", error);
+    console.error("Erreur lors de la suppression de l'allié: ", error);
   }
 };
 
-const createInvitationsList = async () => {
+const createInvitationsTable = async () => {
   const invitations = await fetchInvitations();
 
-  const invitationsList = document.createElement('div');
-  invitationsList.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center');
+  const table = document.createElement('table');
+  table.classList.add('table', 'general-table');
+
+  const tableHead = document.createElement('thead');
+  tableHead.innerHTML = `
+    <tr>
+      <th scope="col">Invitation de</th>
+      <th scope="col">Action</th>
+    </tr>
+  `;
+  table.appendChild(tableHead);
+
+  const tableBody = document.createElement('tbody');
 
   if (invitations.length === 0) {
-    const noInvitationsMessage = document.createElement('p');
-    noInvitationsMessage.textContent = "Pas d'invitations pour le moment...";
-    invitationsList.appendChild(noInvitationsMessage);
+    const noInvitationsRow = document.createElement('tr');
+    noInvitationsRow.innerHTML = `
+      <td colspan="2">Pas d'invitations pour le moment...</td>
+    `;
+    tableBody.appendChild(noInvitationsRow);
   } else {
     invitations.forEach((invitation) => {
-      const inviteItem = document.createElement('div');
-      inviteItem.classList.add(
-        'list-group-item',
-        'd-flex',
-        'justify-content-between',
-        'align-items-center',
-      );
-      inviteItem.textContent = `Invitation de ${invitation.initiator_login}`;
+      const inviteRow = document.createElement('tr');
+      inviteRow.innerHTML = `
+        <td>${invitation.login}</td>
+        <td>
+          <button class="btn btn-sm ${
+            invitation.state === 'accepted' ? 'btn-secondary disabled' : 'btn-primary'
+          }" ${invitation.state === 'accepted' ? 'disabled' : ''}>
+            ${invitation.state === 'accepted' ? 'Acceptée' : 'Accepter'}
+          </button>
+        </td>
+      `;
 
-      const acceptButton = document.createElement('button');
-      acceptButton.classList.add('btn', 'btn-sm');
-
-      if (invitation.state === 'accepted') {
-        acceptButton.classList.add('btn-secondary', 'disabled');
-        acceptButton.textContent = 'Acceptée';
-        acceptButton.disabled = true;
-      } else {
-        acceptButton.classList.add('btn-primary');
-        acceptButton.textContent = 'Accepter';
-
+      const acceptButton = inviteRow.querySelector('button');
+      if (invitation.state !== 'accepted') {
         acceptButton.addEventListener('click', () => {
-          // eslint-disable-next-line no-console
-          console.log(`Invitation de ${invitation.initiator_login} acceptée.`);
-          acceptInvitation(invitation.initiator_login);
+          acceptInvitation(invitation.login);
           acceptButton.classList.add('btn-secondary', 'disabled');
           acceptButton.textContent = 'Acceptée';
           acceptButton.disabled = true;
         });
       }
 
-      inviteItem.appendChild(acceptButton);
-      invitationsList.appendChild(inviteItem);
+      tableBody.appendChild(inviteRow);
     });
   }
 
-  return invitationsList;
+  table.appendChild(tableBody);
+
+  return table;
 };
 
-const createAlliesList = async () => {
+const createAlliesTable = async () => {
   const allies = await fetchAllies();
 
-  const alliesList = document.createElement('div');
-  alliesList.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center');
+  const table = document.createElement('table');
+  table.classList.add('table', 'general-table');
+
+  const tableHead = document.createElement('thead');
+  tableHead.innerHTML = `
+    <tr>
+      <th scope="col">Allié</th>
+      <th scope="col">Action</th>
+    </tr>
+  `;
+  table.appendChild(tableHead);
+
+  const tableBody = document.createElement('tbody');
 
   if (allies.length === 0) {
-    const noAlliesMessage = document.createElement('p');
-    noAlliesMessage.textContent = "Pas d'alliés pour le moment...";
-    alliesList.appendChild(noAlliesMessage);
+    const noAlliesRow = document.createElement('tr');
+    noAlliesRow.innerHTML = `
+      <td colspan="2">Pas d'alliés pour le moment...</td>
+    `;
+    tableBody.appendChild(noAlliesRow);
   } else {
     allies.forEach((ally) => {
-      const allyItem = document.createElement('div');
-      allyItem.classList.add(
-        'list-group-item',
-        'd-flex',
-        'justify-content-between',
-        'align-items-center',
-      );
-      allyItem.textContent = `${ally.login}`;
+      const allyRow = document.createElement('tr');
+      allyRow.innerHTML = `
+        <td>${ally.login}</td>
+        <td>
+          <button class="btn btn-danger btn-sm">Supprimer</button>
+        </td>
+      `;
 
-      const deleteButton = document.createElement('button');
-      deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
-      deleteButton.textContent = 'Supprimer';
-
-      deleteButton.addEventListener('click', () => {
-        // eslint-disable-next-line no-console
-        console.log(`Allié ${ally.login} supprimé.`);
-        removeAlly(ally.login);
-        allyItem.remove();
+      const deleteButton = allyRow.querySelector('button');
+      deleteButton.addEventListener('click', async () => {
+        await removeAlly(ally.login);
+        allyRow.remove();
+        const updatedAllies = await fetchAllies();
+        if (updatedAllies.length === 0) {
+          tableBody.innerHTML = '';
+          const noAlliesRow = document.createElement('tr');
+          noAlliesRow.innerHTML = `
+            <td colspan="2">Pas d'alliés pour le moment...</td>
+          `;
+          tableBody.appendChild(noAlliesRow);
+        }
       });
 
-      allyItem.appendChild(deleteButton);
-      alliesList.appendChild(allyItem);
+      tableBody.appendChild(allyRow);
     });
   }
 
-  return alliesList;
+  table.appendChild(tableBody);
+
+  return table;
 };
 
 const AlliesPage = async () => {
   clearPage();
 
   const main = document.querySelector('main');
-
   const title = document.createElement('h1');
   title.innerText = 'Alliés du Royaume';
 
   const container = document.createElement('div');
   container.classList.add('container');
 
-  const alliesList = await createAlliesList();
-  container.appendChild(alliesList);
+  const alliesTable = await createAlliesTable();
+  container.appendChild(alliesTable);
 
   const buttonsContainer = document.createElement('div');
   buttonsContainer.classList.add('d-flex', 'justify-content-center', 'my-4');
@@ -186,13 +205,14 @@ const AlliesPage = async () => {
 
   alliesButton.addEventListener('click', async () => {
     container.innerHTML = '';
-    container.appendChild(alliesList);
+    const alliancesTable = await createAlliesTable();
+    container.appendChild(alliancesTable);
   });
 
   invitationsButton.addEventListener('click', async () => {
     container.innerHTML = '';
-    const invitationsList = await createInvitationsList();
-    container.appendChild(invitationsList);
+    const invitationsTable = await createInvitationsTable();
+    container.appendChild(invitationsTable);
   });
 
   addAllyButton.addEventListener('click', () => {
@@ -224,20 +244,25 @@ const AlliesPage = async () => {
 
     allyForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      /*
+      const allyToBeAdded = nameInput.value;
       if (allyForm.checkValidity()) {
         try {
-          const response = await fetch(`http://localhost:3000/alliances/${localStorage.getItem('token').player_id}`, {
+          const response = await fetch(`http://localhost:3000/alliances/${THIS_PLAYER}`, {
             method: 'POST',
-            body: allyToBeAdded
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ allyToBeAdded }),
           });
+
+          const data = await response.json();
 
           if (response.ok) {
             formMessage.classList.add('text-success');
-            formMessage.innerText = `${allyToBeAdded} ajouté avec succès à vos alliés !`
+            formMessage.innerText = data.message;
           } else {
             formMessage.classList.add('text-danger');
-            formMessage.innerText = 'Une erreur est survenue.'
+            formMessage.innerText = data.error;
           }
         } catch (error) {
           formMessage.classList.add('text-danger');
@@ -245,13 +270,13 @@ const AlliesPage = async () => {
         }
       } else {
         event.stopPropagation();
-      } 
-      */
+      }
     });
 
     allyForm.appendChild(nameLabel);
     allyForm.appendChild(nameInput);
     allyForm.appendChild(addButton);
+    allyForm.appendChild(formMessage);
     container.appendChild(allyForm);
   });
 

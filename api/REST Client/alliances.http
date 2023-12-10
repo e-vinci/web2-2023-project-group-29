@@ -7,11 +7,11 @@ GET {{baseUrl}}/alliances/allies/1
 GET {{baseUrl}}/alliances/invitations/1
 
 ### Add Ally
-POST {{baseUrl}}/alliances/1
+POST {{baseUrl}}/alliances/2
 Content-Type: application/json
 
 {
-    "allyToBeAdded": "Alice94"
+    "allyToBeAdded": "admin"
 }
 
 ### Remove Ally

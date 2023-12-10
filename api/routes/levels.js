@@ -6,9 +6,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const allLevels = await getAllLevels();
-    res.json(allLevels);
+    return res.json(allLevels);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -18,12 +18,11 @@ router.get('/:id', async (req, res) => {
   try {
     const level = await getLevelbyId(levelId);
     if (level.length === 0) {
-      res.status(404).json({ error: `Level with ID ${levelId} not found.` });
-    } else {
-      res.json(level);
+      return res.status(404).json({ error: `Level with ID ${levelId} not found.` });
     }
+    return res.json(level);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 

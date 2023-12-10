@@ -9,12 +9,11 @@ router.get('/lastLevel/:id', async (req, res) => {
   try {
     const level = await getLastLevel(playerId);
     if (level.length === 0) {
-      res.status(404).json({ error: `Last level of ID ${playerId} not found.` });
-    } else {
-      res.json(level);
+      return res.status(404).json({ error: `Last level of ID ${playerId} not found.` });
     }
+    return res.json(level);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -23,9 +22,9 @@ router.get('/bestScores/:id', async (req, res) => {
 
   try {
     const bestScores = await getBestScoresByWorldId(worldId);
-    res.json(bestScores);
+    return res.json(bestScores);
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message,
     });
   }

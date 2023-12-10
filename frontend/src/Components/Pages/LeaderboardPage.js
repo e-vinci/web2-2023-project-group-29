@@ -63,16 +63,7 @@ const LeaderboardPage = () => {
   filterContainer.appendChild(filterGroup);
 
   const leaderboardTable = document.createElement('table');
-  leaderboardTable.classList.add('table', 'table-striped', 'mx-auto', 'w-75', 'my-4');
-  leaderboardTable.classList.add('table', 'table-striped', 'mx-auto', 'w-75');
-
-  leaderboardTable.style.maxWidth = '60%';
-
-  leaderboardTable.style.borderCollapse = 'separate';
-  leaderboardTable.style.borderSpacing = '0';
-  leaderboardTable.style.borderRadius = '20px';
-  leaderboardTable.style.overflow = 'hidden';
-  leaderboardTable.style.border = '1px solid black';
+  leaderboardTable.classList.add('table', 'table-striped', 'general-table', 'my-4');
 
   const tableHeader = document.createElement('thead');
   tableHeader.innerHTML = `
@@ -97,11 +88,11 @@ const LeaderboardPage = () => {
 function secondsToMinutesSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  
-  const formattedMinutes = (`0${  minutes}`).slice(-2);
-  const formattedSeconds = (`0${  remainingSeconds}`).slice(-2);
-  
-  const result = `${formattedMinutes  }:${  formattedSeconds}`;
+
+  const formattedMinutes = `0${minutes}`.slice(-2);
+  const formattedSeconds = `0${remainingSeconds}`.slice(-2);
+
+  const result = `${formattedMinutes}:${formattedSeconds}`;
   return result;
 }
 

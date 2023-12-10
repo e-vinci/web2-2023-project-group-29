@@ -15,9 +15,9 @@ router.get('/allies/:id', async (req, res) => {
   const playerId = req.params.id;
   try {
     const alliesList = await getAllies(playerId);
-    res.json(alliesList);
+    return res.json(alliesList);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -25,9 +25,9 @@ router.get('/invitations/:id', async (req, res) => {
   const playerId = req.params.id;
   try {
     const invitations = await getInvitations(playerId);
-    res.json(invitations);
+    return res.json(invitations);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -40,25 +40,25 @@ router.post('/:id', async (req, res) => {
   try {
     ally = await searchPlayerByLogin(allyToBeAdded);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 
   if (ally === undefined || ally === null) {
-    res.status(404).json(`Player ${allyToBeAdded} not found.`);
+    return res.status(404).json({ error: `Joueur \`${allyToBeAdded}´ introuvable.` });
   }
 
   // eslint-disable-next-line eqeqeq
   if (playerId == ally.player_id) {
-    res.status(500).json({
+    return res.status(500).json({
       error: "Ah ! Tenter de t'ajouter en tant qu'allié ? D'accord Narcisse, tu t'es déjà !",
     });
   }
 
   try {
     const response = await addAlly(playerId, ally.player_id);
-    res.json(response);
+    return res.json(response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -71,14 +71,14 @@ router.delete('/:id/:ally', async (req, res) => {
   try {
     ally = await searchPlayerByLogin(allyToBeRemoved);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 
   try {
     const resultToBeRemoved = await removeAlly(playerId, ally.player_id);
-    res.json(resultToBeRemoved);
+    return res.json(resultToBeRemoved);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -92,25 +92,25 @@ router.put('/:id/:sender', async (req, res) => {
   try {
     ally = await searchPlayerByLogin(sender);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 
   if (action === 'accept') {
     try {
       const response = await acceptAlly(playerId, ally.player_id);
-      res.json(response);
+      return res.json(response);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   } else if (action === 'reject') {
     try {
       const response = await rejectAlly(playerId, ally.player_id);
-      res.json(response);
+      return res.json(response);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   } else {
-    res.status(400).json({ error: 'Action invalide.' });
+    return res.status(400).json({ error: 'Action invalide.' });
   }
 });
 
