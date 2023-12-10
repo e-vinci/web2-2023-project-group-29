@@ -81,8 +81,6 @@ router.put('/:id/:sender', async (req, res) => {
   const { sender } = req.params;
   const { action } = req.query;
 
-  console.log(action);
-
   let ally = null;
 
   try {
