@@ -10,6 +10,7 @@ const corsOptions = {
 const playersRouter = require('./routes/players');
 const levelsRouter = require('./routes/levels');
 const scoresRouter = require('./routes/scores');
+const alliancesRouter = require('./routes/alliances');
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.use(cors(corsOptions));
 app.use('/players', playersRouter);
 app.use('/levels', levelsRouter);
 app.use('/scores', scoresRouter);
+app.use('/alliances', alliancesRouter);
 
 module.exports = app;

@@ -104,7 +104,6 @@ const createInvitationsList = async () => {
   return invitationsList;
 };
 
-
 const createAlliesList = async () => {
   const allies = await fetchAllies();
 
@@ -144,7 +143,6 @@ const createAlliesList = async () => {
 
   return alliesList;
 };
-
 
 const AlliesPage = async () => {
   clearPage();
@@ -210,26 +208,44 @@ const AlliesPage = async () => {
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('required', 'true');
+    nameInput.setAttribute('name', 'allyToBeAdded');
     nameInput.classList.add('form-control');
     nameInput.style.maxWidth = '50%';
     nameInput.style.fontSize = 'x-large';
-    nameInput.style.marginBottom = '20px'
+    nameInput.style.marginBottom = '20px';
 
     const addButton = document.createElement('button');
     addButton.setAttribute('type', 'submit');
     addButton.classList.add('btn', 'btn-warning', 'btn-block');
     addButton.textContent = 'Ajouter';
 
+    const formMessage = document.createElement('div');
+    formMessage.classList.add('mt-3', 'text-center');
+
     allyForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
+      event.preventDefault();/*
       if (allyForm.checkValidity()) {
-        // Si le formulaire est valide, effectue l'action
-        // Récupérer les données du formulaire et les envoyer via une fonction comme addAlly()
-        // Exemple : await addAlly(formData);
-        // Après l'ajout, tu peux recharger la liste des alliés ou effectuer une action appropriée.
+        const formData = new FormData(allyForm);
+        try { /*
+          const response = await fetch(`http://localhost:3000/alliances/${localStorage.getItem('token').player_id}`, {
+            method: 'POST',
+            body: formData
+          });
+
+          if (response.ok) {
+            formMessage.classList.add('text-success');
+            formMessage.innerText = `${formData.allyToBeAdded} ajouté avec succès à vos alliés !`
+          } else {
+            formMessage.classList.add('text-danger');
+            formMessage.innerText = 'Une erreur est survenue.'
+          }
+        } catch (error) {
+          formMessage.classList.add('text-danger');
+          formMessage.innerText = error.message;
+        }
       } else {
         event.stopPropagation();
-      }
+      } */
     });
 
     allyForm.appendChild(nameLabel);
