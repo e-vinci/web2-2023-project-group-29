@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const allLevels = await getAllLevels();
     res.json(allLevels);
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while fetching all levels.' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
       res.json(level);
     }
   } catch (error) {
-    res.status(500).json({ error: `Error occurred while fetching level (id = ${levelId}): ${error.message}` });
+    res.status(500).json({ error: error.message });
   }
 });
 

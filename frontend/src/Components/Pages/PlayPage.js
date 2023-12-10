@@ -4,9 +4,9 @@ import { makeDisappearNavbar } from '../../utils/navbarSetup';
 
 const createListGroup = () => {
   const links = [
-    { text: 'Play', uri: '/login' },
-    { text: 'Rules', uri: '/rules' },
-    { text: 'Credits', uri: '/credits' },
+    { text: 'Jouer', uri: '/login' },
+    { text: 'Règles', uri: '/rules' },
+    { text: 'Crédits', uri: '/credits' },
   ];
 
   const listGroup = document.createElement('div');

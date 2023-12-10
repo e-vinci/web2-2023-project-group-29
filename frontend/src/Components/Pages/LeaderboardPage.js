@@ -9,6 +9,8 @@ const LeaderboardPage = () => {
   const optionValues = [1, 2, 3];
   let currentOption = optionValues[0];
 
+  const main = document.querySelector('main');
+
   const updateTable = async () => {
     try {
       const response = await fetch(`http://localhost:3000/scores/bestScores/${currentOption}`);
@@ -17,7 +19,6 @@ const LeaderboardPage = () => {
       }
       const data = await response.json();
 
-      const main = document.querySelector('main');
       const leaderboardTable = main.querySelector('table tbody');
       leaderboardTable.innerHTML = '';
 
@@ -32,11 +33,9 @@ const LeaderboardPage = () => {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('There was a problem with the fetch request:', error);
+      console.error('There was a problem with the fetch request: ', error);
     }
   };
-
-  const main = document.querySelector('main');
 
   const title = document.createElement('h1');
   title.textContent = 'Chroniques des Braves';
