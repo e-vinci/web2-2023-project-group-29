@@ -15,7 +15,7 @@ const LeaderboardPage = () => {
     try {
       const response = await fetch(`http://localhost:3000/scores/bestScores/${currentOption}`);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Réponse Network pas ok');
       }
       const data = await response.json();
 
@@ -33,7 +33,7 @@ const LeaderboardPage = () => {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('There was a problem with the fetch request: ', error);
+      console.error('Erreur lors de la récupération des scores: ', error);
     }
   };
 

@@ -6,6 +6,7 @@ const fetchInvitations = async () => {
     const data = await response.json();
     return data.invitations;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Erreur lors de la récupération des invitations :', error);
     return [];
   }
@@ -17,6 +18,7 @@ const fetchAllies = async () => {
     const data = await response.json();
     return data.allies;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Erreur lors de la récupération des alliés :', error);
     return [];
   }
@@ -32,6 +34,7 @@ const acceptInvitation = async (invitationId) => {
     // Peut-être que tu veux recharger les données après l'acceptation
     // fetchInvitations();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Erreur lors de l'acceptation de l'invitation :", error);
   }
 };
@@ -46,6 +49,7 @@ const removeAlly = async (allyId) => {
     // Peut-être que tu veux recharger les données après la suppression
     // fetchAllies();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Erreur lors de la suppression de l'allié :", error);
   }
 };
@@ -83,6 +87,7 @@ const createInvitationsList = async () => {
         acceptButton.textContent = 'Accepter';
 
         acceptButton.addEventListener('click', () => {
+          // eslint-disable-next-line no-console
           console.log(`Invitation de ${invitation.name} acceptée.`);
           acceptInvitation(invitation.id);
           acceptButton.classList.add('btn-secondary', 'disabled');
@@ -126,6 +131,7 @@ const createAlliesList = async () => {
       deleteButton.textContent = 'Supprimer';
 
       deleteButton.addEventListener('click', () => {
+        // eslint-disable-next-line no-console
         console.log(`Allié ${ally.name} supprimé.`);
         removeAlly(ally.id);
         allyItem.remove();
