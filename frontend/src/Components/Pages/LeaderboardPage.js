@@ -21,19 +21,19 @@ const LeaderboardPage = () => {
       } else {
         route = `bestScores/${world}`;
       }
-  
+
       const response = await fetch(`http://localhost:3000/scores/${route}`);
       if (!response.ok) {
         throw new Error('Réponse Network pas ok');
       }
       const data = await response.json();
-  
+
       displayScores(data);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Erreur lors de la récupération des scores: ', error);
     }
   };
-  
 
   const displayScores = (data) => {
     const leaderboardTable = main.querySelector('table tbody');
@@ -60,20 +60,41 @@ const LeaderboardPage = () => {
 
   const switchToWorld = (world) => {
     currentWorld = world;
-    if (isFriendsSelected) {
-      updateFriendsTable('');
-    } else {
+    updateButtonState();
+
+    if (!isFriendsSelected) {
       updateTable();
+    } else {
+      updateFriendsTable('');
     }
   };
 
   const toggleFriends = async () => {
     isFriendsSelected = !isFriendsSelected;
+
+    updateButtonState();
+
     if (isFriendsSelected) {
       await updateFriendsTable('');
     } else {
       await updateTable();
     }
+  };
+
+  const updateButtonState = () => {
+    filterOptions.forEach((option, index) => {
+      const button = filterGroup.children[index];
+      if (option === 'Friends') {
+        button.classList.toggle('active', isFriendsSelected);
+      } else {
+        const world = index + 1;
+        if (isFriendsSelected) {
+          button.classList.toggle('active', world === currentWorld);
+        } else {
+          button.classList.toggle('active', world === currentWorld);
+        }
+      }
+    });
   };
 
   const title = document.createElement('h1');
@@ -88,7 +109,10 @@ const LeaderboardPage = () => {
   filterOptions.forEach((option, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.classList.add('btn', 'btn-secondary');
+    button.classList.add('btn', 'btn-secondary', 'btn-toggle');
+    button.setAttribute('data-bs-toggle', 'button');
+    button.setAttribute('aria-pressed', 'false');
+
     button.textContent = option;
 
     if (option === 'Friends') {
