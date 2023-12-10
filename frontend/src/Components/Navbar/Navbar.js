@@ -40,7 +40,7 @@ const Navbar = () => {
                 <a class="nav-link" href="#" data-uri="/game">Game Page</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/levelPage">level Page</a>
+              <a class="nav-link" href="#" data-uri="/levelMap">level Page</a>
             </li>                         
             </ul>
           </div>

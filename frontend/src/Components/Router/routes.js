@@ -10,7 +10,7 @@ const routes = {
   '/game': GamePage,
   '/login': LoginPage,
   '/register': RegisterPage, 
-  '/levelPage': levelPage,
+  '/levelMap': levelPage,
 };
 
 export default routes;

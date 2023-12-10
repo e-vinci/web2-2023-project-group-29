@@ -1,7 +1,8 @@
 import  levels  from "../../../../data/level.json";
 import Navigate from "../Router/Navigate";
 import { clearPage } from '../../utils/render';
-
+import imgLvel1 from '../../assets/levelMapPage.png'
+import lock from '../../assets/pngkey.com-lock-image-png-3963255.png'
 
 const main = document.querySelector('main');
 function levelPage (){
@@ -11,7 +12,9 @@ function levelPage (){
 }
 function buildLevelPage() {
     const div = document.createElement('div');
-    div.className = 'divMap'
+    div.id = 'divMap';
+    div.className = 'd-flex flex-column vh-100'
+    div.style.backgroundImage = `url(${imgLvel1})`;
     main.appendChild(div)
     const divTitle = document.createElement('div');
     div.appendChild(divTitle);
@@ -35,7 +38,14 @@ function buildLevelPage() {
         rowDiv.className = 'rowLevel';
         rowDiv.id = `${level.level_id}`;
         divList.appendChild(rowDiv);
+
+        const img = document.createElement('img');
+        img.src = lock;
+        img.style.maxWidth = '50%'
+
+        rowDiv.appendChild(img)
         addEventListenerMe(rowDiv);
+        
     });
 }
 

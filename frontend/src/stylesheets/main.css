@@ -1,5 +1,6 @@
-  
-  .card-container {
+
+ 
+ .card-container {
     font-family: "Open Sans", sans serif;
     font-size: 120px;
     font-weight: bold;
@@ -48,14 +49,10 @@
     color: #2196f3;
     font-size: large;
   }
-  html,body,main{
-    height: 100vh;
-    margin: 0;
-  }
-.divMap{
+
+#divMap{
   
   height: 100%;
-  background-image: url(../assets/levelMapPage.png);
   background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
@@ -63,6 +60,13 @@
 .levels{
   height: 100%;
   position: relative;
+}
+.rowLevel{
+  position: relative;
+  opacity: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .rowLevel:nth-of-type(1){
   width: 11%;
