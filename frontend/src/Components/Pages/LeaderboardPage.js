@@ -5,8 +5,8 @@ const LeaderboardPage = () => {
   clearPage();
   makeDisappearNavbar(false);
 
-  const filterOptions = ['World 1', 'World 2', 'World 3'];
-  const optionValues = [1, 2, 3];
+  const filterOptions = ['World 1', 'World 2', 'World 3', 'Friends'];
+  const optionValues = [1, 2, 3, 'F'];
   let currentOption = optionValues[0];
 
   const main = document.querySelector('main');

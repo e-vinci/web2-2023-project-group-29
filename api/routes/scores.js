@@ -1,5 +1,11 @@
 const express = require('express');
-const { getLastLevel, getBestScoresByWorldId } = require('../models/Score');
+const {
+  getLastLevel,
+  getBestScoresByWorldId,
+  getFriendsBestScoresByWorldId,
+} = require('../models/Score');
+const { getAllLevels } = require('../models/Level');
+const { getAllies } = require('../models/Alliance');
 
 const router = express.Router();
 
@@ -28,6 +34,42 @@ router.get('/bestScores/:id', async (req, res) => {
       error: error.message,
     });
   }
+});
+
+router.get('/friendsBestScores/:id/:worldId', async (req, res) => {
+  const { worldId } = req.params;
+  const playerId = req.params.id;
+
+  let bestScores = null;
+  let allies = null;
+
+  try {
+    bestScores = await getBestScoresByWorldId(worldId);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+
+  try {
+    allies = await getAllies(playerId);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+
+  const friendsBestScores = [];
+
+  allies.forEach((ally) => {
+    bestScores.forEach((score) => {
+      if (ally.login === score.player) {
+        friendsBestScores.push(score);
+      }
+    });
+  });
+
+  return res.json(friendsBestScores);
 });
 
 module.exports = router;
