@@ -15,11 +15,11 @@ Content-Type: application/json
 }
 
 ### Remove Ally
-DELETE {{baseUrl}}/alliances/1/Alice94
+DELETE {{baseUrl}}/alliances/1/BobSmith
 
 ### Accept invitation
-PUT {{baseUrl}}/alliances/2/admin?action=accept
+PUT {{baseUrl}}/alliances/1/Diana_22?action=accept
 
 ### Reject invitation
-PUT {{baseUrl}}/alliances/2/admin?action=reject
+PUT {{baseUrl}}/alliances/1/Alice94?action=reject
 
