@@ -39,6 +39,18 @@ const acceptInvitation = async (sender) => {
   }
 };
 
+const rejectInvitation = async (sender) => {
+  try {
+    await fetch(`http://localhost:3000/alliances/${THIS_PLAYER}/${sender}?action=reject`, {
+      method: 'PUT',
+    });
+    fetchInvitations();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Erreur lors du rejet de l'invitation: ", error);
+  }
+};
+
 const removeAlly = async (ally) => {
   try {
     await fetch(`http://localhost:3000/alliances/${THIS_PLAYER}/${ally}`, {
@@ -80,20 +92,31 @@ const createInvitationsTable = async () => {
       inviteRow.innerHTML = `
         <td>${invitation.login}</td>
         <td>
-          <button class="btn btn-sm ${
-            invitation.state === 'accepted' ? 'btn-secondary disabled' : 'btn-primary'
+          <button class="btn btn-primary accept-btn ${
+            invitation.state === 'accepted' ? 'disabled' : ''
           }" ${invitation.state === 'accepted' ? 'disabled' : ''}>
             ${invitation.state === 'accepted' ? 'Acceptée' : 'Accepter'}
           </button>
+          <button class="btn btn-danger reject-btn">Rejeter</button>
         </td>
       `;
 
-      const acceptButton = inviteRow.querySelector('button');
+      const acceptButton = inviteRow.querySelector('.accept-btn');
+      const rejectButton = inviteRow.querySelector('.reject-btn');
+
       if (invitation.state !== 'accepted') {
         acceptButton.addEventListener('click', () => {
           acceptInvitation(invitation.login);
           acceptButton.classList.add('btn-secondary', 'disabled');
           acceptButton.textContent = 'Acceptée';
+          acceptButton.disabled = true;
+          rejectButton.disabled = true;
+        });
+        rejectButton.addEventListener('click', () => {
+          rejectInvitation(invitation.login);
+          rejectButton.classList.add('disabled');
+          rejectButton.textContent = 'Rejetée';
+          rejectButton.disabled = true;
           acceptButton.disabled = true;
         });
       }
