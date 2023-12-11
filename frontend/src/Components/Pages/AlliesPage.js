@@ -1,6 +1,6 @@
 import { clearPage } from '../../utils/render';
 
-const THIS_PLAYER = 1;
+const THIS_PLAYER = 2;
 
 const fetchInvitations = async () => {
   try {
@@ -209,7 +209,7 @@ const AlliesPage = async () => {
   const alliesButton = document.createElement('button');
   alliesButton.textContent = 'Mes Alliés';
   alliesButton.type = 'button';
-  alliesButton.classList.add('btn', 'btn-secondary');
+  alliesButton.classList.add('btn', 'btn-secondary', 'active');
   buttonsGroup.appendChild(alliesButton);
 
   const invitationsButton = document.createElement('button');
@@ -219,23 +219,35 @@ const AlliesPage = async () => {
   buttonsGroup.appendChild(invitationsButton);
 
   const addAllyButton = document.createElement('button');
-  addAllyButton.textContent = 'Ajouter Allié';
+  addAllyButton.textContent = 'Ajouter un Allié';
   addAllyButton.type = 'button';
   addAllyButton.classList.add('btn', 'btn-secondary');
   buttonsGroup.appendChild(addAllyButton);
 
   buttonsContainer.appendChild(buttonsGroup);
 
+  const toggleActive = (selectedButton) => {
+    [alliesButton, invitationsButton, addAllyButton].forEach((button) => {
+      if (button === selectedButton) {
+        button.classList.add('active');
+      } else {
+        button.classList.remove('active');
+      }
+    });
+  };
+
   alliesButton.addEventListener('click', async () => {
     container.innerHTML = '';
     const alliancesTable = await createAlliesTable();
     container.appendChild(alliancesTable);
+    toggleActive(alliesButton);
   });
 
   invitationsButton.addEventListener('click', async () => {
     container.innerHTML = '';
     const invitationsTable = await createInvitationsTable();
     container.appendChild(invitationsTable);
+    toggleActive(invitationsButton);
   });
 
   addAllyButton.addEventListener('click', () => {
@@ -247,6 +259,7 @@ const AlliesPage = async () => {
 
     const nameLabel = document.createElement('label');
     nameLabel.textContent = "Nom de l'allié :";
+    allyForm.appendChild(nameLabel);
 
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
@@ -256,11 +269,13 @@ const AlliesPage = async () => {
     nameInput.style.maxWidth = '50%';
     nameInput.style.fontSize = 'x-large';
     nameInput.style.marginBottom = '20px';
+    allyForm.appendChild(nameInput);
 
     const addButton = document.createElement('button');
     addButton.setAttribute('type', 'submit');
     addButton.classList.add('btn', 'btn-warning', 'btn-block');
     addButton.textContent = 'Ajouter';
+    allyForm.appendChild(addButton);
 
     const formMessage = document.createElement('div');
     formMessage.classList.add('mt-3', 'text-center');
@@ -281,26 +296,27 @@ const AlliesPage = async () => {
           const data = await response.json();
 
           if (response.ok) {
-            formMessage.classList.add('text-success');
             formMessage.innerText = data.message;
+            formMessage.classList.remove('text-danger');
+            formMessage.classList.add('text-success');
           } else {
-            formMessage.classList.add('text-danger');
             formMessage.innerText = data.error;
+            formMessage.classList.remove('text-success');
+            formMessage.classList.add('text-danger');
           }
         } catch (error) {
-          formMessage.classList.add('text-danger');
           formMessage.innerText = error.message;
+          formMessage.classList.remove('text-success');
+          formMessage.classList.add('text-danger');
         }
+        allyForm.appendChild(formMessage);
       } else {
         event.stopPropagation();
       }
     });
 
-    allyForm.appendChild(nameLabel);
-    allyForm.appendChild(nameInput);
-    allyForm.appendChild(addButton);
-    allyForm.appendChild(formMessage);
     container.appendChild(allyForm);
+    toggleActive(addAllyButton);
   });
 
   main.appendChild(title);
