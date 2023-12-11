@@ -126,25 +126,37 @@ const LeaderboardPage = () => {
 
   filterContainer.appendChild(filterGroup);
 
+  const leaderboardContainer = document.createElement('div');
+  leaderboardContainer.style.overflowY = 'auto';
+  leaderboardContainer.style.maxHeight = '605px';
+
   const leaderboardTable = document.createElement('table');
   leaderboardTable.classList.add('table', 'table-striped', 'general-table', 'my-4');
 
   const tableHeader = document.createElement('thead');
-  tableHeader.innerHTML = `
-       <tr style="text-align: center">
-           <th scope="col" style="width: 20%">#</th>
-           <th scope="col" style="width: 40%">Player</th>
-           <th scope="col" style="width: 40%">Time (m:s)</th>
-       </tr>
-   `;
+  const headerRow = document.createElement('tr');
+  headerRow.style.textAlign = 'center';
+
+  const headerColumns = [' #', 'Player', 'Time (m:s)'];
+  headerColumns.forEach((columnText, index) => {
+    const headerColumn = document.createElement('th');
+    headerColumn.setAttribute('scope', 'col');
+    headerColumn.style.width = index === 0 ? '10%' : '45%';
+    headerColumn.textContent = columnText;
+    headerRow.appendChild(headerColumn);
+  });
+
+  tableHeader.appendChild(headerRow);
   leaderboardTable.appendChild(tableHeader);
 
   const tableBody = document.createElement('tbody');
   leaderboardTable.appendChild(tableBody);
 
+  leaderboardContainer.appendChild(leaderboardTable);
+
   main.appendChild(title);
   main.appendChild(filterContainer);
-  main.appendChild(leaderboardTable);
+  main.appendChild(leaderboardContainer);
 
   const secondsToMinutesSeconds = (seconds) => {
     const minutes = Math.floor(seconds / 60);
