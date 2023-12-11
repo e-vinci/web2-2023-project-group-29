@@ -5,6 +5,7 @@ import GamePage  from '../Pages/GamePage';
 import RulesPage from '../Pages/RulesPage';
 import CreditsPage from '../Pages/CreditsPage';
 import PlayPage from '../Pages/PlayPage';
+import WorldPage from '../Pages/WorldPage';
 import LeaderboardPage from '../Pages/LeaderboardPage';
 import AlliesPage from '../Pages/AlliesPage';
 
@@ -16,6 +17,7 @@ const routes = {
   '/rules': RulesPage,
   '/credits': CreditsPage,
   '/play': PlayPage,
+  '/world': WorldPage
   '/leaderboard': LeaderboardPage,
   '/allies': AlliesPage
 };

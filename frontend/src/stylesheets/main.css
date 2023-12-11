@@ -136,6 +136,65 @@ body {
   }
 }
 
+/* ========================================================*/
+
+.game-menu-alex {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  width: 350px;
+  padding: 2%;
+  background-color: #3a3a3a00;
+  user-select: none;
+}
+
+.game-menu-alex .list-group-item-alex {
+  background-color: #5e5e5e;
+  color: #ffffff;
+  border-radius: 20px;
+  border-color: rgba(0, 0, 0, 0);
+  padding: 1vw 3vw;
+  margin: 1vw 0;
+  text-decoration: none;
+  text-align: center;
+}
+
+.game-menu-alex .list-group-item-alex:hover {
+  transform: scale(1.2);
+}
+
+
+.easy-image_back{
+  background-image: url('../img/backgrounds/levelMapPage2.png');
+  background-position: top;
+  
+}
+
+.medium-image_back{
+  background-image: url('../img/backgrounds/levelMapPageLave2.png');
+  background-position: top;
+  
+}
+
+.hard-image_back{
+  background-image: url('../img/backgrounds/levelMapPageDesert.png');
+  background-position: top;
+}
+
+@media (max-width: 768px) {
+  .game-menu-alex {
+    width: 20%;
+    padding: 4%;
+  }
+
+  .game-menu-alex .list-group-item-alex {
+    font-size: 4vw;
+    padding: 1vw 1vw;
+    margin: 1vw 0;
+  }
+}
+/* ========================================================*/
+
 /* Ajouté par Kusay pour avoir toute la page en noir */
 body {
   background-color: black;
