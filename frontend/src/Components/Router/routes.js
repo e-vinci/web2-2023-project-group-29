@@ -17,7 +17,7 @@ const routes = {
   '/rules': RulesPage,
   '/credits': CreditsPage,
   '/play': PlayPage,
-  '/world': WorldPage
+  '/world': WorldPage,
   '/leaderboard': LeaderboardPage,
   '/allies': AlliesPage
 };
