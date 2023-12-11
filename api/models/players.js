@@ -58,7 +58,7 @@ async function loginPlayer(email, password) {
   }
 }
 
-async function addPlayer(email, login, password, avatarPath, xp) {
+async function addPlayer(email, login, password, avatarPath, xp = 0) {
   try {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

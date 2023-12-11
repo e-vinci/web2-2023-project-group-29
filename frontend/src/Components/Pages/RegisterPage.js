@@ -1,17 +1,20 @@
 import Navigate from '../Router/Navigate';
+import img1 from '../../img/players/image1.png';
+import img2 from '../../img/players/image2.png';
+import img3 from '../../img/players/image3.png';
+import img4 from '../../img/players/image4.png';
+import img5 from '../../img/players/image5.png';
+import img6 from '../../img/players/image6.png';
+import img7 from '../../img/players/image7.png';
+import img8 from '../../img/players/image8.png';
 
 const RegisterPage = () => {
   const main = document.querySelector('main');
 
   const generateAvatarOptions = () => {
-    const avatarFolder = '../img/players';
-    const avatarFiles = ['image1.png', 'image2.png', 'image3.png', 'image4.png', 'image5.png', 'image6.png', 'image7.png', 'image8.png'];
-  
-    return avatarFiles.map((avatar) => {
-      const imagePath = `${avatarFolder}/${avatar}`;
-      console.log('Image path:', imagePath); // Ajoutez cette ligne pour débugger
-      return `<img src="${imagePath}" class="avatar-option" data-avatar="${avatar}">`;
-    }).join('');
+    const avatarImages = [img1, img2, img3, img4, img5, img6, img7, img8];
+
+    return avatarImages.map((image, index) => `<img src="${image}" class="avatar-option" data-avatar="${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
   };
 
   const registerPage = `
@@ -79,12 +82,20 @@ const RegisterPage = () => {
     Navigate('/login');
   });
 
-  avatarOptions.addEventListener('click', (e) => {
-    const selectedAvatar = e.target.dataset.avatar;
-    if (selectedAvatar) {
-      selectedAvatarInput.value = selectedAvatar;
-    }
+  // Ajout du gestionnaire d'événements pour les options d'avatar
+avatarOptions.addEventListener('click', (e) => {
+  const selectedAvatar = e.target.dataset.avatar;
+  const avatarImages = document.querySelectorAll('.avatar-option');
+  // Retirez la classe "selected" de toutes les images
+  avatarImages.forEach((image) => {
+    image.classList.remove('selected');
   });
+  // Ajoutez la classe "selected" à l'image sélectionnée
+  if (selectedAvatar) {
+    selectedAvatarInput.value = selectedAvatar;
+    e.target.classList.add('selected');
+  }
+});
 
   registrationForm.addEventListener('submit', async (e) => {
     e.preventDefault();

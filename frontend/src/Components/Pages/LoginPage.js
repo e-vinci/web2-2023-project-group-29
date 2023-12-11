@@ -7,7 +7,7 @@ const handleLoginResponse = async (response) => {
   }
 
   const { token } = await response.json();
-  localStorage.setItem('token', token);
+  sessionStorage.setItem('token', token);
 
   Navigate('/game');
 };
