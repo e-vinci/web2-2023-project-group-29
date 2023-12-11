@@ -12,7 +12,7 @@ const CreditsPage = () => {
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-6">
-          <button id="backButton" class="btn btn-warning">Back</button>
+          <button id="backButton" class="btn btn-warning">Retour</button>
         </div>
       </div>
     </div>

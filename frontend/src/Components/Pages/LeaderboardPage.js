@@ -1,109 +1,175 @@
+/* eslint-disable no-use-before-define */
 import { clearPage } from '../../utils/render';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
+
+const THIS_PLAYER = 1;
 
 const LeaderboardPage = () => {
   clearPage();
   makeDisappearNavbar(false);
 
-  const filterOptions = ['World 1', 'World 2', 'World 3'];
-  const optionValues = [1, 2, 3];
-  let currentOption = optionValues[0];
+  let currentWorld = 1;
+  let isFriendsSelected = false;
 
-  const updateTable = async () => {
+  const main = document.querySelector('main');
+
+  const fetchScores = async (world, option) => {
     try {
-      const response = await fetch(`http://localhost:3000/scores/bestScores/${currentOption}`);
+      let route = '';
+      if (isFriendsSelected) {
+        route = `friendsBestScores/${THIS_PLAYER}/${world}/${option}`;
+      } else {
+        route = `bestScores/${world}`;
+      }
+
+      const response = await fetch(`http://localhost:3000/scores/${route}`);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Réponse Network pas ok');
       }
       const data = await response.json();
 
-      const main = document.querySelector('main');
-      const leaderboardTable = main.querySelector('table tbody');
-      leaderboardTable.innerHTML = '';
-
-      data.forEach((o, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <th scope="row" style="text-align: center">${index + 1}</th>
-          <td style="text-align: center">${o.player}</td>
-          <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
-        `;
-        leaderboardTable.appendChild(row);
-      });
+      displayScores(data);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('There was a problem with the fetch request:', error);
+      console.error('Erreur lors de la récupération des scores: ', error);
     }
   };
 
-  const main = document.querySelector('main');
+  const displayScores = (data) => {
+    const leaderboardTable = main.querySelector('table tbody');
+    leaderboardTable.innerHTML = '';
+
+    data.forEach((o, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <th scope="row" style="text-align: center">${index + 1}</th>
+        <td style="text-align: center">${o.player}</td>
+        <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
+      `;
+      leaderboardTable.appendChild(row);
+    });
+  };
+
+  const updateTable = async () => {
+    await fetchScores(currentWorld, '');
+  };
+
+  const updateFriendsTable = async (option) => {
+    await fetchScores(currentWorld, option);
+  };
+
+  const switchToWorld = (world) => {
+    currentWorld = world;
+    updateButtonState();
+
+    if (!isFriendsSelected) {
+      updateTable();
+    } else {
+      updateFriendsTable('');
+    }
+  };
+
+  const toggleFriends = async () => {
+    isFriendsSelected = !isFriendsSelected;
+
+    updateButtonState();
+
+    if (isFriendsSelected) {
+      await updateFriendsTable('');
+    } else {
+      await updateTable();
+    }
+  };
+
+  const updateButtonState = () => {
+    filterOptions.forEach((option, index) => {
+      const button = filterGroup.children[index];
+      if (option === 'Friends') {
+        button.classList.toggle('active', isFriendsSelected);
+      } else {
+        const world = index + 1;
+        if (isFriendsSelected) {
+          button.classList.toggle('active', world === currentWorld);
+        } else {
+          button.classList.toggle('active', world === currentWorld);
+        }
+      }
+    });
+  };
 
   const title = document.createElement('h1');
   title.textContent = 'Chroniques des Braves';
 
+  const filterOptions = ['World 1', 'World 2', 'World 3', 'Friends'];
   const filterContainer = document.createElement('div');
   filterContainer.classList.add('d-flex', 'justify-content-center', 'my-4');
-
   const filterGroup = document.createElement('div');
   filterGroup.classList.add('btn-group');
 
   filterOptions.forEach((option, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.classList.add('btn', 'btn-secondary');
+    button.classList.add('btn', 'btn-secondary', 'btn-toggle');
+    button.setAttribute('data-bs-toggle', 'button');
+    button.setAttribute('aria-pressed', 'false');
+
     button.textContent = option;
 
-    button.addEventListener('click', async () => {
-      currentOption = optionValues[index];
-      await updateTable();
-    });
+    if (option === 'Friends') {
+      button.addEventListener('click', toggleFriends);
+    } else {
+      button.addEventListener('click', () => switchToWorld(index + 1));
+    }
 
     filterGroup.appendChild(button);
   });
 
   filterContainer.appendChild(filterGroup);
 
+  const leaderboardContainer = document.createElement('div');
+  leaderboardContainer.style.overflowY = 'auto';
+  leaderboardContainer.style.maxHeight = '605px';
+
   const leaderboardTable = document.createElement('table');
-  leaderboardTable.classList.add('table', 'table-striped', 'mx-auto', 'w-75', 'my-4');
-  leaderboardTable.classList.add('table', 'table-striped', 'mx-auto', 'w-75');
-
-  leaderboardTable.style.maxWidth = '60%';
-
-  leaderboardTable.style.borderCollapse = 'separate';
-  leaderboardTable.style.borderSpacing = '0';
-  leaderboardTable.style.borderRadius = '20px';
-  leaderboardTable.style.overflow = 'hidden';
-  leaderboardTable.style.border = '1px solid black';
+  leaderboardTable.classList.add('table', 'table-striped', 'general-table', 'my-4');
 
   const tableHeader = document.createElement('thead');
-  tableHeader.innerHTML = `
-       <tr style="text-align: center">
-           <th scope="col" style="width: 20%">#</th>
-           <th scope="col" style="width: 40%">Player</th>
-           <th scope="col" style="width: 40%">Time (m:s)</th>
-       </tr>
-   `;
+  const headerRow = document.createElement('tr');
+  headerRow.style.textAlign = 'center';
+
+  const headerColumns = [' #', 'Player', 'Time (m:s)'];
+  headerColumns.forEach((columnText, index) => {
+    const headerColumn = document.createElement('th');
+    headerColumn.setAttribute('scope', 'col');
+    headerColumn.style.width = index === 0 ? '10%' : '45%';
+    headerColumn.textContent = columnText;
+    headerRow.appendChild(headerColumn);
+  });
+
+  tableHeader.appendChild(headerRow);
   leaderboardTable.appendChild(tableHeader);
 
   const tableBody = document.createElement('tbody');
   leaderboardTable.appendChild(tableBody);
 
+  leaderboardContainer.appendChild(leaderboardTable);
+
   main.appendChild(title);
   main.appendChild(filterContainer);
-  main.appendChild(leaderboardTable);
+  main.appendChild(leaderboardContainer);
+
+  const secondsToMinutesSeconds = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedMinutes = `0${minutes}`.slice(-2);
+    const formattedSeconds = `0${remainingSeconds}`.slice(-2);
+
+    const result = `${formattedMinutes}:${formattedSeconds}`;
+    return result;
+  };
 
   updateTable();
 };
-
-function secondsToMinutesSeconds(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  
-  const formattedMinutes = (`0${  minutes}`).slice(-2);
-  const formattedSeconds = (`0${  remainingSeconds}`).slice(-2);
-  
-  const result = `${formattedMinutes  }:${  formattedSeconds}`;
-  return result;
-}
 
 export default LeaderboardPage;

@@ -19,7 +19,6 @@ body {
   margin: 80px auto;
   border-radius: 10px;
   perspective: 1400px;
-  
 }
 
 .card {
@@ -28,7 +27,6 @@ body {
   border-radius: 10px;
   width: 50%;
   transform-style: preserve-3d;
-  
 }
 
 .front,
@@ -40,8 +38,6 @@ body {
   justify-content: center;
   align-items: center;
   backface-visibility: hidden;
-  
-  
 }
 
 .front {
@@ -54,7 +50,7 @@ body {
   top: 0;
   left: 0;
 
-  transform: rotateY(180deg);  
+  transform: rotateY(180deg);
   background: black;
 }
 
@@ -124,7 +120,7 @@ body {
 .btn-secondary:hover {
   background-color: lightgray;
   border-color: lightgray;
-  color: black; 
+  color: black;
 }
 
 @media (max-width: 768px) {
@@ -160,29 +156,27 @@ body {
 .bg-orange .navbar-nav .nav-link:hover {
   color: #000000; /* Code couleur noir */
 }
-.bossAndPlayer{
+.bossAndPlayer {
   border-bottom: 1px solid #ffffff;
   display: grid;
   grid-template-areas: 'heart vs bossLife';
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
-.divBoss{
+.divBoss {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
-.boss{
-
+.boss {
   width: 30%;
   height: 90%;
 }
-#life { 
+#life {
   grid-area: bossLife;
   width: 100%;
   height: 9%;
   border: 1px solid #ffffff;
   text-align: center;
-  
 }
 
 #LifeBar {
@@ -190,45 +184,41 @@ body {
   width: 100%;
   background-color: #ff0000;
   font-size: 50%;
-  
- }
- #divVersus{
+}
+#divVersus {
   grid-area: vs;
- }
- 
- .imgBoss{
+}
+
+.imgBoss {
   width: AUTO;
   height: 125px;
   margin-bottom: 10px;
-  
- }
+}
 
- .card-found .back {
+.card-found .back {
   pointer-events: none; /* Désactive les événements de pointer (clics) sur les cartes trouvées */
 }
 
 .card-found .back img {
   opacity: 1; /* Rend l'image de la carte trouvée visible */
 }
-.divHearts{
+.divHearts {
   margin-bottom: 2%;
- }
- .hearts{
-    grid-area: heart;
-    display: flex;
-    justify-content: center;
-    align-items:end; 
-    
- }
+}
+.hearts {
+  grid-area: heart;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
 
- .heart ,.skull{
-    width: 30px;
-    height: 30px;
-    margin: 10px;
- }
- 
+.heart,
+.skull {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+}
 
- 
 .imagesOfCards {
   width: 60%;
   height: 50%;
@@ -237,4 +227,27 @@ body {
 h1 {
   text-align: center;
   margin-top: 20px;
+}
+
+.general-table {
+  max-width: 60%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid black;
+}
+
+.general-table th,
+.general-table td {
+  text-align: center;
+}
+
+.general-table th {
+  width: 20%;
+}
+
+.general-table td {
+  width: 40%;
 }

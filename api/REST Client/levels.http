@@ -4,7 +4,7 @@
 GET {{baseUrl}}/levels
 
 ### GET level by ID
-GET {{baseUrl}}/levels/id=1
+GET {{baseUrl}}/levels/1
 
-### GET level by world and number
-GET {{baseUrl}}/levels/world=3/level=2
+### GET level ID by world and number
+GET {{baseUrl}}/levels/3/2
