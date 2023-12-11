@@ -169,7 +169,7 @@ const LeaderboardPage = () => {
     return result;
   };
 
-  updateTable();
+  switchToWorld(currentWorld);
 };
 
 export default LeaderboardPage;

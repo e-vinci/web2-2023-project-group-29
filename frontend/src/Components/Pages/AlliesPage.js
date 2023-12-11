@@ -236,6 +236,8 @@ const AlliesPage = async () => {
     });
   };
 
+  toggleActive(alliesButton);
+
   alliesButton.addEventListener('click', async () => {
     container.innerHTML = '';
     const alliancesTable = await createAlliesTable();
