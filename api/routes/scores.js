@@ -1,6 +1,5 @@
 const express = require('express');
 const { getLastLevel, getBestScoresByWorldId, getFriendsBestScores } = require('../models/Score');
-const { getAllies } = require('../models/Alliance');
 
 const router = express.Router();
 
