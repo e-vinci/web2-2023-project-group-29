@@ -3,27 +3,27 @@
 /* eslint-disable no-plusplus */
 // eslint-disable-next-line
 import anime from 'animejs';
-import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
 
-let firstCard = null; // Variable stockant la première carte cliquée.
 
-const numberOfCards = levels[2].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
-const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
-let bossLife = bossLifeMax;
-const memoryTimer = levels[2].memorisation_time; // Variable stockant en fonction des niveaux le temps de memorisation
+
+let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+let bossLifeMax = null; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
+let bossLife = null;
+let memoryTimer = null; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
 let cards;
+let firstCard = null; // Variable stockant la première carte cliquée.
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
-let level=null;
+let level=null; // Variable stockant 
 
 const main = document.querySelector('main');
 
@@ -38,7 +38,8 @@ const levelparams = urlParams.get('level');
 async function GamePage() {
   clearPage();
 
-  level = await getLevel();
+  // Recuperation des donnees (Level, World, Memory Timer etc..)
+  recoveryData();
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -79,6 +80,14 @@ async function GamePage() {
       }
     }),
   );
+}
+
+async function recoveryData(){
+  level = await getLevel();
+  numberOfCards = level.card_number;
+  memoryTimer = level.memorisation_time;
+  bossLifeMax = numberOfCards * 5;
+  bossLife = bossLifeMax;
 }
 
 async function getLevel() {
@@ -185,7 +194,7 @@ function buildGamePage() {
                    <br> 
                    <div id="gameTimer"></div>
                    <div class="card-container">`;
-  const arrayOfCards = initializeArrayOfCards();
+  const arrayOfCards = initializeArrayOfCards(level.world,level.level_number);
   shuffleArray(arrayOfCards);
 
   for (let index = 0; index < numberOfCards; index++) {
