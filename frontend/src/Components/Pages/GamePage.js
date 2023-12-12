@@ -6,8 +6,8 @@ import anime from 'animejs';
 import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
-import imgskull from '../../img/favicon.ico'
-import imgBoss from '../../assets/images_boss/boss4.png';
+import imgskull from '../../img/favicon.ico';
+import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
 
 let firstCard = null; // Variable stockant la première carte cliquée.
@@ -29,13 +29,19 @@ const main = document.querySelector('main');
 const divBossAndPlayer = document.createElement('div');
 divBossAndPlayer.className = 'bossAndPlayer';
 
-function GamePage() {
+const urlParams = new URLSearchParams(window.location.search);
+
+// Récupérez la valeur du paramètre 'levelId'
+const levelId = urlParams.get('levelId');
+
+async function GamePage() {
   clearPage();
 
+  const level = await getLevel();
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
-  displayBoss();
+  displayBoss(level.boss);
   // Affichage des vies du joueur
   displayplayerLife();
   // Ajouts des divs HTML du jeu (div cards, div memorytimer,div gameTimer etc...)
@@ -74,6 +80,14 @@ function GamePage() {
   );
 }
 
+async function getLevel() {
+
+  const response = await fetch(`api/levels/${levelId}`);
+  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  const level = await response.json();
+  return level;
+}
+
 function displayVSAndTitle(){
   main.appendChild(divBossAndPlayer);
   const divTitle = document.createElement('div');
@@ -98,7 +112,10 @@ function displayVSAndTitle(){
   divVersusTitle.appendChild(versusTitle);
   
 }
-function displayBoss(){
+async function displayBoss(bossSrc){
+
+  
+  const imgBoss = findBossOrPlayerImg(bossSrc);
   const div = document.createElement('div')
   div.className = 'divBoss'
   divBossAndPlayer.appendChild(div)
@@ -126,14 +143,29 @@ function displayBossLife(bossWrapper) {
   p.id = 'bossLife';
   divBossLife.appendChild(p);
 }
-
-function displayplayerLife() {
-  const hearts = document.createElement('div');
-  hearts.className = 'hearts';
+async function getUser() {
+  try {
+    const response = await fetch(`api/user/id`);
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    const user = await response.json();
+    return user.avatar_path;
+  } catch (error) {
+    console.error('getAllPizzas::error: ', error);
+    throw error;
+  }
+  
+}
+async function displayplayerLife() {
+  const player = document.createElement('div');
+  const playerImg = await getUser();
+  const wrapperimg = document.createElement('img');
+  wrapperimg.src = playerImg
+  player.appendChild(wrapperimg)
+  player.className = 'hearts';
   const divHeart = document.createElement('div');
   divHeart.className = 'divHearts';
-  divBossAndPlayer.appendChild(hearts); // container for hearts
-  hearts.appendChild(divHeart);
+  divBossAndPlayer.appendChild(player); // container for hearts
+  player.appendChild(divHeart);
   for (let index = 0; index < 3; index++) {
     const heart = document.createElement('img');
     heart.src = imgheart;
