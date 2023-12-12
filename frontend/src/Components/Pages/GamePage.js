@@ -33,13 +33,14 @@ divBossAndPlayer.className = 'bossAndPlayer';
 const urlParams = new URLSearchParams(window.location.search);
 
 // Récupérez la valeur du paramètre 'levelId'
-const levelparams = urlParams.get('level');
+const levelparams = urlParams.get('levelId');
+console.log(levelparams);
 
 async function GamePage() {
   clearPage();
 
   // Recuperation des donnees (Level, World, Memory Timer etc..)
-  recoveryData();
+  await recoveryData();
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -95,9 +96,10 @@ try{
   const response = await fetch(`api/levels/${levelparams}`);
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
   const levelresult = await response.json();
+  console.log(levelresult);
   return levelresult;
 } catch (error) {
-  console.error('getAllPizzas::error: ', error);
+  console.error('getLevelById::error: ', error);
   throw error;
 }
 }
@@ -157,7 +159,7 @@ function displayBossLife(bossWrapper) {
   p.id = 'bossLife';
   divBossLife.appendChild(p);
 }
-async function getUser() {
+/* async function getUser() {
   try {
     const response = await fetch(`api/user/session.id`);
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
@@ -168,12 +170,12 @@ async function getUser() {
     throw error;
   }
   
-}
+} */
 async function displayplayerLife() {
   const player = document.createElement('div');
-  const playerImg = await getUser();
+ // const playerImg = await getUser();
   const wrapperimg = document.createElement('img');
-  wrapperimg.src = playerImg
+  // wrapperimg.src = playerImg
   player.appendChild(wrapperimg)
   player.className = 'hearts';
   const divHeart = document.createElement('div');

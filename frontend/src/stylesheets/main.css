@@ -310,3 +310,43 @@ h1 {
 .general-table td {
   width: 40%;
 }
+.divMap{
+  display: flex;
+  flex-direction: column;
+  height: 89vh;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.levels{
+  height: 100%;
+  position: relative;
+}
+.rowLevel{
+  position: relative;
+  opacity: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rowLevel:nth-of-type(1){
+  width: 11%;
+  height: 15%;
+  position: absolute;
+  top: 20%;
+  left: 25%;
+}
+.rowLevel:nth-of-type(2){
+  width: 11%;
+  height: 15%;
+  position: absolute;
+  top: 18%;
+  right: 30%;
+}
+.rowLevel:nth-of-type(3){
+  width: 11%;
+  height: 16%;
+  position: absolute;
+  bottom: 40%;
+  right: 45%;
+}
