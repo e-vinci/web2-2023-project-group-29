@@ -23,6 +23,7 @@ let cards;
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
+let level=null;
 
 const main = document.querySelector('main');
 
@@ -32,12 +33,12 @@ divBossAndPlayer.className = 'bossAndPlayer';
 const urlParams = new URLSearchParams(window.location.search);
 
 // Récupérez la valeur du paramètre 'levelId'
-const levelId = urlParams.get('levelId');
+const levelparams = urlParams.get('level');
 
 async function GamePage() {
   clearPage();
 
-  const level = await getLevel();
+  level = await getLevel();
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -81,11 +82,15 @@ async function GamePage() {
 }
 
 async function getLevel() {
-
-  const response = await fetch(`api/levels/${levelId}`);
+try{
+  const response = await fetch(`api/levels/${levelparams}`);
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-  const level = await response.json();
-  return level;
+  const levelresult = await response.json();
+  return levelresult;
+} catch (error) {
+  console.error('getAllPizzas::error: ', error);
+  throw error;
+}
 }
 
 function displayVSAndTitle(){
@@ -145,7 +150,7 @@ function displayBossLife(bossWrapper) {
 }
 async function getUser() {
   try {
-    const response = await fetch(`api/user/id`);
+    const response = await fetch(`api/user/session.id`);
     if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
     const user = await response.json();
     return user.avatar_path;
