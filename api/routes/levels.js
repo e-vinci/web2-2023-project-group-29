@@ -17,13 +17,13 @@ router.get('/:id', async (req, res) => {
 
   try {
     const level = await getLevelbyId(levelId);
-    if (level.length === 0) {
+    if (level === undefined || level === null) {
       res.status(404).json({ error: `Level with ID ${levelId} not found.` });
     } else {
       res.json(level);
     }
   } catch (error) {
-    res.status(500).json({ error: `Error occurred while fetching level (id = ${levelId}): ${error.message}` });
+    res.status(500).json({ error: error.message });
   }
 });
 

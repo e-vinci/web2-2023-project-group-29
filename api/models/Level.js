@@ -17,5 +17,12 @@ async function getLevelbyId(id) {
     throw new Error(`Error fetching level (id = ${id}): ${error.message}`);
   }
 }
-
-module.exports = { getAllLevels, getLevelbyId };
+async function getLevel(world, level) {
+  try {
+    const stmt = await client.query('SELECT level_id FROM remember_or_die.levels_vw WHERE world = $1 AND level_number = $2;', [world, level]);
+    return stmt.rows[0];
+  } catch (error) {
+    throw new Error(`Error fetching level (${world}-${level}): ${error.message}`);
+  }
+}
+module.exports = { getAllLevels, getLevelbyId, getLevel };
