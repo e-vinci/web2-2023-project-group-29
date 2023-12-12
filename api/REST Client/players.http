@@ -1,15 +1,28 @@
 ### Read all players
-GET http://localhost:3000/players
+GET http://localhost:3000/players/
+Authorization: {{player.response.body.token}}
 
 ### Create a new player
-POST http://localhost:3000/players
+POST http://localhost:3000/players/register
 Content-Type: application/json
 
 {
-    "email": "example@example.com",
-    "login": "example_user",
-    "password": "password123",
-    "avatarPath": "/avatars/avatar.png",
-    "xp": 100
+    "email": "kusay@gmail.com",
+    "login": "kusay",
+    "password": "kusay",
+    "avatarPath": "/avatars/avatar.png"
 }
 
+### Login as a player
+# @name player
+POST http://localhost:3000/players/login
+Content-Type: application/json
+    
+{
+    "email": "kusay@gmail.com",
+    "password": "kusay"
+}
+
+### Déconnexion
+POST http://localhost:3000/players/logout
+Authorization: {{player.response.body.token}}

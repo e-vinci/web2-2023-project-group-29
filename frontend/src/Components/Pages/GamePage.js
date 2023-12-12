@@ -30,6 +30,10 @@ const divBossAndPlayer = document.createElement('div');
 divBossAndPlayer.className = 'bossAndPlayer';
 
 function GamePage() {
+  if (!getAuthenticatedUser()){
+    Navigate('/login');
+    return;
+  }
   clearPage();
 
   // Affichage du monde , du niveau et du logo VS

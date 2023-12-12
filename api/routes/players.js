@@ -1,33 +1,68 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
-const { getAllPlayers, addPlayer } = require('../models/Player');
+const cookie = require('cookie');
+const Player = require('../models/players');
+const { authenticate, logout } = require('../utils/auths');
 
 const router = express.Router();
+const { lifetimeJwt } = require('../models/players');
 
-router.get('/', async (req, res) => {
+router.get('/', authenticate, async (req, res) => {
   try {
-    const allPlayers = await getAllPlayers();
-    res.json(allPlayers);
+    const players = await Player.getAllPlayers();
+    res.json(players);
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while fetching all players.' });
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   const {
-    email, login, password, avatarPath, xp,
+    email, login, password, avatarPath,
   } = req.body;
 
-  try {
-    const result = await addPlayer(email, login, password, avatarPath, xp);
+  if (!email || !login || !password || !avatarPath) {
+    return res.status(400).json({ error: 'Tous les champs sont requis' });
+  }
 
-    if (result.success) {
-      res.status(201).json({ message: result.message });
-    } else {
-      res.status(400).json({ error: result.message });
-    }
+  try {
+    const result = await Player.addPlayer(email, login, password, avatarPath);
+    return res.status(201).json(result);
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while adding a player.' });
+    return res.status(500).json({ error: error.message });
   }
 });
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
+  }
+
+  try {
+    const authenticatedUser = await Player.loginPlayer(email, password);
+
+    if (!authenticatedUser) {
+      return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+    }
+
+    const { token } = authenticatedUser;
+
+    // Stocker le jeton dans un cookie HTTP
+    res.setHeader('Set-Cookie', cookie.serialize('token', token, {
+      httpOnly: true,
+      maxAge: lifetimeJwt / 1000, // La durée de vie du cookie en secondes
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production', // Assurez-vous d'utiliser HTTPS en production
+    }));
+
+    return res.json(authenticatedUser);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/logout', authenticate, logout);
 
 module.exports = router;

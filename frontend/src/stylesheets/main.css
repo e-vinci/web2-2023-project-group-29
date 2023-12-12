@@ -215,6 +215,12 @@ body {
 .bg-orange .navbar-nav .nav-link:hover {
   color: #000000; /* Code couleur noir */
 }
+
+/* Couleur de la bordure pour indiquer la sélection */
+.avatar-option.selected {
+  border: 2px solid #ffa500;
+}
+
 .bossAndPlayer {
   border-bottom: 1px solid #ffffff;
   display: grid;
@@ -260,6 +266,10 @@ body {
 
 .card-found .back img {
   opacity: 1; /* Rend l'image de la carte trouvée visible */
+}
+/* case ajouter fichier */
+input[type="file"] {
+  height: 3rem; /* Ajustez la hauteur selon vos préférences */
 }
 .divHearts {
   margin-bottom: 2%;

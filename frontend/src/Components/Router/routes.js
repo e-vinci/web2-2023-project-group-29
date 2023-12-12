@@ -12,7 +12,7 @@ import AlliesPage from '../Pages/AlliesPage';
 const routes = {
   '/': HomePage,
   '/login': LoginPage,
-  '/register': RegisterPage, 
+  '/register': RegisterPage,
   '/game': GamePage,
   '/rules': RulesPage,
   '/credits': CreditsPage,
