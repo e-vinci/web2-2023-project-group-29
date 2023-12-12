@@ -1,3 +1,4 @@
+import { setAuthenticatedUser } from '../../utils/auths';
 import Navigate from '../Router/Navigate';
 
 const handleLoginResponse = async (response) => {
@@ -7,7 +8,7 @@ const handleLoginResponse = async (response) => {
   }
 
   const { token } = await response.json();
-  sessionStorage.setItem('token', token);
+  setAuthenticatedUser(token);
 
   Navigate('/game');
 };

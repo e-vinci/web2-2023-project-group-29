@@ -18,15 +18,15 @@ router.get('/', authenticate, async (req, res) => {
 
 router.post('/register', async (req, res) => {
   const {
-    email, login, password, avatarPath, xp,
+    email, login, password, avatarPath,
   } = req.body;
 
-  if (!email || !login || !password || !avatarPath || xp === undefined) {
+  if (!email || !login || !password || !avatarPath) {
     return res.status(400).json({ error: 'Tous les champs sont requis' });
   }
 
   try {
-    const result = await Player.addPlayer(email, login, password, avatarPath, xp);
+    const result = await Player.addPlayer(email, login, password, avatarPath);
     return res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({ error: error.message });

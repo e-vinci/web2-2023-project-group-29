@@ -8,6 +8,8 @@ import { clearPage } from '../../utils/render';
 import img1 from '../../assets/default/bomb.png';
 import img2 from '../../assets/default/star.png';
 import img3 from '../../assets/default/dude.png';
+import { getAuthenticatedUser } from '../../utils/auths';
+import Navigate from '../Router/Navigate';
 
 let firstCard = null; // Variable pour stocker la première carte cliquée
 
@@ -26,6 +28,10 @@ let timerOfThePlayer;
 const main = document.querySelector('main');
 
 function GamePage() {
+  if (!getAuthenticatedUser()){
+    Navigate('/login');
+    return;
+  }
   clearPage();
 
   // affichage de la barre de vie du boss

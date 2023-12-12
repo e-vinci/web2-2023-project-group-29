@@ -10,8 +10,7 @@ Content-Type: application/json
     "email": "kusay@gmail.com",
     "login": "kusay",
     "password": "kusay",
-    "avatarPath": "/avatars/avatar.png",
-    "xp": 0
+    "avatarPath": "/avatars/avatar.png"
 }
 
 ### Login as a player

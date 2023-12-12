@@ -58,7 +58,7 @@ async function loginPlayer(email, password) {
   }
 }
 
-async function addPlayer(email, login, password, avatarPath, xp = 0) {
+async function addPlayer(email, login, password, avatarPath) {
   try {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -68,8 +68,8 @@ async function addPlayer(email, login, password, avatarPath, xp = 0) {
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const query = 'INSERT INTO remember_or_die.players (email, login, password, avatar_path, xp) VALUES ($1, $2, $3, $4, $5)';
-    const values = [email, login, hashedPassword, avatarPath, xp];
+    const query = 'INSERT INTO remember_or_die.players (email, login, password, avatar) VALUES ($1, $2, $3, $4)';
+    const values = [email, login, hashedPassword, avatarPath];
     await client.query(query, values);
 
     const token = jwt.sign(

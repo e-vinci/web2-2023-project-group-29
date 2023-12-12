@@ -100,7 +100,7 @@ avatarOptions.addEventListener('click', (e) => {
   registrationForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const username = document.querySelector('#username').value;
+    const login = document.querySelector('#username').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
     const avatarPath = selectedAvatarInput.value;
@@ -111,7 +111,7 @@ avatarOptions.addEventListener('click', (e) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, email, password, avatarPath }),
+        body: JSON.stringify({ login, email, password, avatarPath }),
       });
 
       if (!response.ok) {
