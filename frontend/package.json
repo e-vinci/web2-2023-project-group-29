@@ -1,14 +1,14 @@
 {
-  "name": "js-phaser-boilerplate",
+  "name": "remember_or_die_frontend",
   "version": "1.0.0",
-  "description": "myJScourse's modern frontend boilerplate to build a phaser game",
+  "description": "Remember or Die. It's up to you !",
   "scripts": {
     "deploy": "npm run build && gh-pages -d dist",
     "dev": "webpack --mode development --config webpack.config.base.js && cp dist/index.html dist/404.html",
     "build": "webpack --mode production --config webpack.config.prod.js && cp dist/index.html dist/404.html",
     "start": "webpack serve --mode development --config webpack.config.base.js"
   },
-  "author": "e-baron",
+  "author": "Melik Budak, Dawid Ciborowski, Ahmet Kusay Demir, Alexandre Garcia, Omar Koubai",
   "license": "CC-BY-SA-4.0",
   "devDependencies": {
     "@babel/core": "^7.14.3",

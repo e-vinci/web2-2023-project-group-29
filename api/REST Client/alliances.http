@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:3000
+
+### GET Allies
+GET {{baseUrl}}/alliances/allies/1
+
+### GET Invitations
+GET {{baseUrl}}/alliances/invitations/1
+
+### Add Ally
+POST {{baseUrl}}/alliances/2
+Content-Type: application/json
+
+{
+    "allyToBeAdded": "admin"
+}
+
+### Remove Ally
+DELETE {{baseUrl}}/alliances/1/BobSmith
+
+### Accept invitation
+PUT {{baseUrl}}/alliances/1/Diana_22?action=accept
+
+### Reject invitation
+PUT {{baseUrl}}/alliances/1/Alice94?action=reject
+

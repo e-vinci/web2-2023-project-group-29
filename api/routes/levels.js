@@ -1,14 +1,14 @@
 const express = require('express');
-const { getAllLevels, getLevelbyId } = require('../models/Level');
+const { getAllLevels, getLevelbyId, getLevel } = require('../models/Level');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
     const allLevels = await getAllLevels();
-    res.json(allLevels);
+    return res.json(allLevels);
   } catch (error) {
-    res.status(500).json({ error: 'Error occurred while fetching all levels.' });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -18,12 +18,27 @@ router.get('/:id', async (req, res) => {
   try {
     const level = await getLevelbyId(levelId);
     if (level === undefined || level === null) {
-      res.status(404).json({ error: `Level with ID ${levelId} not found.` });
-    } else {
-      res.json(level);
+      return res.status(404).json({ error: `Level with ID ${levelId} not found.` });
     }
+    return res.json(level);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/:world/:level', async (req, res) => {
+  const { world } = req.params;
+  const { level } = req.params;
+
+  try {
+    const response = await getLevel(parseInt(world, 10), parseInt(level, 10));
+    if (response === undefined || response === null) {
+      return res.status(404).json({ error: `Level ${world}-${level} not found.` });
+    }
+    const levelId = response.level_id;
+    return res.json(levelId);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 });
 

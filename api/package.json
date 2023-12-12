@@ -1,5 +1,5 @@
 {
-  "name": "jwt-api-boilerplate",
+  "name": "remember_or_die_backend",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -33,5 +33,5 @@
     "nodemon": "^2.0.19",
     "prettier-airbnb-config": "^1.0.0"
   },
-  "author": "e-Baron"
+  "author": "Melik Budak, Dawid Ciborowski, Ahmet Kusay Demir, Alexandre Garcia, Omar Koubai"
 }
