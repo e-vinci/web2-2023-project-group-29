@@ -12,7 +12,7 @@ const handleLoginResponse = async (response) => {
   const { token } = await response.json();
   setAuthenticatedUser(token);
 
-  Navigate('/game');
+  Navigate('/world');
 };
 
 const LoginPage = () => {
@@ -68,7 +68,7 @@ const LoginPage = () => {
 
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
-    Navigate('/world');
+    Navigate('/play');
   });
 
   loginForm.addEventListener('submit', async (e) => {
