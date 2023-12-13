@@ -9,8 +9,11 @@ import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico'
 import imgBoss from '../../assets/images_boss/boss4.png';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
+import { makeDisappearNavbar } from '../../utils/navbarSetup';
+/*
 import Navigate from '../Router/Navigate';
-import {getAuthenticatedUser} from '../../utils/auths'
+import {getAuthenticatedUser} from '../../utils/auths' 
+*/
 
 let firstCard = null; // Variable stockant la première carte cliquée.
 
@@ -31,11 +34,17 @@ const main = document.querySelector('main');
 const divBossAndPlayer = document.createElement('div');
 divBossAndPlayer.className = 'bossAndPlayer';
 
+// Permet de faire disparaitre la bar de navigation
+makeDisappearNavbar(true);
+
 function GamePage() {
+  /*
   if (!getAuthenticatedUser()){
     Navigate('/login');
     return;
   }
+  */
+  
   clearPage();
 
   // Affichage du monde , du niveau et du logo VS
