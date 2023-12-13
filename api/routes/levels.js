@@ -36,7 +36,7 @@ router.get('/:world/:level', async (req, res) => {
       return res.status(404).json({ error: `Level ${world}-${level} not found.` });
     }
     const levelId = response.level_id;
-    return res.json(levelId);
+    return res.json({ levelId });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

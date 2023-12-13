@@ -8,6 +8,7 @@ import PlayPage from '../Pages/PlayPage';
 import WorldPage from '../Pages/WorldPage';
 import LeaderboardPage from '../Pages/LeaderboardPage';
 import AlliesPage from '../Pages/AlliesPage';
+import levelMapPage from '../Pages/levelMapPage';
 
 const routes = {
   '/': HomePage,
@@ -19,7 +20,8 @@ const routes = {
   '/play': PlayPage,
   '/world': WorldPage,
   '/leaderboard': LeaderboardPage,
-  '/allies': AlliesPage
+  '/allies': AlliesPage,
+  '/levelMap':levelMapPage
 };
 
 export default routes;

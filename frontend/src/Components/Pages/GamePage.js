@@ -3,11 +3,10 @@
 /* eslint-disable no-plusplus */
 // eslint-disable-next-line
 import anime from 'animejs';
-import levels from '../../../../data/level.json';
 import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
-import imgskull from '../../img/favicon.ico'
-import imgBoss from '../../assets/images_boss/boss4.png';
+import imgskull from '../../img/favicon.ico';
+import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
 /*
@@ -15,19 +14,21 @@ import Navigate from '../Router/Navigate';
 import {getAuthenticatedUser} from '../../utils/auths' 
 */
 
-let firstCard = null; // Variable stockant la première carte cliquée.
 
-const numberOfCards = levels[7].card_number; // Variable stockant par rapport au niveau le nombre de cartes a généré.
-const bossLifeMax = numberOfCards * 5; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
-let bossLife = bossLifeMax;
-const memoryTimer = 20; // Variable stockant en fonction des niveaux le temps de memorisation
+
+let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
+let bossLifeMax = null; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
+let bossLife = null;
+let memoryTimer = null; // Variable stockant en fonction des niveaux le temps de memorisation
 let lifeBarWrapper;
 let bossLifeWrapper;
 let clickableWhenStartMemoryTimer = false; // Variable pour autoriser le click après la fin du timer de mémorisation.
 let cards;
+let firstCard = null; // Variable stockant la première carte cliquée.
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
+let level=null; // Variable stockant 
 
 const main = document.querySelector('main');
 
@@ -37,7 +38,9 @@ divBossAndPlayer.className = 'bossAndPlayer';
 // Permet de faire disparaitre la bar de navigation
 makeDisappearNavbar(true);
 
-function GamePage() {
+let urlParams=null;
+let levelparams=null;
+async function GamePage() {
   /*
   if (!getAuthenticatedUser()){
     Navigate('/login');
@@ -47,10 +50,23 @@ function GamePage() {
   
   clearPage();
 
+  // Recuperation des donnees (Level, World, Memory Timer etc..)
+  try {
+    urlParams = new URLSearchParams(window.location.search);
+
+    // Récupérez la valeur du paramètre 'levelId'
+    levelparams = urlParams.get('levelId');
+    console.log(levelparams);
+
+    await recoveryData();
+  } catch (error) {
+    console.error(error);
+  }
+  
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
-  displayBoss();
+  displayBoss(level.boss);
   // Affichage des vies du joueur
   displayplayerLife();
   // Ajouts des divs HTML du jeu (div cards, div memorytimer,div gameTimer etc...)
@@ -89,6 +105,32 @@ function GamePage() {
   );
 }
 
+async function recoveryData(){
+  try {
+    level = await getLevel();
+  } catch (error) {
+    console.Error(error);
+  }
+  
+  numberOfCards = level.card_number;
+  memoryTimer = level.memorisation_time;
+  bossLifeMax = numberOfCards * 5;
+  bossLife = bossLifeMax;
+}
+
+async function getLevel() {
+try{
+  const response = await fetch(`api/levels/${levelparams}`);
+  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  const levelresult = await response.json();
+  console.log(levelresult);
+  return levelresult;
+} catch (error) {
+  console.error('getLevelById::error: ', error);
+  throw error;
+}
+}
+
 function displayVSAndTitle(){
   main.appendChild(divBossAndPlayer);
   const divTitle = document.createElement('div');
@@ -101,7 +143,8 @@ function displayVSAndTitle(){
   divBossAndPlayer.appendChild(divVersusTitle);
 
   const showWorldAndLevel=document.createElement('h3');
-  showWorldAndLevel.innerText= `World ${1} Level ${3}`;
+  
+  showWorldAndLevel.innerText= `World ${level.world} Level ${level.level_number}`;
 
   const versusTitle = document.createElement('h1');
   versusTitle.innerText = 'VS'
@@ -113,7 +156,10 @@ function displayVSAndTitle(){
   divVersusTitle.appendChild(versusTitle);
   
 }
-function displayBoss(){
+async function displayBoss(bossSrc){
+
+  
+  const imgBoss = findBossOrPlayerImg(bossSrc);
   const div = document.createElement('div')
   div.className = 'divBoss'
   divBossAndPlayer.appendChild(div)
@@ -141,14 +187,29 @@ function displayBossLife(bossWrapper) {
   p.id = 'bossLife';
   divBossLife.appendChild(p);
 }
-
-function displayplayerLife() {
-  const hearts = document.createElement('div');
-  hearts.className = 'hearts';
+/* async function getUser() {
+  try {
+    const response = await fetch(`api/user/session.id`);
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    const user = await response.json();
+    return user.avatar_path;
+  } catch (error) {
+    console.error('getAllPizzas::error: ', error);
+    throw error;
+  }
+  
+} */
+async function displayplayerLife() {
+  const player = document.createElement('div');
+ // const playerImg = await getUser();
+  const wrapperimg = document.createElement('img');
+  // wrapperimg.src = playerImg
+  player.appendChild(wrapperimg)
+  player.className = 'hearts';
   const divHeart = document.createElement('div');
   divHeart.className = 'divHearts';
-  divBossAndPlayer.appendChild(hearts); // container for hearts
-  hearts.appendChild(divHeart);
+  divBossAndPlayer.appendChild(player); // container for hearts
+  player.appendChild(divHeart);
   for (let index = 0; index < 3; index++) {
     const heart = document.createElement('img');
     heart.src = imgheart;
@@ -158,12 +219,12 @@ function displayplayerLife() {
 }
 
 function buildGamePage() {
- 
-  let innerHTML = `
-                  <div id="memoryTimer"></div>
-                    <div id="gameTimer"></div>
-                      <div class="card-container">`;
-  const arrayOfCards = initializeArrayOfCards();
+  
+  let innerHTML = `<div id="memoryTimer"></div>
+                   <br> 
+                   <div id="gameTimer"></div>
+                   <div class="card-container">`;
+  const arrayOfCards = initializeArrayOfCards(level.world,level.level_number);
   shuffleArray(arrayOfCards);
 
   for (let index = 0; index < numberOfCards; index++) {
