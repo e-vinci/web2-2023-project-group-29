@@ -30,17 +30,24 @@ const main = document.querySelector('main');
 const divBossAndPlayer = document.createElement('div');
 divBossAndPlayer.className = 'bossAndPlayer';
 
-const urlParams = new URLSearchParams(window.location.search);
-
-// Récupérez la valeur du paramètre 'levelId'
-const levelparams = urlParams.get('levelId');
-console.log(levelparams);
-
+let urlParams=null;
+let levelparams=null;
 async function GamePage() {
   clearPage();
 
   // Recuperation des donnees (Level, World, Memory Timer etc..)
-  await recoveryData();
+  try {
+    urlParams = new URLSearchParams(window.location.search);
+
+    // Récupérez la valeur du paramètre 'levelId'
+    levelparams = urlParams.get('levelId');
+    console.log(levelparams);
+
+    await recoveryData();
+  } catch (error) {
+    console.error(error);
+  }
+  
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -84,7 +91,12 @@ async function GamePage() {
 }
 
 async function recoveryData(){
-  level = await getLevel();
+  try {
+    level = await getLevel();
+  } catch (error) {
+    console.Error(error);
+  }
+  
   numberOfCards = level.card_number;
   memoryTimer = level.memorisation_time;
   bossLifeMax = numberOfCards * 5;
@@ -116,7 +128,8 @@ function displayVSAndTitle(){
   divBossAndPlayer.appendChild(divVersusTitle);
 
   const showWorldAndLevel=document.createElement('h3');
-  showWorldAndLevel.innerText= `World ${1} Level ${3}`;
+  
+  showWorldAndLevel.innerText= `World ${level.world} Level ${level.level_number}`;
 
   const versusTitle = document.createElement('h1');
   versusTitle.innerText = 'VS'

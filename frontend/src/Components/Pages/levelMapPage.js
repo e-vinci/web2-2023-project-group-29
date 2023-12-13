@@ -6,22 +6,26 @@ import imgDesert from '../../assets/default/levelMapPageDesert.png'
 // import {getAuthenticatedUser} from '../../utils/auths'
 import lock from '../../assets/default/pngkey.com-lock-image-png-3963255.png'
 
- // const urlParams = new URLSearchParams(window.location.search);
-
-// Récupérez la valeur du paramètre 'levelId'
- // const worldparam = urlParams.get('world');
- const worldparam= 3
-console.log(worldparam);
-
-const imagesMap = [{world:1,img:imgsea},{world:2,img:imgLava},{world:3,img:imgDesert}]
+let urlParams =null;
+let worldparam=null;
+let imagesMap=null;
 
 const main = document.querySelector('main');
 function levelPage (){
     clearPage();
+
+    // Récupérez la valeur du paramètre 'levelId'
+    urlParams = new URLSearchParams(window.location.search);
+    worldparam = urlParams.get('world');
+    console.log(worldparam);
+    
+    imagesMap = [{world:1,img:imgsea},{world:2,img:imgLava},{world:3,img:imgDesert}]
+
     /* if (!getAuthenticatedUser()){
         Navigate('/login');
         return;
       } */
+
     buildLevelPage();  
 
 }
@@ -70,13 +74,17 @@ function buildLevelPage() {
 function addEventListenerMe(wrapper){
      wrapper.addEventListener('click',async ()=>{
         try {
-            const response = await fetch(`api/levels/${worldparam}/${wrapper.id}`)
+            const response = await fetch(`api/levels/${worldparam}/${wrapper.id}`);
+
             if(!response.ok)throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+
             const data = await response.json(); // Utilisation de response.json() pour obtenir les données JSON
             const {levelId} = data;
+
             Navigate(`/game?levelId=${levelId}`);
+            
         } catch (error) {
-            console.error('getAllPizzas::error: ', error);
+            console.error('error: ', error);
             throw error;
         }
         
