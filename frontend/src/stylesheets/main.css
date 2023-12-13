@@ -126,10 +126,21 @@ body {
   left: 70%;
   width: 10%;
   height: 20%;
-  
-  
 }
 
+.button-profil {
+  position: fixed;
+  top: 70%;
+  left: 62%;
+  width: 20%;
+  height: 7%;
+}
+
+.image-back-profil{
+  background-image: url('../img/backgrounds/ProfilImage.png');
+  background-position: center;
+  
+}
 /*==============================================*/
 
 .container-fluid {
