@@ -9,9 +9,9 @@ const setupNavbar = () => {
 
   const createListGroup = () => {
     const links = [
-      { text: 'Easy', uri: '/' , img: 'easy-image_back'},
-      { text: 'Medium', uri: '/', img: 'medium-image_back' },
-      { text: 'Hard', uri: '/', img: 'hard-image_back' },
+      { text: 'Easy', uri: '/levelMap?world=1' , img: 'easy-image_back'},
+      { text: 'Medium', uri: '/levelMap?world=2', img: 'medium-image_back' },
+      { text: 'Hard', uri: '/levelMap?world=3', img: 'hard-image_back' },
     ];
   
     const listGroup = document.createElement('div');
