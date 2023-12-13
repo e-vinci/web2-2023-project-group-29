@@ -2,7 +2,7 @@
 import { clearPage } from '../../utils/render';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
 
-const THIS_PLAYER = 1;
+const THIS_PLAYER = 2;
 
 const LeaderboardPage = () => {
   clearPage();
@@ -84,7 +84,7 @@ const LeaderboardPage = () => {
   const updateButtonState = () => {
     filterOptions.forEach((option, index) => {
       const button = filterGroup.children[index];
-      if (option === 'Friends') {
+      if (option === 'Alliés') {
         button.classList.toggle('active', isFriendsSelected);
       } else {
         const world = index + 1;
@@ -100,7 +100,7 @@ const LeaderboardPage = () => {
   const title = document.createElement('h1');
   title.textContent = 'Chroniques des Braves';
 
-  const filterOptions = ['World 1', 'World 2', 'World 3', 'Friends'];
+  const filterOptions = ['Monde 1', 'Monde 2', 'Monde 3', 'Alliés'];
   const filterContainer = document.createElement('div');
   filterContainer.classList.add('d-flex', 'justify-content-center', 'my-4');
   const filterGroup = document.createElement('div');
@@ -115,7 +115,7 @@ const LeaderboardPage = () => {
 
     button.textContent = option;
 
-    if (option === 'Friends') {
+    if (option === 'Alliés') {
       button.addEventListener('click', toggleFriends);
     } else {
       button.addEventListener('click', () => switchToWorld(index + 1));
@@ -137,7 +137,7 @@ const LeaderboardPage = () => {
   const headerRow = document.createElement('tr');
   headerRow.style.textAlign = 'center';
 
-  const headerColumns = [' #', 'Player', 'Time (m:s)'];
+  const headerColumns = [' #', 'Joueur', 'Temps (m:s)'];
   headerColumns.forEach((columnText, index) => {
     const headerColumn = document.createElement('th');
     headerColumn.setAttribute('scope', 'col');
@@ -169,7 +169,7 @@ const LeaderboardPage = () => {
     return result;
   };
 
-  updateTable();
+  switchToWorld(currentWorld);
 };
 
 export default LeaderboardPage;
