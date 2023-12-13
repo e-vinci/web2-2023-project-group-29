@@ -29,17 +29,14 @@ let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
 let level=null; // Variable stockant 
-
+let imgBoss=null;
+let urlParams=null;
+let levelparams=null;
 const main = document.querySelector('main');
 
 const divBossAndPlayer = document.createElement('div');
 divBossAndPlayer.className = 'bossAndPlayer';
 
-// Permet de faire disparaitre la bar de navigation
-makeDisappearNavbar(true);
-
-let urlParams=null;
-let levelparams=null;
 async function GamePage() {
   /*
   if (!getAuthenticatedUser()){
@@ -47,7 +44,10 @@ async function GamePage() {
     return;
   }
   */
-  
+ 
+  // Permet de faire disparaitre la bar de navigation
+  makeDisappearNavbar(true);
+
   clearPage();
 
   // Recuperation des donnees (Level, World, Memory Timer etc..)
@@ -159,9 +159,9 @@ function displayVSAndTitle(){
 async function displayBoss(bossSrc){
 
   
-  const imgBoss = findBossOrPlayerImg(bossSrc);
+  imgBoss = findBossOrPlayerImg(bossSrc);
   const div = document.createElement('div')
-  div.className = 'divBoss'
+  div.className = 'divBoss';
   divBossAndPlayer.appendChild(div)
   const boss = document.createElement('div');
   boss.className = 'boss';
@@ -170,7 +170,7 @@ async function displayBoss(bossSrc){
   imgWrapperBoss.src = imgBoss;
   imgWrapperBoss.className = 'imgBoss'
   boss.appendChild(imgWrapperBoss);
-  displayBossLife(boss)
+  displayBossLife(boss);
 }
 
 function displayBossLife(bossWrapper) {
@@ -221,7 +221,6 @@ async function displayplayerLife() {
 function buildGamePage() {
   
   let innerHTML = `<div id="memoryTimer"></div>
-                   <br> 
                    <div id="gameTimer"></div>
                    <div class="card-container">`;
   const arrayOfCards = initializeArrayOfCards(level.world,level.level_number);
@@ -263,12 +262,6 @@ function buildGamePage() {
     cardContainer.style.height='60%';
     cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
     }
-  
-  
- 
-  
-  
-  
 }
 
 function createMemoryTimer(timer) {
