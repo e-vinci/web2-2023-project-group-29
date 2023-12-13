@@ -37,14 +37,14 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
+    return res.status(400).json({ error: 'Email et mot de passe requis' });
   }
 
   try {
     const authenticatedUser = await Player.loginPlayer(email, password);
 
     if (!authenticatedUser) {
-      return res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+      return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
 
     const { token } = authenticatedUser;
@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
       httpOnly: true,
       maxAge: lifetimeJwt / 1000, // La durée de vie du cookie en secondes
       sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production', // Assurez-vous d'utiliser HTTPS en production
+      secure: process.env.NODE_ENV === 'production',
     }));
 
     return res.json(authenticatedUser);

@@ -60,7 +60,7 @@ async function loginPlayer(email, password) {
 
 async function addPlayer(email, login, password, avatarPath) {
   try {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 
     if (!emailRegex.test(email)) {
       throw new Error("Format d'email invalide");
