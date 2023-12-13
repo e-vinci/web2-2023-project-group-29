@@ -36,16 +36,16 @@ const ProfilPage = () => {
 
   const colonne1Div = document.createElement('tr');
   const colonne1Name = document.createElement('td');
-  colonne1Name.innerHTML = "Nom";
+  colonne1Name.innerHTML = "Pseudo";
   const colonne1Value = document.createElement('td');
-  colonne1Value.innerHTML = "pierre";
+  colonne1Value.innerHTML = "Cayou";
 
 
   const colonne2Div = document.createElement('tr');
   const colonne2Name = document.createElement('td');
-  colonne2Name.innerHTML = "Pseudo";
+  colonne2Name.innerHTML = "XP";
   const colonne2Value = document.createElement('td');
-  colonne2Value.innerHTML = "Cayou";
+  colonne2Value.innerHTML = "1000";
 
 
   const colonne3Div = document.createElement('tr');
@@ -56,7 +56,7 @@ const ProfilPage = () => {
 
   const imgProfil = document.createElement('img');
   imgProfil.src = testImageProfil;
-  imgProfil.classList.add('container-fluid-img-profil');
+  imgProfil.classList.add('img-profil');
 
 
 
