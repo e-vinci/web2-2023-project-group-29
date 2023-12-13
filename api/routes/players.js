@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
       httpOnly: true,
       maxAge: lifetimeJwt / 1000, // La durée de vie du cookie en secondes
       sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production', // Assurez-vous d'utiliser HTTPS en production
+      secure: process.env.NODE_ENV === 'production',
     }));
 
     return res.json(authenticatedUser);

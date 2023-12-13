@@ -68,7 +68,7 @@ const LoginPage = () => {
 
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
-    Navigate('/play');
+    Navigate('/world');
   });
 
   loginForm.addEventListener('submit', async (e) => {
