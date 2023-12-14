@@ -9,8 +9,8 @@ const handleLoginResponse = async (response) => {
     throw new Error(errorData.error);
   }
 
-  const { token } = await response.json();
-  setAuthenticatedUser(token);
+  const player = await response.json();
+  setAuthenticatedUser(player);
 
   Navigate('/game');
 };
