@@ -428,15 +428,16 @@ h1 {
 }
 .rowLevel:nth-of-type(2){
   width: 11%;
-  height: 15%;
-  position: absolute;
-  top: 18%;
-  right: 30%;
-}
-.rowLevel:nth-of-type(3){
-  width: 11%;
   height: 16%;
   position: absolute;
   bottom: 40%;
   right: 45%;
 }
+.rowLevel:nth-of-type(3){
+  width: 11%;
+  height: 15%;
+  position: absolute;
+  top: 18%;
+  right: 30%;
+}
+

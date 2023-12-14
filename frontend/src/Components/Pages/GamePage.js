@@ -42,7 +42,6 @@ async function GamePage() {
     Navigate('/login');
     return;
   }
-  
  
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
@@ -61,6 +60,10 @@ async function GamePage() {
     await recoveryData();
   } catch (error) {
     console.error(error);
+  }
+  if(user.lastLevel.world<level.world || user.lastLevel.level_number<level.level_number) {
+    Navigate(`/levelMap?world=${user.lastLevel.world}`)
+    return;
   }
   
   // Affichage du monde , du niveau et du logo VS
@@ -110,8 +113,7 @@ async function recoveryData(){
     level = await getLevel();
   } catch (error) {
     console.Error(error);
-  }
-  
+  } 
   numberOfCards = level.card_number;
   memoryTimer = level.memorisation_time;
   bossLifeMax = numberOfCards * 5;
