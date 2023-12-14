@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console */
+
 /**
  * Module dependencies.
  */
 
 const debug = require('debug')('api2:server');
 const http = require('http');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const client = require('../db_config');
 const app = require('../app');
 
 /**
@@ -21,13 +28,20 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+// Connect to the database before starting the server
+client.connect()
+  .then(() => {
+    console.log('Connected to the database');
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    // Listen on provided port, on all network interfaces
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+  })
+  .catch((err) => {
+    console.error('Error connecting to the database:', err);
+    process.exit(1);
+  });
 
 /**
  * Normalize a port into a number, string, or false.
@@ -63,12 +77,10 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      // eslint-disable-next-line no-console
       console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      // eslint-disable-next-line no-console
       console.error(`${bind} is already in use`);
       process.exit(1);
       break;
