@@ -116,6 +116,31 @@ async function searchPlayerByLogin(login) {
   }
 }
 
+async function updatePassword(id, newPassword) {
+  try {
+    await client.query('UPDATE remember_or_die.players SET password = $1 WHERE player_id = $2;', [newPassword, id]);
+    return { success: true, message: 'Mot-de-passe modifié avec succès !' };
+  } catch (error) {
+    throw new Error(`Error updating player's password (id = ${id}): ${error.message}`);
+  }
+}
+
+async function updateAvatar(id, avatar) {
+  try {
+    await client.query('UPDATE remember_or_die.players SET avatar = $1 WHERE player_id = $2;', [avatar, id]);
+    return { success: true, message: 'Avatar modifié avec succès !' };
+  } catch (error) {
+    throw new Error(`Error updating player's avatar (id = ${id}): ${error.message}`);
+  }
+}
+
 module.exports = {
-  getAllPlayers, addPlayer, loginPlayer, readOneUserFromUsername, lifetimeJwt, searchPlayerByLogin,
+  getAllPlayers,
+  addPlayer,
+  loginPlayer,
+  readOneUserFromUsername,
+  lifetimeJwt,
+  searchPlayerByLogin,
+  updatePassword,
+  updateAvatar,
 };

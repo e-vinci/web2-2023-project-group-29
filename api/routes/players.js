@@ -63,6 +63,30 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.post('/updatePassword', async (req, res) => {
+  const { playerId } = req.body;
+  const { newPassword } = req.body;
+
+  try {
+    const response = await Player.updatePassword(playerId, newPassword);
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/updateAvatar', async (req, res) => {
+  const { playerId } = req.body;
+  const { avatar } = req.body;
+
+  try {
+    const response = await Player.updateAvatar(playerId, avatar);
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.post('/logout', authenticate, logout);
 
 module.exports = router;
