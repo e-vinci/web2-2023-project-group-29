@@ -11,7 +11,7 @@ import shield from '../../img/backgrounds/Bouclier.png';
 const ProfilPage = () => {
   clearPage();
   makeDisappearNavbar(false);
- playAudio();
+  playAudio();
 
       const player = getAuthenticatedUser();
 

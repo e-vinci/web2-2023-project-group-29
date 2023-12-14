@@ -5,7 +5,7 @@ import imgLava from '../../assets/default/levelMapPageLAVE.png'
 import imgDesert from '../../assets/default/levelMapPageDesert.png'
 import {getAuthenticatedUser} from '../../utils/auths'
 import lock from '../../assets/default/pngkey.com-lock-image-png-3963255.png'
-import { makeDisappearNavbar } from "../../utils/navbarSetup";
+import makeDisappearNavbar from "../../utils/navbarSetup";
 
 let urlParams =null;
 let worldparam=null;

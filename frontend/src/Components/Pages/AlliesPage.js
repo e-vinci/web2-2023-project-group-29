@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { getAuthenticatedUser } from '../../utils/auths';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 
@@ -193,6 +194,8 @@ const createAlliesTable = async () => {
 };
 
 const AlliesPage = async () => {
+  makeDisappearNavbar(false);
+
   clearPage();
 
   const main = document.querySelector('main');
