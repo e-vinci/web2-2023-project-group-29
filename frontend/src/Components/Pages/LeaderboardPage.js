@@ -2,8 +2,9 @@
 /* eslint-disable no-use-before-define */
 import { clearPage } from '../../utils/render';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import { getAuthenticatedUser } from '../../utils/auths';
 
-const THIS_PLAYER = 2;
+const thisPlayer = getAuthenticatedUser();
 
 const LeaderboardPage = () => {
   clearPage();
@@ -18,7 +19,7 @@ const LeaderboardPage = () => {
     try {
       let route = '';
       if (isFriendsSelected) {
-        route = `friendsBestScores/${THIS_PLAYER}/${world}/${option}`;
+        route = `friendsBestScores/${thisPlayer.playerId}/${world}/${option}`;
       } else {
         route = `bestScores/${world}`;
       }
