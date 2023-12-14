@@ -11,9 +11,9 @@ import { Navbar as BootstrapNavbar } from 'bootstrap';
 const Navbar = () => {
   const navbarWrapper = document.querySelector('#navbarWrapper');
   const navbar = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-orange"> <!-- Ajout de la classe bg-orange -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Remember Or Die</a>
+          <a class="navbar-brand" href="#">Add your brand here</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -28,20 +28,14 @@ const Navbar = () => {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#" data-uri="/">Home Page</a>
+                <a class="nav-link" aria-current="page" href="#" data-uri="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/world">Choix du Monde</a>
+                <a class="nav-link" href="#" data-uri="/game">Game</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/profil">Profil</a>
-              </li>  
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/leaderboard">Chronique des Braves</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/allies">Alliés du Royaume</a>
-              </li>                
+                <a class="nav-link" href="#" data-uri="/new">New Page</a>
+              </li>                        
             </ul>
           </div>
         </div>
