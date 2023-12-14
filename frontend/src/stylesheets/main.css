@@ -206,6 +206,37 @@ body {
 
 /* ========================================================*/
 
+
+
+.game-over-container {
+  position: fixed;
+  text-align: center;
+}
+
+.h1-game-over {
+  color: #ff0000;
+  font-size: 230%;
+}
+
+.button-game-over-try {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+.button-game-over-give {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #af4c4c;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================================================*/
+
 .game-menu-alex {
   position: absolute;
   top: 20%;

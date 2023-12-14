@@ -27,15 +27,17 @@ let cards;
 let firstCard = null; // Variable stockant la première carte cliquée.
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
-let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
+let countHeartPlayer = null; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
 let level=null; // Variable stockant 
 let imgBoss=null;
 let urlParams=null;
 let levelparams=null;
+
 const main = document.querySelector('main');
 
 let divBossAndPlayer;
 const user = getAuthenticatedUser();
+
 async function GamePage() {
   
   if (!user){
@@ -48,6 +50,12 @@ async function GamePage() {
   makeDisappearNavbar(true);
 
   clearPage();
+  countHeartPlayer = 3;
+  console.log(countHeartPlayer);
+
+  
+
+
   divBossAndPlayer = document.createElement('div');
   divBossAndPlayer.className = 'bossAndPlayer';
   // Recuperation des donnees (Level, World, Memory Timer etc..)
@@ -373,7 +381,7 @@ function checkMatchingCards(card) {
       // On met le popUp alert dans un setTimeout afin de laisser asser de temps au cartes de se remettre dans le bon sens
       if (countHeartPlayer === 0) {
         setTimeout(() => {
-          alert('GAME OVER !');
+         gameOver();
         }, 1000);
       }
     } else {
@@ -444,6 +452,29 @@ function animationBreakHeart() {
     heart.src = imgskull;
     countHeartPlayer--;
   }
+}
+
+function gameOver(){
+  countHeartPlayer = 3;
+  const lastGamePlay = new URL(window.location.href);
+
+  const divGameOver = `<div class="game-over-container full-screen-bg">
+                        <h1 class="h1-game-over">GAME OVER !</h1>
+                        <button id="tryAgain" class="btn btn-warning button-game-over-try">Essayer encore?</button>
+                        <button id="giveUp" class="btn btn-warning button-game-over-give">Abandonner?</button>
+                      </div>
+                      `
+  main.innerHTML =divGameOver;
+
+  const tryAgain = document.getElementById('tryAgain');
+  tryAgain.addEventListener('click', () => {
+    Navigate(`/${lastGamePlay.href.substring(22,50)}`);  
+  });
+  const giveUp = document.getElementById('giveUp');
+  giveUp.addEventListener('click', () => {
+      Navigate('/world');
+  });
+
 }
 
 export default GamePage;
