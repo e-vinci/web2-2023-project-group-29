@@ -1,6 +1,6 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { playAudio } from '../../utils/audioManager';
+
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 import findAvatarImg  from '../../utils/imagesBossAndPlayer';
@@ -11,7 +11,6 @@ import shield from '../../img/backgrounds/Bouclier.png';
 const ProfilPage = () => {
   clearPage();
   makeDisappearNavbar(false);
- playAudio();
 
       const player = getAuthenticatedUser();
 
@@ -67,11 +66,6 @@ const ProfilPage = () => {
         const imgProfilBack = document.createElement('img');
         imgProfilBack.src = shield;
         imgProfilBack.classList.add('img-profil-shield');
-
-
-
-
-
 
         const BouttonModifier = document.createElement('button');
         BouttonModifier.textContent = "modifier profil";
