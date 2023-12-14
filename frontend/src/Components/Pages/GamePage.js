@@ -7,13 +7,11 @@ import { clearPage } from '../../utils/render';
 import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
-import {initializeArrayOfCards} from '../../utils/imagesCards';
+import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
+
 import Navigate from '../Router/Navigate';
-import {getAuthenticatedUser} from '../../utils/auths' 
-
-
-
+import { getAuthenticatedUser } from '../../utils/auths';
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 let bossLifeMax = null; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
@@ -27,21 +25,21 @@ let firstCard = null; // Variable stockant la première carte cliquée.
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
-let level=null; // Variable stockant 
-let imgBoss=null;
-let urlParams=null;
-let levelparams=null;
+let level = null; // Variable stockant
+let imgBoss = null;
+let urlParams = null;
+let levelparams = null;
 const main = document.querySelector('main');
 
 let divBossAndPlayer;
-const user = getAuthenticatedUser();
-async function GamePage() {
-  
-  if (!user){
-    Navigate('/login');
+let user = null;
+
+const GamePage = async () => {
+  user = getAuthenticatedUser();
+  if (!user) {
+    Navigate('/start');
     return;
   }
-  
  
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
@@ -61,7 +59,7 @@ async function GamePage() {
   } catch (error) {
     console.error(error);
   }
-  
+
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -70,8 +68,6 @@ async function GamePage() {
   displayplayerLife();
   // Ajouts des divs HTML du jeu (div cards, div memorytimer,div gameTimer etc...)
   buildGamePage();
-
-  
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
@@ -102,15 +98,15 @@ async function GamePage() {
       }
     }),
   );
-}
+};
 
-async function recoveryData(){
+async function recoveryData() {
   try {
     level = await getLevel();
   } catch (error) {
     console.Error(error);
   }
-  
+
   numberOfCards = level.card_number;
   memoryTimer = level.memorisation_time;
   bossLifeMax = numberOfCards * 5;
@@ -118,54 +114,53 @@ async function recoveryData(){
 }
 
 async function getLevel() {
-try{
-  const response = await fetch(`api/levels/${levelparams}`);
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-  const levelresult = await response.json();
-  console.log(levelresult);
-  return levelresult;
-} catch (error) {
-  console.error('getLevelById::error: ', error);
-  throw error;
-}
+  try {
+    const response = await fetch(`api/levels/${levelparams}`);
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    const levelresult = await response.json();
+    console.log(levelresult);
+    return levelresult;
+  } catch (error) {
+    console.error('getLevelById::error: ', error);
+    throw error;
+  }
 }
 
-function displayVSAndTitle(){
+function displayVSAndTitle() {
   main.appendChild(divBossAndPlayer);
   const divTitle = document.createElement('div');
 
-  const divVersusTitle = document.createElement('div')
-  divVersusTitle.id = 'divVersus'
-  divVersusTitle.style.textAlign='center';
-  divVersusTitle.style.marginTop='5%';
- 
+  const divVersusTitle = document.createElement('div');
+  divVersusTitle.id = 'divVersus';
+  divVersusTitle.style.textAlign = 'center';
+  divVersusTitle.style.marginTop = '5%';
+
   divBossAndPlayer.appendChild(divVersusTitle);
 
-  const showWorldAndLevel=document.createElement('h3');
-  
-  showWorldAndLevel.innerText= `World ${level.world} Level ${level.level_number}`;
+  const showWorldAndLevel = document.createElement('h3');
+
+  showWorldAndLevel.innerText = `World ${level.world} Level ${level.level_number}`;
 
   const versusTitle = document.createElement('h1');
-  versusTitle.innerText = 'VS'
-  versusTitle.id = 'versus'
-  versusTitle.style.marginTop='5%';
-  
+  versusTitle.innerText = 'VS';
+  versusTitle.id = 'versus';
+  versusTitle.style.marginTop = '5%';
+
   divTitle.appendChild(showWorldAndLevel);
   divVersusTitle.appendChild(divTitle);
   divVersusTitle.appendChild(versusTitle);
-  
 }
- function displayBoss(bossSrc){
+function displayBoss(bossSrc) {
   imgBoss = findBossOrPlayerImg(bossSrc);
-  const div = document.createElement('div')
+  const div = document.createElement('div');
   div.className = 'divBoss';
-  divBossAndPlayer.appendChild(div)
+  divBossAndPlayer.appendChild(div);
   const boss = document.createElement('div');
   boss.className = 'boss';
   div.appendChild(boss);
   const imgWrapperBoss = document.createElement('img');
   imgWrapperBoss.src = imgBoss;
-  imgWrapperBoss.className = 'imgBoss'
+  imgWrapperBoss.className = 'imgBoss';
   boss.appendChild(imgWrapperBoss);
   displayBossLife(boss);
 }
@@ -173,7 +168,7 @@ function displayVSAndTitle(){
 function displayBossLife(bossWrapper) {
   const divLife = document.createElement('div');
   divLife.id = 'life';
-  divLife.className = 'boss'
+  divLife.className = 'boss';
   bossWrapper.appendChild(divLife);
   const divBossLife = document.createElement('div');
   divBossLife.id = 'LifeBar';
@@ -185,17 +180,17 @@ function displayBossLife(bossWrapper) {
   divBossLife.appendChild(p);
 }
 
- function displayplayerLife() {
-  const divPlayer = document.createElement('div');// container of player and his life 
-  const player = document.createElement('div');// container img of player
-  player.className = 'player'
+function displayplayerLife() {
+  const divPlayer = document.createElement('div'); // container of player and his life
+  const player = document.createElement('div'); // container img of player
+  player.className = 'player';
   divPlayer.appendChild(player);
 
   const playerImg = findBossOrPlayerImg(user.avatarPath); // img player src
   const wrapperimg = document.createElement('img'); // wrapper img
   wrapperimg.src = playerImg;
-  wrapperimg.className = 'playerImg'
-  player.appendChild(wrapperimg)
+  wrapperimg.className = 'playerImg';
+  player.appendChild(wrapperimg);
   divPlayer.className = 'divPlayer';
   const divHeart = document.createElement('div');
   divHeart.className = 'divHearts';
@@ -210,11 +205,10 @@ function displayBossLife(bossWrapper) {
 }
 
 function buildGamePage() {
-  
   let innerHTML = `<div id="memoryTimer"></div>
                    <div id="gameTimer"></div>
                    <div class="card-container">`;
-  const arrayOfCards = initializeArrayOfCards(level.world,level.level_number);
+  const arrayOfCards = initializeArrayOfCards(level.world, level.level_number);
   shuffleArray(arrayOfCards);
 
   for (let index = 0; index < numberOfCards; index++) {
@@ -231,28 +225,27 @@ function buildGamePage() {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.style.display = 'grid';
 
-  if(numberOfCards === 8 ){
+  if (numberOfCards === 8) {
     cardContainer.style.gridTemplateColumns = `repeat(4, auto)`;
-    cardContainer.style.gap='40px';
-    cardContainer.style.width='600px';
-    cardContainer.style.height='60%';
-    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
+    cardContainer.style.gap = '40px';
+    cardContainer.style.width = '600px';
+    cardContainer.style.height = '60%';
+    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
   }
-  if(numberOfCards=== 16){
+  if (numberOfCards === 16) {
     cardContainer.style.gridTemplateColumns = `repeat(4, auto)`;
-    cardContainer.style.gap='30px';
-    cardContainer.style.width='600px';
-    cardContainer.style.height='60%';
-    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
-  }
-  if(numberOfCards===24){
+    cardContainer.style.gap = '30px';
+    cardContainer.style.width = '600px';
+    cardContainer.style.height = '60%';
+    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
+  }  if (numberOfCards === 24) {
     cardContainer.style.gridTemplateColumns = `repeat(6, auto)`;
-    cardContainer.style.margin='0 20%';
-    cardContainer.style.gap='30px';
-    cardContainer.style.width='900px';
-    cardContainer.style.height='60%';
-    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)'; 
-    }
+    cardContainer.style.margin = '0 20%';
+    cardContainer.style.gap = '30px';
+    cardContainer.style.width = '900px';
+    cardContainer.style.height = '60%';
+    cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
+  }
 }
 
 function createMemoryTimer(timer) {
@@ -323,7 +316,6 @@ function animationBossLife(lifeBarWrapper) {
     easing: 'easeInOutSine',
   });
 }
-
 
 function shuffleArray(arrayOfCards) {
   /** *************************************************************************************
