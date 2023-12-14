@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-use-before-define */
 import { clearPage } from '../../utils/render';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
@@ -22,7 +23,7 @@ const LeaderboardPage = () => {
         route = `bestScores/${world}`;
       }
 
-      const response = await fetch(`http://localhost:3000/scores/${route}`);
+      const response = await fetch(`${process.env.API_BASE_URL}/scores/${route}`);
       if (!response.ok) {
         throw new Error('Réponse Network pas ok');
       }
@@ -30,7 +31,6 @@ const LeaderboardPage = () => {
 
       displayScores(data);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Erreur lors de la récupération des scores: ', error);
     }
   };
