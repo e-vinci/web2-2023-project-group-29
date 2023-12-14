@@ -24,5 +24,9 @@ const clearAuthenticatedUser = () => {
   currentUser = undefined;
 };
 
+const setAvatar = (newAvatarPath) => {
+  currentUser.avatarPath = newAvatarPath
+};
+
 // eslint-disable-next-line object-curly-newline
-export { getAuthenticatedUser, setAuthenticatedUser, isAuthenticated, clearAuthenticatedUser };
+export { setAvatar,getAuthenticatedUser, setAuthenticatedUser, isAuthenticated, clearAuthenticatedUser };

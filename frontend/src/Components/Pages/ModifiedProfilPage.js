@@ -62,15 +62,15 @@ modificatedForm.addEventListener('submit', async (e) => {
 
   const password = document.querySelector('#password').value;
   const player = getAuthenticatedUser();
-  const id = player.playerId;
+  const {playerId} = player;
 
   try {
-    const response = await fetch('http://localhost:3000/modifiedProfil/updatePassword', {
+    const response = await fetch(`${process.env.API_BASE_URL}/players/updatePassword`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({id, password}),
+      body: JSON.stringify({playerId, password}),
     });
 
     if (!response.ok) {

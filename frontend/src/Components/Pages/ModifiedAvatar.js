@@ -1,7 +1,7 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
-import { getAuthenticatedUser } from '../../utils/auths';
+import { getAuthenticatedUser , setAvatar} from '../../utils/auths';
 import img1 from '../../img/players/image1.png';
 import img2 from '../../img/players/image2.png';
 import img3 from '../../img/players/image3.png';
@@ -100,8 +100,7 @@ modificatedForm.addEventListener('submit', async (e) => {
 
   const avatar = selectedAvatarInput.value;
   const player = getAuthenticatedUser();
-  const id = player.playerId;
-
+  const {playerId} = player;
 
   try {
     const response = await fetch(`${process.env.API_BASE_URL}/players/updateAvatar`, {
@@ -109,13 +108,14 @@ modificatedForm.addEventListener('submit', async (e) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({id, avatar}),
+      body: JSON.stringify({playerId, avatar}),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error);
     }
+    setAvatar(avatar);
 
     Navigate('/profil');
   } catch (error) {
