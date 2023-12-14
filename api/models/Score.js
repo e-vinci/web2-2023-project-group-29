@@ -3,10 +3,18 @@ const client = require('../db_config');
 async function getLastLevel(id) {
   try {
     const stmt = await client.query(
-      'SELECT MAX(level) as lastLevel FROM remember_or_die.scores WHERE player = $1',
+      `
+      SELECT l.level_id, l.world, l.level_number 
+      FROM remember_or_die.levels l 
+      WHERE l.level_id = (SELECT MAX(level) 
+                          FROM remember_or_die.scores s 
+                          INNER JOIN remember_or_die.players p 
+                                    ON p.player_id = s.player 
+                          WHERE player_id = $1);
+      `,
       [id],
     );
-    return stmt.rows;
+    return stmt.rows[0];
   } catch (error) {
     throw new Error(`Error fetching last played level: ${error.message}`);
   }
@@ -56,4 +64,17 @@ async function getFriendsBestScores(playerId, worldId) {
   }
 }
 
-module.exports = { getLastLevel, getBestScoresByWorldId, getFriendsBestScores };
+async function addScore(playerId, score, levelId) {
+  try {
+    const stmt = await client.query('SELECT remember_or_die.add_score($1, $2, $3);', [playerId, score, levelId]);
+    return stmt.rows[0];
+  } catch (error) {
+    throw new Error(
+      `Error adding score (${score}) for player (id = ${playerId}) for level (id = ${levelId}): ${error.message}`,
+    );
+  }
+}
+
+module.exports = {
+  getLastLevel, getBestScoresByWorldId, getFriendsBestScores, addScore,
+};

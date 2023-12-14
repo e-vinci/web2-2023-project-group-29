@@ -10,9 +10,9 @@ const { lifetimeJwt } = require('../models/players');
 router.get('/', authenticate, async (req, res) => {
   try {
     const players = await Player.getAllPlayers();
-    res.json(players);
+    return res.json(players);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -69,9 +69,9 @@ router.put('/updatePassword', async (req, res) => {
 
   try {
     const response = await Player.updatePassword(playerId, newPassword);
-    res.json(response);
+    return res.json(response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -81,9 +81,9 @@ router.put('/updateAvatar', async (req, res) => {
 
   try {
     const response = await Player.updateAvatar(playerId, avatar);
-    res.json(response);
+    return res.json(response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
