@@ -7,8 +7,11 @@ import img5 from '../../img/players/image5.png';
 import img6 from '../../img/players/image6.png';
 import img7 from '../../img/players/image7.png';
 import img8 from '../../img/players/image8.png';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 
 const RegisterPage = () => {
+  makeDisappearNavbar(true);
+  
   const main = document.querySelector('main');
 
   const generateAvatarOptions = () => {

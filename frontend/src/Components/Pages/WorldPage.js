@@ -1,11 +1,7 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { playAudio } from '../../utils/audioManager';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 
-const setupNavbar = () => {
-  const navbar = document.querySelector('#navbarWrapper');
-  navbar.style.display = 'block';
-};
 
   const createListGroup = () => {
     const links = [
@@ -36,8 +32,7 @@ const setupNavbar = () => {
 
 const WorldPage = () => {
   clearPage();
-  playAudio();
-  setupNavbar();
+  makeDisappearNavbar(false);
 
   const main = document.querySelector('main');
 

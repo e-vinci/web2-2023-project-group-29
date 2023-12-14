@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Navigate from "../Router/Navigate";
 import { clearPage } from '../../utils/render';
 import imgsea from '../../assets/default/levelMapPageSea.png'
@@ -5,15 +6,17 @@ import imgLava from '../../assets/default/levelMapPageLAVE.png'
 import imgDesert from '../../assets/default/levelMapPageDesert.png'
 import {getAuthenticatedUser} from '../../utils/auths'
 import lock from '../../assets/default/pngkey.com-lock-image-png-3963255.png'
-import { makeDisappearNavbar } from "../../utils/navbarSetup";
+import makeDisappearNavbar from "../../utils/navbarSetup";
 
 let urlParams =null;
 let worldparam=null;
 let imagesMap=null;
 
 const main = document.querySelector('main');
-const user = getAuthenticatedUser();
+let user = null;
+
 function levelPage (){
+    user = getAuthenticatedUser();
     if (!user){
         Navigate('/login');
         return;
