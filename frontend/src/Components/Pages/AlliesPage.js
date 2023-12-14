@@ -1,9 +1,16 @@
 /* eslint-disable no-console */
 import { getAuthenticatedUser } from '../../utils/auths';
 import { clearPage } from '../../utils/render';
+import Navigate from '../Router/Navigate';
 
 const thisPlayer = getAuthenticatedUser();
-const {playerId} = thisPlayer;
+let playerId = null;
+// eslint-disable-next-line prefer-destructuring
+if (thisPlayer) {
+  playerId = thisPlayer.playerId;
+} else {
+  Navigate('/')
+}
 
 const fetchInvitations = async () => {
   try {
