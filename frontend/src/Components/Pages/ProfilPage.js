@@ -61,7 +61,7 @@ const ProfilPage = () => {
 
 
         const imgProfil = document.createElement('img');
-        imgProfil.src = findAvatarImg.findAvatarImg(`avatar${player.avatarPath}`);
+        imgProfil.src = findAvatarImg.findAvatarImg(`${player.avatarPath}`);
         imgProfil.classList.add('img-profil');
 
         const imgProfilBack = document.createElement('img');
