@@ -1,27 +1,19 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-// import { playAudio } from '../../utils/audioManager';
+import { playAudio } from '../../utils/audioManager';
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
-
+import { getAuthenticatedUser } from '../../utils/auths';
+import findAvatarImg  from '../../utils/imagesBossAndPlayer';
 import testImageProfil from '../../img/backgrounds/caise.jpg';
+import shield from '../../img/backgrounds/Bouclier.png';
 
 
 const ProfilPage = () => {
   clearPage();
   makeDisappearNavbar(false);
-  // playAudio();
+ playAudio();
 
-      const valeurRecuperee = sessionStorage.getItem('email');
-
-      fetch(`http://localhost:3000/readOneUserFromUsername/${valeurRecuperee}`).then(response => {
-
-          if (!response.ok) {
-
-            throw new Error(`Erreur HTTP: ${response.status}`);
-          }
-          return response.json();
-
-      }).then(playerInfo =>{
+      const player = getAuthenticatedUser();
 
         const main = document.querySelector('main');
 
@@ -50,25 +42,36 @@ const ProfilPage = () => {
         const colonne1Name = document.createElement('td');
         colonne1Name.innerHTML = "Pseudo";
         const colonne1Value = document.createElement('td');
-        colonne1Value.innerHTML = playerInfo.login;
+        colonne1Value.innerHTML = player.login;
 
 
         const colonne2Div = document.createElement('tr');
         const colonne2Name = document.createElement('td');
         colonne2Name.innerHTML = "XP";
         const colonne2Value = document.createElement('td');
-        colonne2Value.innerHTML = playerInfo.xp;
+        colonne2Value.innerHTML = player.xp;
 
 
         const colonne3Div = document.createElement('tr');
         const colonne3Name = document.createElement('td');
         colonne3Name.innerHTML = "Email";
         const colonne3Value = document.createElement('td');
-        colonne3Value.innerHTML = playerInfo.email;
+        colonne3Value.innerHTML = player.email;
+
+
 
         const imgProfil = document.createElement('img');
-        imgProfil.src = playerInfo.avatar_path;
+        imgProfil.src = findAvatarImg.findAvatarImg(`avatar${player.avatarPath}`);
         imgProfil.classList.add('img-profil');
+
+        const imgProfilBack = document.createElement('img');
+        imgProfilBack.src = shield;
+        imgProfilBack.classList.add('img-profil-shield');
+
+
+
+
+
 
         const BouttonModifier = document.createElement('button');
         BouttonModifier.textContent = "modifier profil";
@@ -104,16 +107,14 @@ const ProfilPage = () => {
 
 
 
-        
+    
+        worldPageDiv.appendChild(imgProfilBack);
         worldPageDiv.appendChild(BouttonModifier);
         worldPageDiv.appendChild(imageBProfil);
         worldPageDiv.appendChild(imgProfil);
         worldPageDiv.appendChild(tableProfil);
 
         main.appendChild(worldPageDiv);
-      })
-
-  
 };
 
 export default ProfilPage;

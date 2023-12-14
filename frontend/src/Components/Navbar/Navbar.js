@@ -31,14 +31,17 @@ const Navbar = () => {
                 <a class="nav-link" aria-current="page" href="#" data-uri="/">Home Page</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/login">Login Page</a>
+                <a class="nav-link" href="#" data-uri="/world">Choix du Monde</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/register">Register Page</a>
+                <a class="nav-link" href="#" data-uri="/profil">Profil</a>
               </li>  
               <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/game">Game Page</a>
-              </li>                       
+                <a class="nav-link" href="#" data-uri="/leaderboard">Chronique des Braves</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" data-uri="/allies">Alliés du Royaume</a>
+              </li>                
             </ul>
           </div>
         </div>

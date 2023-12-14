@@ -8,6 +8,15 @@ import boss7 from '../assets/images_boss/boss7.png'
 import boss8 from '../assets/images_boss/boss8.png'
 import boss9 from '../assets/images_boss/boss9.png'
 
+import img1 from '../img/players/image1.png';
+import img2 from '../img/players/image2.png';
+import img3 from '../img/players/image3.png';
+import img4 from '../img/players/image4.png';
+import img5 from '../img/players/image5.png';
+import img6 from '../img/players/image6.png';
+import img7 from '../img/players/image7.png';
+import img8 from '../img/players/image8.png';
+
 const imagesBoss = []
 
 imagesBoss.push({boss: boss1, src :'boss1'})
@@ -22,15 +31,14 @@ imagesBoss.push({boss: boss9, src :'boss9'})
 
 
 
-imagesBoss.push({img: boss1, src :'avatar1'})
-imagesBoss.push({img: boss2, src :'avatar2'})
-imagesBoss.push({img: boss3, src :'avatar3'})
-imagesBoss.push({img: boss4, src :'avatar4'})
-imagesBoss.push({img: boss5, src :'avatar5'})
-imagesBoss.push({img: boss6, src :'avatar6'})
-imagesBoss.push({img: boss7, src :'avatar7'})
-imagesBoss.push({img: boss8, src :'avatar8'})
-imagesBoss.push({img: boss9, src :'avatar9'})
+imagesBoss.push({img: img1, src :'avatar1'})
+imagesBoss.push({img: img2, src :'avatar2'})
+imagesBoss.push({img: img3, src :'avatar3'})
+imagesBoss.push({img: img4, src :'avatar4'})
+imagesBoss.push({img: img5, src :'avatar5'})
+imagesBoss.push({img: img6, src :'avatar6'})
+imagesBoss.push({img: img7, src :'avatar7'})
+imagesBoss.push({img: img8, src :'avatar8'})
 
 
 
@@ -38,4 +46,9 @@ function findBossOrPlayerImg(source){
     return imagesBoss.find((img)=> img.src === source).boss;
 
 }
-export default findBossOrPlayerImg;
+
+function findAvatarImg(source){
+    return imagesBoss.find((img)=> img.src === source).img;
+
+}
+export default { findBossOrPlayerImg, findAvatarImg };
