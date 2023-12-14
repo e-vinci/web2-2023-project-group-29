@@ -44,11 +44,10 @@ imagesBoss.push({img: img8, src :'avatar8'})
 
 function findBossOrPlayerImg(source){
     return imagesBoss.find((img)=> img.src === source).boss;
-
 }
 
 function findAvatarImg(source){
     return imagesBoss.find((img)=> img.src === source).img;
-
 }
+
 export default { findBossOrPlayerImg, findAvatarImg };

@@ -1,7 +1,7 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
 import { playAudio } from '../../utils/audioManager';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 import findAvatarImg  from '../../utils/imagesBossAndPlayer';
 import testImageProfil from '../../img/backgrounds/caise.jpg';

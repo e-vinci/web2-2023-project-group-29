@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-use-before-define */
 import { clearPage } from '../../utils/render';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 import Navigate from '../Router/Navigate';
 

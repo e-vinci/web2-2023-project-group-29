@@ -8,7 +8,7 @@ import imgheart from '../../assets/default/heart.png';
 import imgskull from '../../img/favicon.ico';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import {initializeArrayOfCards} from '../../utils/imagesCards';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 /*
 import Navigate from '../Router/Navigate';
 import {getAuthenticatedUser} from '../../utils/auths' 
