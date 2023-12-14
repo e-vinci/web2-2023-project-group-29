@@ -36,7 +36,7 @@ async function loginPlayer(email, password) {
         playerId: userFound.player_id,
         email: userFound.email,
         login: userFound.login,
-        avatarPath: userFound.avatar_path,
+        avatarPath: userFound.avatar,
         xp: userFound.xp,
       },
       jwtSecret,
@@ -47,7 +47,7 @@ async function loginPlayer(email, password) {
       playerId: userFound.player_id,
       email: userFound.email,
       login: userFound.login,
-      avatarPath: userFound.avatar_path,
+      avatarPath: userFound.avatar,
       xp: userFound.xp,
       token,
     };
@@ -107,7 +107,7 @@ async function readOneUserFromUsername(email) {
 async function searchPlayerByLogin(login) {
   try {
     const stmt = await client.query(
-      'SELECT player_id, email, login, avatar_path, xp FROM remember_or_die.players_vw WHERE login = $1',
+      'SELECT player_id, email, login, avatar, xp FROM remember_or_die.players_vw WHERE login = $1',
       [login],
     );
     return stmt.rows[0];
