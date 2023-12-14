@@ -19,15 +19,15 @@ import img8 from '../img/players/image8.png';
 
 const imagesBoss = []
 
-imagesBoss.push({boss: boss1, src :'boss1'})
-imagesBoss.push({boss: boss2, src :'boss2'})
-imagesBoss.push({boss: boss3, src :'boss3'})
-imagesBoss.push({boss: boss4, src :'boss4'})
-imagesBoss.push({boss: boss5, src :'boss5'})
-imagesBoss.push({boss: boss6, src :'boss6'})
-imagesBoss.push({boss: boss7, src :'boss7'})
-imagesBoss.push({boss: boss8, src :'boss8'})
-imagesBoss.push({boss: boss9, src :'boss9'})
+imagesBoss.push({img: boss1, src :'boss1'})
+imagesBoss.push({img: boss2, src :'boss2'})
+imagesBoss.push({img: boss3, src :'boss3'})
+imagesBoss.push({img: boss4, src :'boss4'})
+imagesBoss.push({img: boss5, src :'boss5'})
+imagesBoss.push({img: boss6, src :'boss6'})
+imagesBoss.push({img: boss7, src :'boss7'})
+imagesBoss.push({img: boss8, src :'boss8'})
+imagesBoss.push({img: boss9, src :'boss9'})
 
 
 
@@ -43,11 +43,8 @@ imagesBoss.push({img: img8, src :'avatar8'})
 
 
 function findBossOrPlayerImg(source){
-    return imagesBoss.find((img)=> img.src === source).boss;
-}
+    const found  = imagesBoss.find((img)=> img.src === source);
+    return found.img;
 
-function findAvatarImg(source){
-    return imagesBoss.find((img)=> img.src === source).img;
 }
-
-export default { findBossOrPlayerImg, findAvatarImg };
+export default findBossOrPlayerImg;

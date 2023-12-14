@@ -6,6 +6,7 @@ const { authenticate, logout } = require('../utils/auths');
 
 const router = express.Router();
 const { lifetimeJwt } = require('../models/players');
+const { getLastLevel } = require('../models/Score');
 
 router.get('/', authenticate, async (req, res) => {
   try {
@@ -46,6 +47,10 @@ router.post('/login', async (req, res) => {
     if (!authenticatedUser) {
       return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
+
+    const data = await getLastLevel(authenticatedUser.playerId);
+    if (!data) authenticatedUser.lastLevel = { world: 1, level_number: 1 };
+    else authenticatedUser.lastLevel = data;
 
     const { token } = authenticatedUser;
 

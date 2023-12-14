@@ -12,7 +12,7 @@ import makeDisappearNavbar from '../../utils/navbarSetup';
 /*
 import Navigate from '../Router/Navigate';
 import {getAuthenticatedUser} from '../../utils/auths' 
-*/
+
 
 
 
@@ -34,22 +34,22 @@ let urlParams=null;
 let levelparams=null;
 const main = document.querySelector('main');
 
-const divBossAndPlayer = document.createElement('div');
-divBossAndPlayer.className = 'bossAndPlayer';
-
+let divBossAndPlayer;
+const user = getAuthenticatedUser();
 async function GamePage() {
-  /*
-  if (!getAuthenticatedUser()){
+  
+  if (!user){
     Navigate('/login');
     return;
   }
-  */
+  
  
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
 
   clearPage();
-
+  divBossAndPlayer = document.createElement('div');
+  divBossAndPlayer.className = 'bossAndPlayer';
   // Recuperation des donnees (Level, World, Memory Timer etc..)
   try {
     urlParams = new URLSearchParams(window.location.search);
@@ -156,9 +156,7 @@ function displayVSAndTitle(){
   divVersusTitle.appendChild(versusTitle);
   
 }
-async function displayBoss(bossSrc){
-
-  
+ function displayBoss(bossSrc){
   imgBoss = findBossOrPlayerImg(bossSrc);
   const div = document.createElement('div')
   div.className = 'divBoss';
@@ -187,28 +185,22 @@ function displayBossLife(bossWrapper) {
   p.id = 'bossLife';
   divBossLife.appendChild(p);
 }
-/* async function getUser() {
-  try {
-    const response = await fetch(`api/user/session.id`);
-    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-    const user = await response.json();
-    return user.avatar_path;
-  } catch (error) {
-    console.error('getAllPizzas::error: ', error);
-    throw error;
-  }
-  
-} */
-async function displayplayerLife() {
-  const player = document.createElement('div');
- // const playerImg = await getUser();
-  const wrapperimg = document.createElement('img');
-  // wrapperimg.src = playerImg
+
+ function displayplayerLife() {
+  const divPlayer = document.createElement('div');// container of player and his life 
+  const player = document.createElement('div');// container img of player
+  player.className = 'player'
+  divPlayer.appendChild(player);
+
+  const playerImg = findBossOrPlayerImg(user.avatarPath); // img player src
+  const wrapperimg = document.createElement('img'); // wrapper img
+  wrapperimg.src = playerImg;
+  wrapperimg.className = 'playerImg'
   player.appendChild(wrapperimg)
-  player.className = 'hearts';
+  divPlayer.className = 'divPlayer';
   const divHeart = document.createElement('div');
   divHeart.className = 'divHearts';
-  divBossAndPlayer.appendChild(player); // container for hearts
+  divBossAndPlayer.appendChild(divPlayer); // container for hearts
   player.appendChild(divHeart);
   for (let index = 0; index < 3; index++) {
     const heart = document.createElement('img');
