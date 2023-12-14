@@ -45,15 +45,25 @@ const LeaderboardPage = () => {
       const leaderboardTable = main.querySelector('table tbody');
       leaderboardTable.innerHTML = '';
 
-      data.forEach((o, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <th scope="row" style="text-align: center">${index + 1}</th>
-        <td style="text-align: center">${o.player}</td>
-        <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
-      `;
-        leaderboardTable.appendChild(row);
-      });
+      if (data.length === 0) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.setAttribute('colspan', '3');
+        emptyCell.style.textAlign = 'center';
+        emptyCell.textContent = 'Aucun brave pour le moment...';
+        emptyRow.appendChild(emptyCell);
+        leaderboardTable.appendChild(emptyRow);
+      } else {
+        data.forEach((o, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <th scope="row" style="text-align: center">${index + 1}</th>
+            <td style="text-align: center">${o.player}</td>
+            <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
+          `;
+          leaderboardTable.appendChild(row);
+        });
+      }
     };
 
     const updateTable = async () => {
