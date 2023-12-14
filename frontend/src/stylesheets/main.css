@@ -139,7 +139,15 @@ body {
 .button-profil {
   position: fixed;
   top: 70%;
-  left: 62%;
+  left: 61%;
+  width: 20%;
+  height: 7%;
+}
+
+.button-profil-validated {
+  position: fixed;
+  top: 70%;
+  left: 17%;
   width: 20%;
   height: 7%;
 }

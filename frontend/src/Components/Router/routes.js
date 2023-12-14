@@ -10,6 +10,8 @@ import LeaderboardPage from '../Pages/LeaderboardPage';
 import AlliesPage from '../Pages/AlliesPage';
 import ProfilPage from '../Pages/ProfilPage';
 import levelMapPage from '../Pages/levelMapPage';
+import ModifiedProfil from '../Pages/ModifiedProfilPage';
+
 
 const routes = {
   '/': HomePage,
@@ -23,7 +25,8 @@ const routes = {
   '/leaderboard': LeaderboardPage,
   '/allies': AlliesPage,
   '/profil': ProfilPage,
-  '/levelMap':levelMapPage
+  '/levelMap':levelMapPage,
+  '/modifiedProfil':ModifiedProfil
 
 };
 

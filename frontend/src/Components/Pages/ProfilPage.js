@@ -16,9 +16,9 @@ const ProfilPage = () => {
 
         const main = document.querySelector('main');
 
-        const worldPageDiv = document.createElement('div');
-        worldPageDiv.style.maxWidth = "100%";
-        worldPageDiv.classList.add('container-fluid', 'full-screen-bg');
+        const profilPageDiv = document.createElement('div');
+        profilPageDiv.style.maxWidth = "100%";
+        profilPageDiv.classList.add('container-fluid', 'full-screen-bg');
 
         const imageBProfil = document.createElement('div');
         imageBProfil.classList.add('full-screen-bois');
@@ -73,7 +73,8 @@ const ProfilPage = () => {
         BouttonModifier.classList.add('button-profil','image-back-profil');
         BouttonModifier.addEventListener('click', (e) => {
           e.preventDefault();
-          Navigate('/login');
+
+          Navigate('/modifiedProfil');
         });
 
 
@@ -102,13 +103,13 @@ const ProfilPage = () => {
 
 
     
-        worldPageDiv.appendChild(imgProfilBack);
-        worldPageDiv.appendChild(BouttonModifier);
-        worldPageDiv.appendChild(imageBProfil);
-        worldPageDiv.appendChild(imgProfil);
-        worldPageDiv.appendChild(tableProfil);
+        profilPageDiv.appendChild(imgProfilBack);
+        profilPageDiv.appendChild(BouttonModifier);
+        profilPageDiv.appendChild(imageBProfil);
+        profilPageDiv.appendChild(imgProfil);
+        profilPageDiv.appendChild(tableProfil);
 
-        main.appendChild(worldPageDiv);
+        main.appendChild(profilPageDiv);
 };
 
 export default ProfilPage;
