@@ -404,6 +404,7 @@ function checkMatchingCards(card) {
         stopGameTimer();
         setTimeout(() => {
           alert(`you win with a time of : ${timerOfThePlayer}`);
+          victory();
         }, 850);
       }
     }
@@ -472,6 +473,32 @@ function gameOver(){
   });
   const giveUp = document.getElementById('giveUp');
   giveUp.addEventListener('click', () => {
+      Navigate('/world');
+  });
+
+}
+
+function victory(){
+  countHeartPlayer = 3;
+  const lastGamePlay = new URL(window.location.href);
+
+  const divGameOver = ` <div class="victory-container full-screen-bg">
+                          <h1 class="h1-victory">Bravo aventurier</h1>
+                          <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} S</p>
+                          <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
+                          <div class="experience-victory">500 points d'expérience</div>
+                          <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
+                          <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
+                        </div>
+                      `
+  main.innerHTML =divGameOver;
+
+  const replayLevel = document.getElementById('replayLevel');
+  replayLevel.addEventListener('click', () => {
+    Navigate(`/${lastGamePlay.href.substring(22,50)}`);  
+  });
+  const goToWorld = document.getElementById('goToWorld');
+  goToWorld.addEventListener('click', () => {
       Navigate('/world');
   });
 
