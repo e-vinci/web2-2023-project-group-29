@@ -168,8 +168,9 @@ const LeaderboardPage = () => {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
 
-      const formattedMinutes = `0${minutes}`.slice(-2);
-      const formattedSeconds = `0${remainingSeconds}`.slice(-2);
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const formattedSeconds =
+        remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
 
       const result = `${formattedMinutes}:${formattedSeconds}`;
       return result;
