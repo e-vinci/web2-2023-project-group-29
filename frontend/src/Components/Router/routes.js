@@ -11,6 +11,7 @@ import AlliesPage from '../Pages/AlliesPage';
 import ProfilPage from '../Pages/ProfilPage';
 import levelMapPage from '../Pages/levelMapPage';
 import ModifiedProfil from '../Pages/ModifiedProfilPage';
+import ModifiedAvatar from '../Pages/ModifiedAvatar';
 
 
 const routes = {
@@ -26,7 +27,8 @@ const routes = {
   '/allies': AlliesPage,
   '/profil': ProfilPage,
   '/levelMap':levelMapPage,
-  '/modifiedProfil':ModifiedProfil
+  '/modifiedProfil':ModifiedProfil,
+  '/modifiedAvatar':ModifiedAvatar
 
 };
 

@@ -1,14 +1,23 @@
+/* eslint-disable no-console */
+import { getAuthenticatedUser } from '../../utils/auths';
 import { clearPage } from '../../utils/render';
+import Navigate from '../Router/Navigate';
 
-const THIS_PLAYER = 2;
+const thisPlayer = getAuthenticatedUser();
+let playerId = null;
+// eslint-disable-next-line prefer-destructuring
+if (thisPlayer) {
+  playerId = thisPlayer.playerId;
+} else {
+  Navigate('/')
+}
 
 const fetchInvitations = async () => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/alliances/invitations/${THIS_PLAYER}`);
+    const response = await fetch(`${process.env.API_BASE_URL}/alliances/invitations/${playerId}`);
     const data = await response.json();
     return data;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Erreur lors de la récupération des invitations: ', error);
     return [];
   }
@@ -16,11 +25,10 @@ const fetchInvitations = async () => {
 
 const fetchAllies = async () => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/alliances/allies/${THIS_PLAYER}`);
+    const response = await fetch(`${process.env.API_BASE_URL}/alliances/allies/${playerId}`);
     const data = await response.json();
     return data;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Erreur lors de la récupération des alliés: ', error);
     return [];
   }
@@ -28,37 +36,34 @@ const fetchAllies = async () => {
 
 const acceptInvitation = async (sender) => {
   try {
-    await fetch(`${process.env.API_BASE_URL}/alliances/${THIS_PLAYER}/${sender}?action=accept`, {
+    await fetch(`${process.env.API_BASE_URL}/alliances/${playerId}/${sender}?action=accept`, {
       method: 'PUT',
     });
     fetchAllies();
     fetchInvitations();
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Erreur lors de l'acceptation de l'invitation: ", error);
   }
 };
 
 const rejectInvitation = async (sender) => {
   try {
-    await fetch(`${process.env.API_BASE_URL}/alliances/${THIS_PLAYER}/${sender}?action=reject`, {
+    await fetch(`${process.env.API_BASE_URL}/alliances/${playerId}/${sender}?action=reject`, {
       method: 'PUT',
     });
     fetchInvitations();
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Erreur lors du rejet de l'invitation: ", error);
   }
 };
 
 const removeAlly = async (ally) => {
   try {
-    await fetch(`${process.env.API_BASE_URL}/alliances/${THIS_PLAYER}/${ally}`, {
+    await fetch(`${process.env.API_BASE_URL}/alliances/${playerId}/${ally}`, {
       method: 'DELETE',
     });
     fetchAllies();
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Erreur lors de la suppression de l'allié: ", error);
   }
 };
@@ -287,7 +292,7 @@ const AlliesPage = async () => {
       const allyToBeAdded = nameInput.value;
       if (allyForm.checkValidity()) {
         try {
-          const response = await fetch(`${process.env.API_BASE_URL}/alliances/${THIS_PLAYER}`, {
+          const response = await fetch(`${process.env.API_BASE_URL}/alliances/${playerId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -5,7 +5,7 @@
 
 head,
 body {
-  font-size: xx-large;
+  font-size: x-large;
   font-family: 'FantasyFont', sans-serif;
   user-select: none;
 }
@@ -122,10 +122,11 @@ body {
 
 .img-profil {
   position: fixed;
-  top: 24%;
-  left: 70.5%;
-  width: 10%;
+  top: 26%;
+  left: 71%;
+  width: 9%;
   height: 15%;
+  border-radius: 50%;
 }
 
 .img-profil-shield {
@@ -136,12 +137,20 @@ body {
   height: 22%;
 }
 
-.button-profil {
+.button-profil-password {
   position: fixed;
   top: 70%;
-  left: 61%;
-  width: 20%;
+  left: 65%;
+  width: 15%;
   height: 7%;
+}
+
+.button-profil-avatar {
+  position: fixed;
+  top: 45%;
+  left: 70%;
+  width: 11%;
+  height: 8%;
 }
 
 .button-profil-validated {
@@ -156,6 +165,14 @@ body {
   background-image: url('../img/backgrounds/ProfilImage.png');
   background-position: center;
   
+}
+
+.button-container {
+  text-align: center; /* Ajuste le texte à l'intérieur du conteneur */
+}
+
+.button-container button {
+  margin: 5px; /* Ajoute une marge entre les boutons */
 }
 /*==============================================*/
 

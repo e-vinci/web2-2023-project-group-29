@@ -1,6 +1,5 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-
 import { makeDisappearNavbar } from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 import findAvatarImg  from '../../utils/imagesBossAndPlayer';
@@ -60,21 +59,28 @@ const ProfilPage = () => {
 
 
         const imgProfil = document.createElement('img');
-        imgProfil.src = findAvatarImg.findAvatarImg(`avatar${player.avatarPath}`);
+        imgProfil.src = findAvatarImg.findAvatarImg(`${player.avatarPath}`);
         imgProfil.classList.add('img-profil');
 
         const imgProfilBack = document.createElement('img');
         imgProfilBack.src = shield;
         imgProfilBack.classList.add('img-profil-shield');
 
-        const BouttonModifier = document.createElement('button');
-        BouttonModifier.textContent = "modifier profil";
-        BouttonModifier.classList.add(testImageProfil);
-        BouttonModifier.classList.add('button-profil','image-back-profil');
-        BouttonModifier.addEventListener('click', (e) => {
+        const BouttonModifierPassword = document.createElement('button');
+        BouttonModifierPassword.textContent = "modifier profil";
+        BouttonModifierPassword.classList.add(testImageProfil);
+        BouttonModifierPassword.classList.add('btn' , 'btn-warning', 'btn-block','button-profil-password');
+        BouttonModifierPassword.addEventListener('click', (e) => {
           e.preventDefault();
-
           Navigate('/modifiedProfil');
+        });
+        const BouttonModifierAvatar = document.createElement('button');
+        BouttonModifierAvatar.textContent = "modifier avatar";
+        BouttonModifierAvatar.classList.add(testImageProfil);
+        BouttonModifierAvatar.classList.add('btn' , 'btn-warning', 'btn-block','button-profil-avatar');
+        BouttonModifierAvatar.addEventListener('click', (e) => {
+          e.preventDefault();
+          Navigate('/modifiedAvatar');
         });
 
 
@@ -100,11 +106,10 @@ const ProfilPage = () => {
         tableProfil.appendChild(theadDutableau);
         tableProfil.appendChild(tbodyDutableau);
 
-
-
     
         profilPageDiv.appendChild(imgProfilBack);
-        profilPageDiv.appendChild(BouttonModifier);
+        profilPageDiv.appendChild(BouttonModifierPassword);
+        profilPageDiv.appendChild(BouttonModifierAvatar);
         profilPageDiv.appendChild(imageBProfil);
         profilPageDiv.appendChild(imgProfil);
         profilPageDiv.appendChild(tableProfil);

@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const generateAvatarOptions = () => {
     const avatarImages = [img1, img2, img3, img4, img5, img6, img7, img8];
 
-    return avatarImages.map((image, index) => `<img src="${image}" class="avatar-option" data-avatar="${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
+    return avatarImages.map((image, index) => `<img src="${image}" class="avatar-option" data-avatar="avatar${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
   };
 
   const registerPage = `
