@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
+import Navigate from '../Router/Navigate';
 import { clearAuthenticatedUser } from '../../utils/auths';
 
 /**
@@ -12,9 +13,9 @@ import { clearAuthenticatedUser } from '../../utils/auths';
 const Navbar = () => {
   const navbarWrapper = document.querySelector('#navbarWrapper');
   const navbar = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-orange"> <!-- Ajout de la classe bg-orange -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-orange navigation">
         <div class="container-fluid">
-          <a class="navbar-brand" style="pointer-events: none;" href="#">Remember Or Die</a>
+          <a class="navbar-brand href="#">Remember Or Die</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -41,7 +42,7 @@ const Navbar = () => {
                 <a class="nav-link" href="#" data-uri="/profil">Profil</a>
               </li>   
               <li id="disconnectBtn" class="nav-item me-5">
-                <a class="nav-link" href="#">Déconnexion</a>
+                <a class="nav-link" data-uri="/play" href="#">Déconnexion</a>
               </li>          
             </ul>
           </div>
@@ -51,7 +52,10 @@ const Navbar = () => {
   navbarWrapper.innerHTML = navbar;
   
   const navlink = document.querySelector('#disconnectBtn');
-  navlink.addEventListener('click', () => clearAuthenticatedUser())
+  navlink.addEventListener('click', (e) => {
+    clearAuthenticatedUser();
+    Navigate(e.target.uri);
+  })
 };
 
 export default Navbar;
