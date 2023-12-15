@@ -10,11 +10,9 @@ import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
 import Navigate from '../Router/Navigate';
-import { getAuthenticatedUser , setXp, setLastLevel } from '../../utils/auths';
-import  calculateRank  from '../../utils/xp';
-import backgroundImage from '../../img/backgrounds/background_Game.png'
-
-
+import { getAuthenticatedUser, setXp, setLastLevel } from '../../utils/auths';
+import calculateRank from '../../utils/xp';
+import backgroundImage from '../../img/backgrounds/background_Game.png';
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 let bossLifeMax = null; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
@@ -29,7 +27,7 @@ let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
 let level = null; // Variable stockant tous les informations du level (world, l'image du boss, level number,memory timer etc...)
-let nbrOfclicks=null; // Variable stockant le nombre de clicks sur les cartes
+let nbrOfclicks = null; // Variable stockant le nombre de clicks sur les cartes
 let imgBoss = null; // Variable stockant l'image du boss
 let urlParams = null;
 let levelparams = null;
@@ -40,24 +38,22 @@ let divBossAndPlayer;
 
 const main = document.querySelector('main');
 
-
-
 const GamePage = async () => {
   user = getAuthenticatedUser();
   if (!user) {
     Navigate('/login');
     return;
   }
- 
+
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
 
   clearPage();
-  
+
   countHeartPlayer = 3;
-  
+
   // on initialise le nombre de click au debut de chaque partie a 0
-  nbrOfclicks=0;
+  nbrOfclicks = 0;
 
   divBossAndPlayer = document.createElement('div');
   divBossAndPlayer.className = 'bossAndPlayer';
@@ -68,21 +64,22 @@ const GamePage = async () => {
     // Récupérez la valeur du paramètre 'levelId'
     levelparams = urlParams.get('levelId');
     console.log(levelparams);
-    
+
     await recoveryData();
-    
-    main.style.backgroundImage=`url(${backgroundImage})`;
-    main.style.height='100vh';
-      
-  
+
+    main.style.backgroundImage = `url(${backgroundImage})`;
+    main.style.height = '100vh';
   } catch (error) {
     console.error(error);
   }
-  if(user.lastLevel.world+1<level.world || user.lastLevel.level_number+1<level.level_number) {
-    Navigate(`/levelMap?world=${user.lastLevel.world+1}`)
+  if (
+    user.lastLevel.world + 1 < level.world ||
+    user.lastLevel.level_number + 1 < level.level_number
+  ) {
+    Navigate(`/levelMap?world=${user.lastLevel.world + 1}`);
     return;
   }
-  
+
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -94,7 +91,7 @@ const GamePage = async () => {
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
-  
+
   bossLifeWrapper = document.querySelector('#bossLife');
 
   // On creer le timer de memorisation
@@ -102,7 +99,7 @@ const GamePage = async () => {
 
   // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
   turnAllTheCards();
-  
+
   // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte.
   cards.forEach((card) =>
     card.addEventListener('click', () => {
@@ -115,15 +112,15 @@ const GamePage = async () => {
         return;
       }
       // Avec se if on oblige le joueur a clicker sur 2 cartes a la fois.
-      if(nbrOfclicks<=2){
-      // Si la variable est vraie, le temps de mémorisation écoulé autorise le joueur à cliquer sur les cartes
-      if (clickableWhenStartMemoryTimer === true) {
-        if (!card.classList.contains('card-found')) {
-          handleCardClick(card);
-          checkMatchingCards(card);
-          
+      if (nbrOfclicks <= 2) {
+        // Si la variable est vraie, le temps de mémorisation écoulé autorise le joueur à cliquer sur les cartes
+        if (clickableWhenStartMemoryTimer === true) {
+          if (!card.classList.contains('card-found')) {
+            handleCardClick(card);
+            checkMatchingCards(card);
+          }
         }
-      }}
+      }
     }),
   );
 };
@@ -133,7 +130,7 @@ async function recoveryData() {
     level = await getLevel();
   } catch (error) {
     console.Error(error);
-  } 
+  }
   numberOfCards = level.card_number;
   memoryTimer = level.memorisation_time;
   bossLifeMax = numberOfCards * 5;
@@ -141,16 +138,16 @@ async function recoveryData() {
 }
 
 async function getLevel() {
-try{
-  const response = await fetch(`${process.env.API_BASE_URL}/levels/${levelparams}`);
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-  const levelresult = await response.json();
-  console.log(levelresult);
-  return levelresult;
-} catch (error) {
-  console.error('getLevelById::error: ', error);
-  throw error;
-}
+  try {
+    const response = await fetch(`${process.env.API_BASE_URL}/levels/${levelparams}`);
+    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    const levelresult = await response.json();
+    console.log(levelresult);
+    return levelresult;
+  } catch (error) {
+    console.error('getLevelById::error: ', error);
+    throw error;
+  }
 }
 
 function displayVSAndTitle() {
@@ -265,7 +262,8 @@ function buildGamePage() {
     cardContainer.style.width = '600px';
     cardContainer.style.height = '60%';
     cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
-  }  if (numberOfCards === 24) {
+  }
+  if (numberOfCards === 24) {
     cardContainer.style.gridTemplateColumns = `repeat(6, auto)`;
     cardContainer.style.gap = '30px';
     cardContainer.style.width = '900px';
@@ -377,7 +375,7 @@ function checkMatchingCards(card) {
         console.log('first Card= ', firstCard);
         handleCardClick(card);
         console.log('second Card= ', card);
-        nbrOfclicks=0;
+        nbrOfclicks = 0;
         if (firstCard !== null) {
           firstCard = null;
         }
@@ -390,7 +388,8 @@ function checkMatchingCards(card) {
       // On met le popUp alert dans un setTimeout afin de laisser asser de temps au cartes de se remettre dans le bon sens
       if (countHeartPlayer === 0) {
         setTimeout(() => {
-         gameOver();
+          clearPage();
+          gameOver();
         }, 1000);
       }
     } else {
@@ -412,6 +411,7 @@ function checkMatchingCards(card) {
       if (bossLife === 0) {
         stopGameTimer();
         setTimeout(() => {
+          clearPage();
           victory();
         }, 850);
       }
@@ -429,7 +429,6 @@ function startGameTimer() {
    *
    ************************************************************************************** */
 
-  
   const gameTimerElement = document.getElementById('gameTimer');
 
   idGameTimer = setInterval(() => {
@@ -463,7 +462,7 @@ function animationBreakHeart() {
   }
 }
 
-function gameOver(){
+function gameOver() {
   countHeartPlayer = 3;
   const lastGamePlay = new URL(window.location.href);
 
@@ -472,33 +471,32 @@ function gameOver(){
                         <button id="tryAgain" class="btn btn-warning button-game-over-try">Essayer encore?</button>
                         <button id="giveUp" class="btn btn-warning button-game-over-give">Abandonner?</button>
                       </div>
-                      `
-  main.innerHTML =divGameOver;
+                      `;
+  main.innerHTML = divGameOver;
 
   const tryAgain = document.getElementById('tryAgain');
   tryAgain.addEventListener('click', () => {
-    Navigate(`/${lastGamePlay.href.substring(22,50)}`);  
+    Navigate(`/${lastGamePlay.href.substring(22, 50)}`);
   });
   const giveUp = document.getElementById('giveUp');
   giveUp.addEventListener('click', () => {
-      Navigate('/world');
+    Navigate('/world');
   });
-
 }
 
 const fetchScores = async () => {
   try {
     const player = getAuthenticatedUser();
-    const {playerId} = player;
+    const { playerId } = player;
     const score = gameSeconds;
     const levelId = levelparams;
-    
-    const response = await fetch(`${process.env.API_BASE_URL}/scores/addScore`,{
+
+    const response = await fetch(`${process.env.API_BASE_URL}/scores/addScore`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({playerId, score, levelId}),
+      body: JSON.stringify({ playerId, score, levelId }),
     });
     if (!response.ok) {
       throw new Error('Réponse Network pas ok');
@@ -511,14 +509,13 @@ const fetchScores = async () => {
   }
 };
 
-
-function victory(){
+function victory() {
   countHeartPlayer = 3;
   const lastGamePlay = new URL(window.location.href);
   fetchScores();
   const rank = calculateRank();
   const experience = rank.progressPercentage;
-  
+
   const divGameOver = ` <div class="victory-container full-screen-bg">
                           <h1 class="h1-victory">Bravo aventurier</h1>
                           <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} </p>
@@ -533,26 +530,20 @@ function victory(){
                           <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
                           <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
                         </div>
-                      `
-  main.innerHTML =divGameOver;
+                      `;
+  main.innerHTML = divGameOver;
 
-  xpBarWarpper = document.querySelector('#experienceBar')
-  xpBarWarpper.style.cssText = `width: ${experience}%`
-
+  xpBarWarpper = document.querySelector('#experienceBar');
+  xpBarWarpper.style.cssText = `width: ${experience}%`;
 
   const replayLevel = document.getElementById('replayLevel');
   replayLevel.addEventListener('click', () => {
-    Navigate(`/${lastGamePlay.href.substring(22,50)}`);  
+    Navigate(`/${lastGamePlay.href.substring(22, 50)}`);
   });
   const goToWorld = document.getElementById('goToWorld');
   goToWorld.addEventListener('click', () => {
-      Navigate('/world');
+    Navigate('/world');
   });
-
 }
-
-
-
-
 
 export default GamePage;

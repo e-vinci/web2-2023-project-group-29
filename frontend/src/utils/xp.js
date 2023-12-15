@@ -22,5 +22,4 @@ function calculateRank() {
   
 }
 
-
 export default  calculateRank ;
