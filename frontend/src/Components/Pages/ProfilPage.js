@@ -5,6 +5,7 @@ import { getAuthenticatedUser } from '../../utils/auths';
 import findBossOrPlayerImg  from '../../utils/imagesBossAndPlayer';
 import testImageProfil from '../../img/backgrounds/caise.jpg';
 import shield from '../../img/backgrounds/Bouclier.png';
+import  calculateRank  from '../../utils/xp';
 
 
 const ProfilPage = () => {
@@ -12,6 +13,7 @@ const ProfilPage = () => {
   makeDisappearNavbar(false);
 
       const player = getAuthenticatedUser();
+      const rank = calculateRank();
 
         const main = document.querySelector('main');
 
@@ -42,19 +44,25 @@ const ProfilPage = () => {
         const colonne1Value = document.createElement('td');
         colonne1Value.innerHTML = player.login;
 
-
         const colonne2Div = document.createElement('tr');
         const colonne2Name = document.createElement('td');
-        colonne2Name.innerHTML = "XP";
+        colonne2Name.innerHTML = "Rank";
         const colonne2Value = document.createElement('td');
-        colonne2Value.innerHTML = player.xp;
+        colonne2Value.innerHTML = rank.level;
 
 
         const colonne3Div = document.createElement('tr');
         const colonne3Name = document.createElement('td');
-        colonne3Name.innerHTML = "Email";
+        colonne3Name.innerHTML = "XP";
         const colonne3Value = document.createElement('td');
-        colonne3Value.innerHTML = player.email;
+        colonne3Value.innerHTML = player.xp;
+
+
+        const colonne4Div = document.createElement('tr');
+        const colonne4Name = document.createElement('td');
+        colonne4Name.innerHTML = "Email";
+        const colonne4Value = document.createElement('td');
+        colonne4Value.innerHTML = player.email;
 
 
 
@@ -98,10 +106,13 @@ const ProfilPage = () => {
         colonne3Div.appendChild(colonne3Name);
         colonne3Div.appendChild(colonne3Value);
 
+        colonne4Div.appendChild(colonne4Name);
+        colonne4Div.appendChild(colonne4Value);
+
         tbodyDutableau.appendChild(colonne1Div);
         tbodyDutableau.appendChild(colonne2Div);
         tbodyDutableau.appendChild(colonne3Div);
-
+        tbodyDutableau.appendChild(colonne4Div);
 
         tableProfil.appendChild(theadDutableau);
         tableProfil.appendChild(tbodyDutableau);

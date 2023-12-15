@@ -1,6 +1,6 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import  makeDisappearNavbar  from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 
 
@@ -19,7 +19,7 @@ const ModifiedProfilPage = () => {
           <div class="row justify-content-center">
             <div class="col-md-6">
             <br>
-              <form id="modificatedForm">
+              <form id="modificatedForm" >
               <br>
                 <div class="form-group">
                   <label for="password">Nouveau mot de passe</label>
@@ -35,8 +35,8 @@ const ModifiedProfilPage = () => {
                 <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
 
                 <div class="button-container">
-                  <button  type="submit" class="btn btn-warning btn-block">Sauvegardé</button>
-                  <button id='backButton' type="submit" class="btn btn-warning btn-block">Annulé</button>
+                  <button  type="submit" class="btn btn-warning btn-block">Sauvegarder</button>
+                  <button id='backButton' type="submit" class="btn btn-warning btn-block">Annuler</button>
                 </div>
               </form>
             </div>
@@ -60,7 +60,13 @@ const ModifiedProfilPage = () => {
 modificatedForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const newPassword = document.querySelector('#password').value;
+  const password = document.querySelector('#password').value;
+  const confirmPassword = document.querySelector('#confirmPassword').value;
+  if (password !== confirmPassword) {
+    passwordMismatchError.textContent = 'Les mots de passe ne correspondent pas';
+    return;
+  }
+
   const player = getAuthenticatedUser();
   const {playerId} = player;
 
@@ -70,7 +76,7 @@ modificatedForm.addEventListener('submit', async (e) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({playerId, newPassword}),
+      body: JSON.stringify({playerId, newPassword: password}),
     });
 
     if (!response.ok) {

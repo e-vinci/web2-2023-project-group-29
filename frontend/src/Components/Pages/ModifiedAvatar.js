@@ -1,7 +1,9 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import  makeDisappearNavbar  from '../../utils/navbarSetup';
 import { getAuthenticatedUser , setAvatar} from '../../utils/auths';
+import  calculateRank  from '../../utils/xp';
+import lock from '../../assets/default/pngkey.com-lock-image-png-3963255.png'
 import img1 from '../../img/players/image1.png';
 import img2 from '../../img/players/image2.png';
 import img3 from '../../img/players/image3.png';
@@ -20,19 +22,112 @@ import img15 from '../../img/players/image15.png';
 import img16 from '../../img/players/image16.png';
 
 
+const avatarAllImages = [
+  {
+    "url":img1,
+    "rank":0 
+  }, 
+  {
+    "url":img2,
+    "rank":0 
+  }, 
+  {
+    "url":img3,
+    "rank":0 
+  }, 
+  {
+    "url":img4,
+    "rank":0 
+  }, 
+  {
+    "url":img5,
+    "rank":0 
+  }, 
+  {
+    "url":img6,
+    "rank":0 
+  }, 
+  {
+    "url":img7,
+    "rank":0 
+  }, 
+  {
+    "url":img8,
+    "rank":0 
+  }, 
+  {
+    "url":img9,
+    "rank":1 
+  }, 
+  {
+    "url":img10,
+    "rank":2 
+  }, 
+  {
+    "url":img11,
+    "rank":3 
+  }, 
+  {
+    "url":img12,
+    "rank":4 
+  }, 
+  {
+    "url":img13,
+    "rank":5
+  }, 
+  {
+    "url":img14,
+    "rank":6 
+  }, 
+  {
+    "url":img15,
+    "rank":7 
+  }, 
+  {
+    "url":img16,
+    "rank":8 
+  }, 
+
+];
+
 
 const ModifiedAvatarPage = () => {
   clearPage();
   makeDisappearNavbar(false);
+
+  const rank = calculateRank();
+
+  // avatarAllImages.forEach((a) => {
+  //   console.log(a.rank <= rank.level);
+  // });
+
+  // const imageDefault = avatarAllImages.filter((a) => a.rank <= rank.level) // images accecible
+  // const imageLock = avatarAllImages.filter((a) => a.rank > rank.level) // images lock
+
   const main = document.querySelector('main');
 
-  const generateAvatarOptions = () => {
-    const avatarImages = [img1, img2, img3, img4, img5, img6, img7, img8,
-      img9,img10,img11,img12,img13,img14,img15,img16
-    ];
+  // function generateAvatarOptionsFree() {
+  //   return imageDefault.map((image, index) => `<img src="${image.url}" class="avatar-option lock-img" data-avatar="avatar${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
+  // };
 
-    return avatarImages.map((image, index) => `<img src="${image}" class="avatar-option" data-avatar="avatar${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
-  };
+  // function generateAvatarOptionslock() {
+  //   return imageLock.map((image, index) => `<img src="${image.url}" class="avatar-option lock-img" data-avatar="avatar${index + 9}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
+  // };
+
+
+  const getAvatarImages = () => {
+    let html = '';
+
+    avatarAllImages.forEach((image, index) => {
+      if (image.rank <= rank.level) {
+        html += `<img src="${image.url}" class="avatar-option" data-avatar="avatar${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`;
+      } else {
+        html += `<img src="${lock}" class="avatar-option lock-img" data-avatar="avatar${index + 1}" data-locked="true" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`;
+      }
+    });
+
+    return html;
+  }
 
   const modifiedProfilPage = `
     <div class="full-screen-bg">
@@ -43,12 +138,14 @@ const ModifiedAvatarPage = () => {
             <br>
               <form id="modificatedForm">
 
-                <div class="form-group">
+                <div class="form-group ">
+                  <br>
+                  <br>
                   <label for="avatar">Choisissez votre avatar :</label>
                   <br>
                   <br>
-                  <div id="avatarOptions" class="d-flex flex-wrap">
-                    ${generateAvatarOptions()}
+                  <div id="avatarOptions" class="d-flex flex-wrap ">
+                    ${getAvatarImages()}
                   </div>
                 </div>
                 <br>
@@ -57,8 +154,8 @@ const ModifiedAvatarPage = () => {
                 <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
 
                 <div class="button-container">
-                  <button  type="submit" class="btn btn-warning btn-block">Sauvegardé</button>
-                  <button id='backButton' type="submit" class="btn btn-warning btn-block">Annulé</button>
+                  <button  type="submit" class="btn btn-warning btn-block">Sauvegarder</button>
+                  <button id='backButton' type="submit" class="btn btn-warning btn-block">Annuler</button>
                 </div>
               </form>
             </div>
@@ -67,6 +164,8 @@ const ModifiedAvatarPage = () => {
       </div>
     </div>
   `;
+
+  
 
   main.innerHTML = modifiedProfilPage;
 
@@ -83,13 +182,17 @@ const ModifiedAvatarPage = () => {
   // Ajout du gestionnaire d'événements pour les options d'avatar
 avatarOptions.addEventListener('click', (e) => {
   const selectedAvatar = e.target.dataset.avatar;
+  const isLocked = e.target.dataset.locked;
   const avatarImages = document.querySelectorAll('.avatar-option');
   // Retirez la classe "selected" de toutes les images
-  avatarImages.forEach((image) => {
-    image.classList.remove('selected');
-  });
+  if (!isLocked) {
+    avatarImages.forEach((image) => {
+      image.classList.remove('selected');
+    });
+  }
   // Ajoutez la classe "selected" à l'image sélectionnée
-  if (selectedAvatar) {
+  if (selectedAvatar && !isLocked) {
+    console.log(selectedAvatar);
     selectedAvatarInput.value = selectedAvatar;
     e.target.classList.add('selected');
   }
@@ -99,6 +202,11 @@ modificatedForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const avatar = selectedAvatarInput.value;
+  if (!avatar) {
+    passwordMismatchError.textContent = 'Veuillez sélectionner un avatar';
+    return;
+  }
+
   const player = getAuthenticatedUser();
   const {playerId} = player;
 
@@ -122,6 +230,8 @@ modificatedForm.addEventListener('submit', async (e) => {
     passwordMismatchError.textContent = error.message;
   }
 });
+
+
 
     
 };
