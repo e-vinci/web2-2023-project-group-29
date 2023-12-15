@@ -60,7 +60,7 @@ const ModifiedProfilPage = () => {
 modificatedForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const password = document.querySelector('#password').value;
+  const newPassword = document.querySelector('#password').value;
   const player = getAuthenticatedUser();
   const {playerId} = player;
 
@@ -70,7 +70,7 @@ modificatedForm.addEventListener('submit', async (e) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({playerId, password}),
+      body: JSON.stringify({playerId, newPassword}),
     });
 
     if (!response.ok) {
