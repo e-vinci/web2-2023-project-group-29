@@ -30,6 +30,7 @@ let level = null; // Variable stockant
 let imgBoss = null;
 let urlParams = null;
 let levelparams = null;
+let xp = null;
 const main = document.querySelector('main');
 
 let divBossAndPlayer;
@@ -467,15 +468,31 @@ function gameOver(){
 
 }
 
+const fetchScores = async () => {
+  try {
+    
+    const response = await fetch(`${process.env.API_BASE_URL}/score/addScore/${timerOfThePlayer}`);
+    if (!response.ok) {
+      throw new Error('Réponse Network pas ok');
+    }
+    const data = await response.json();
+    xp = data.xp;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des scores: ', error);
+  }
+};
+
 function victory(){
   countHeartPlayer = 3;
   const lastGamePlay = new URL(window.location.href);
+  fetchScores();
+  const rank = getPlayerRank().value;
 
   const divGameOver = ` <div class="victory-container full-screen-bg">
                           <h1 class="h1-victory">Bravo aventurier</h1>
                           <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} S</p>
                           <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
-                          <div class="experience-victory">${getPlayerRank().progressPercentage} points d'expérience gagné</div>
+                          <div class="experience-victory">votre Xp est de ${xp} et votre rank est ${rank}</div>
                           <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
                           <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
                         </div>
@@ -493,6 +510,7 @@ function victory(){
 
 }
 
-// timerOfThePlayer
+
+
 
 export default GamePage;
