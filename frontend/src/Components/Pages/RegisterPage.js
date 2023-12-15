@@ -1,8 +1,10 @@
 import Navigate from '../Router/Navigate';
 import makeDisappearNavbar from '../../utils/navbarSetup';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
+import { clearPage } from '../../utils/render';
 
 const RegisterPage = () => {
+  clearPage();
   makeDisappearNavbar(true);
   
   const main = document.querySelector('main');

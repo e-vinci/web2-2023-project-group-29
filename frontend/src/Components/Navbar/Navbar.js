@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
 import { clearAuthenticatedUser } from '../../utils/auths';
+import Navigate from '../Router/Navigate';
 
 /**
  * Render the Navbar which is styled by using Bootstrap
@@ -51,7 +52,7 @@ const Navbar = () => {
   navbarWrapper.innerHTML = navbar;
   
   const navlink = document.querySelector('#disconnectBtn');
-  navlink.addEventListener('click', () => clearAuthenticatedUser())
+  navlink.addEventListener('click', () => clearAuthenticatedUser(), Navigate('/play'))
 };
 
 export default Navbar;
