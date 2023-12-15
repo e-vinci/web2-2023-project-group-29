@@ -1,6 +1,6 @@
 import Navigate from '../Router/Navigate';
 import makeDisappearNavbar from '../../utils/navbarSetup';
-import imagesBossAndPlayer from '../../utils/imagesBossAndPlayer'
+import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 
 const RegisterPage = () => {
   makeDisappearNavbar(true);
@@ -9,9 +9,9 @@ const RegisterPage = () => {
 
   const generateAvatarOptions = () => {
     const avatarImages = ['avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5', 'avatar6', 'avatar7', 'avatar8'];
-
+    
     return avatarImages.map((image) => {
-      const avatarSrc = imagesBossAndPlayer.findAvatarImg(image);
+      const avatarSrc = findBossOrPlayerImg(image);
       return `<img src="${avatarSrc}" class="avatar-option" data-avatar="${image}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`;
     }).join('');
   };
