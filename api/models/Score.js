@@ -67,12 +67,12 @@ async function getFriendsBestScores(playerId, worldId) {
 
 async function addScore(playerId, score, levelId) {
   try {
-    const stmt = await client.query('SELECT remember_or_die.add_score($1, $2, $3);', [
+    await client.query('SELECT remember_or_die.add_score($1, $2, $3);', [
       playerId,
       score,
       levelId,
     ]);
-    return stmt.rows[0];
+    return true;
   } catch (error) {
     throw new Error(
       `Error adding score (${score}) for player (id = ${playerId}) for level (id = ${levelId}): ${error.message}`,

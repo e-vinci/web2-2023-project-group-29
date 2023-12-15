@@ -2,6 +2,7 @@ const express = require('express');
 const {
   getLastLevel, getBestScoresByWorldId, getFriendsBestScores, addScore,
 } = require('../models/Score');
+const { searchPlayerById } = require('../models/players');
 
 const router = express.Router();
 
@@ -53,7 +54,12 @@ router.post('/addScore', async (req, res) => {
 
   try {
     const response = await addScore(playerId, score, levelId);
-    return res.json(response);
+    if (response) {
+      const player = await searchPlayerById(playerId);
+      player.lastLevel = await getLastLevel(playerId);
+      return res.json(player);
+    }
+    return res.json(null);
   } catch (error) {
     return res.status(500).json({
       error: error.message,
