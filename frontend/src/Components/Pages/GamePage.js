@@ -227,7 +227,7 @@ function buildGamePage() {
 
   if (numberOfCards === 8) {
     cardContainer.style.gridTemplateColumns = `repeat(4, auto)`;
-    cardContainer.style.gap = '40px';
+    cardContainer.style.gap = '30px';
     cardContainer.style.width = '600px';
     cardContainer.style.height = '60%';
     cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
