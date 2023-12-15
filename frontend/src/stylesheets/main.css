@@ -257,7 +257,7 @@ body {
 .experience-victory {
   font-size: 24px;
   font-weight: bold;
-  color: #4caf50;
+  color: #00ff08;
 }
 
 .button-victory {
@@ -406,11 +406,12 @@ body {
 }
 #experience {
   position: fixed;
-  width: 80%;
+  width: 30%;
   height: 5%;
-  left: 10% ;
+  left: 35% ;
   border: 1px solid #ffffff;
   text-align: center;
+  border-radius: 20px;
 }
 
 #experienceBar {
@@ -418,6 +419,8 @@ body {
   width: 100%;
   background-color: #1185cd;
   font-size: 60%;
+  border-radius: 20px;
+  
 }
 
 /*=================================*/

@@ -31,6 +31,7 @@ let nbrOfclicks=null; // Variable stockant le nombre de clicks sur les cartes
 let imgBoss = null; // Variable stockant l'image du boss
 let urlParams = null;
 let levelparams = null;
+let xpBarWarpper = null;
 let gameSeconds = 0;
 let user = null; // Variable stockant utilisateur connecte
 let divBossAndPlayer;
@@ -81,6 +82,7 @@ const GamePage = async () => {
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
+  
   bossLifeWrapper = document.querySelector('#bossLife');
 
   // On creer le timer de memorisation
@@ -505,23 +507,28 @@ function victory(){
   const lastGamePlay = new URL(window.location.href);
   fetchScores();
   const rank = calculateRank();
-
+  const experience = rank.progressPercentage;
+  
   const divGameOver = ` <div class="victory-container full-screen-bg">
                           <h1 class="h1-victory">Bravo aventurier</h1>
-                          <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} S</p>
+                          <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} </p>
                           <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
+                          <div class="experience-victory"> Rank: ${rank.level}</div>
                           <div id="experience" class="barre">
                             <div id="experienceBar" class="experience-victory ">
-                              <p classe="p-victory">votre Xp est de ${rank.progressPercentage}% </p>
+                              <p classe="p-victory">${experience}% </p>
                             </div>
                           </div>
                           <br>
-                          <div class="experience-victory"> Et votre rank est ${rank.level}</div>
                           <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
                           <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
                         </div>
                       `
   main.innerHTML =divGameOver;
+
+  xpBarWarpper = document.querySelector('#experienceBar')
+  xpBarWarpper.style.cssText = `width: ${experience}%`
+
 
   const replayLevel = document.getElementById('replayLevel');
   replayLevel.addEventListener('click', () => {
@@ -533,6 +540,7 @@ function victory(){
   });
 
 }
+
 
 
 
