@@ -1,7 +1,16 @@
 import Navigate from '../Router/Navigate';
-import imagesBossAndPlayer from '../../utils/imagesBossAndPlayer';
+import img1 from '../../img/players/image1.png';
+import img2 from '../../img/players/image2.png';
+import img3 from '../../img/players/image3.png';
+import img4 from '../../img/players/image4.png';
+import img5 from '../../img/players/image5.png';
+import img6 from '../../img/players/image6.png';
+import img7 from '../../img/players/image7.png';
+import img8 from '../../img/players/image8.png';
 
 const RegisterPage = () => {
+  makeDisappearNavbar(true);
+  
   const main = document.querySelector('main');
 
   const generateAvatarOptions = () => {

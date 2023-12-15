@@ -116,9 +116,21 @@ async function searchPlayerByLogin(login) {
   }
 }
 
+async function searchPlayerById(id) {
+  try {
+    const stmt = await client.query(
+      'SELECT player_id, email, login, avatar, xp FROM remember_or_die.players_vw WHERE player_id = $1',
+      [id],
+    );
+    return stmt.rows[0];
+  } catch (error) {
+    throw new Error(`Error fetching player (id = ${id}): ${error.message}`);
+  }
+}
+
 async function updatePassword(id, newPassword) {
   try {
-    await client.query('UPDATE remember_or_die.players SET password = $1 WHERE player_id = $2;', [newPassword, id]);
+    await client.query('UPDATE remember_or_die.players SET password = $1 WHERE player_id = $2;', [await bcrypt.hash(newPassword, saltRounds), id]);
     return { success: true, message: 'Mot-de-passe modifié avec succès !' };
   } catch (error) {
     throw new Error(`Error updating player's password (id = ${id}): ${error.message}`);
@@ -143,4 +155,5 @@ module.exports = {
   searchPlayerByLogin,
   updatePassword,
   updateAvatar,
+  searchPlayerById,
 };

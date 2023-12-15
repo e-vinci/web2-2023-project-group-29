@@ -6,13 +6,14 @@ const { authenticate, logout } = require('../utils/auths');
 
 const router = express.Router();
 const { lifetimeJwt } = require('../models/players');
+const { getLastLevel } = require('../models/Score');
 
 router.get('/', authenticate, async (req, res) => {
   try {
     const players = await Player.getAllPlayers();
-    res.json(players);
+    return res.json(players);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -47,6 +48,10 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
 
+    const data = await getLastLevel(authenticatedUser.playerId);
+    if (!data) authenticatedUser.lastLevel = { world: 1, level_number: 1 };
+    else authenticatedUser.lastLevel = data;
+
     const { token } = authenticatedUser;
 
     // Stocker le jeton dans un cookie HTTP
@@ -69,9 +74,9 @@ router.post('/updatePassword', async (req, res) => {
 
   try {
     const response = await Player.updatePassword(playerId, newPassword);
-    res.json(response);
+    return res.json(response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -81,9 +86,9 @@ router.post('/updateAvatar', async (req, res) => {
 
   try {
     const response = await Player.updateAvatar(playerId, avatar);
-    res.json(response);
+    return res.json(response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 

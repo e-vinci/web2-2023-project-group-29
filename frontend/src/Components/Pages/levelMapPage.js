@@ -1,17 +1,28 @@
+/* eslint-disable no-console */
 import Navigate from "../Router/Navigate";
 import { clearPage } from '../../utils/render';
 import imgsea from '../../assets/default/levelMapPageSea.png'
 import imgLava from '../../assets/default/levelMapPageLAVE.png'
 import imgDesert from '../../assets/default/levelMapPageDesert.png'
-// import {getAuthenticatedUser} from '../../utils/auths'
+import {getAuthenticatedUser} from '../../utils/auths'
 import lock from '../../assets/default/pngkey.com-lock-image-png-3963255.png'
+import makeDisappearNavbar from "../../utils/navbarSetup";
 
 let urlParams =null;
 let worldparam=null;
 let imagesMap=null;
 
 const main = document.querySelector('main');
+let user = null;
+
 function levelPage (){
+    user = getAuthenticatedUser();
+    if (!user){
+        Navigate('/login');
+        return;
+    
+    }
+    makeDisappearNavbar(false) 
     clearPage();
 
     // Récupérez la valeur du paramètre 'levelId'
@@ -21,23 +32,21 @@ function levelPage (){
     
     imagesMap = [{world:1,img:imgsea},{world:2,img:imgLava},{world:3,img:imgDesert}]
 
-    /* if (!getAuthenticatedUser()){
-        Navigate('/login');
-        return;
-      } */
-
+    
     buildLevelPage();  
 
 }
 function buildLevelPage() {
     const div = document.createElement('div');
-    div.className = 'divMap'
+    main.appendChild(div)
+    const divMap = document.createElement('div');
+    divMap.className = 'divMap'
     // eslint-disable-next-line eqeqeq
     const imgBackground = imagesMap.find((img)=>img.world == worldparam).img;
-    div.style.backgroundImage = `url(${imgBackground})`;
-    main.appendChild(div)
+    divMap.style.backgroundImage = `url(${imgBackground})`;
+    div.appendChild(divMap)
     const divTitle = document.createElement('div');
-    div.appendChild(divTitle);
+    divMap.appendChild(divTitle);
 
     const title = document.createElement('h1');
     divTitle.appendChild(title);
@@ -46,7 +55,7 @@ function buildLevelPage() {
     
 
     const divList = document.createElement('div');
-    div.appendChild(divList);
+    divMap.appendChild(divList);
     divList.className = 'levels'
     
 
@@ -57,14 +66,18 @@ function buildLevelPage() {
         rowDiv.appendChild(rowListTitle);
         rowDiv.className = 'rowLevel';
         rowDiv.id =index ;
+        console.log(user,'je suis bangala');
         divList.appendChild(rowDiv);
-
+        if(user.lastLevel.world>=worldparam && user.lastLevel.level_number>=index ){
+            addEventListenerMe(rowDiv); 
+    }else{
         const img = document.createElement('img');
         img.src = lock;
         img.style.maxWidth = '50%'
 
         rowDiv.appendChild(img)
-        addEventListenerMe(rowDiv);
+    }
+        
        
     }
 }
@@ -72,6 +85,7 @@ function buildLevelPage() {
 
 
 function addEventListenerMe(wrapper){
+    
      wrapper.addEventListener('click',async ()=>{
         try {
             const response = await fetch(`api/levels/${worldparam}/${wrapper.id}`);
