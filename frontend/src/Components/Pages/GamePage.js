@@ -10,7 +10,7 @@ import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
 import Navigate from '../Router/Navigate';
-import { getAuthenticatedUser, setAuthenticatedUser } from '../../utils/auths';
+import { getAuthenticatedUser , setXp, setLastLevel } from '../../utils/auths';
 import  calculateRank  from '../../utils/xp';
 
 
@@ -30,7 +30,6 @@ let level = null; // Variable stockant
 let imgBoss = null;
 let urlParams = null;
 let levelparams = null;
-let xp = null;
 let gameSeconds = 0;
 const main = document.querySelector('main');
 
@@ -487,9 +486,8 @@ const fetchScores = async () => {
       throw new Error('Réponse Network pas ok');
     }
     const data = await response.json();
-    setAuthenticatedUser(data.xp);
-    xp = data.xp;
-    console.log(xp);
+    setXp(data.xp);
+    setLastLevel(data.lastLevel);
   } catch (error) {
     console.error('Erreur lors de la récupération des scores: ', error);
   }
