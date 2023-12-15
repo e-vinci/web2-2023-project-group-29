@@ -263,19 +263,6 @@ body {
   }
   
 }
-/** *************************************************************************************
-   *    Author: https://chat.openai.com/
-   
-   ************************************************************************************** */
-@media (max-width: 1400px) {
-  .navbar-expand-lg .navbar-collapse {
-    display: none !important;
-  }
-  .navbar-expand-lg .navbar-toggler {
-    display: block !important;
-  }
-}
-/* ========================================================*/
 
 /* Ajouté par Kusay pour avoir toute la page en noir */
 body {
@@ -406,8 +393,7 @@ h1 {
   flex-direction: column;
   height: 90.89vh;
   background-size: 100%  100%;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat
 }
 .levels{
   height: 100%;
