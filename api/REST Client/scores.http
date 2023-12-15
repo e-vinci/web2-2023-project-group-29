@@ -8,3 +8,13 @@ GET {{baseUrl}}/bestScores/1
 
 ### GET friends best scores
 GET {{baseUrl}}/friendsBestScores/1/1
+
+### Add Score
+POST {{baseUrl}}/addScore
+Content-Type: application/json
+    
+{
+    "playerId": "1",
+    "score": "15",
+    "levelId": "1"
+}
