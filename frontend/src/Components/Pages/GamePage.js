@@ -12,6 +12,8 @@ import makeDisappearNavbar from '../../utils/navbarSetup';
 import Navigate from '../Router/Navigate';
 import { getAuthenticatedUser , setXp, setLastLevel } from '../../utils/auths';
 import  calculateRank  from '../../utils/xp';
+import backgroundImage from '../../img/backgrounds/background_Game.png'
+
 
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
@@ -43,7 +45,7 @@ const main = document.querySelector('main');
 const GamePage = async () => {
   user = getAuthenticatedUser();
   if (!user) {
-    Navigate('/start');
+    Navigate('/login');
     return;
   }
   
@@ -51,6 +53,7 @@ const GamePage = async () => {
   makeDisappearNavbar(true);
 
   clearPage();
+  
   countHeartPlayer = 3;
   
   // on initialise le nombre de click au debut de chaque partie a 0
@@ -65,8 +68,13 @@ const GamePage = async () => {
     // Récupérez la valeur du paramètre 'levelId'
     levelparams = urlParams.get('levelId');
     console.log(levelparams);
-
+    
     await recoveryData();
+    
+    main.style.backgroundImage=`url(${backgroundImage})`;
+    main.style.height='100vh';
+      
+  
   } catch (error) {
     console.error(error);
   }
@@ -256,7 +264,6 @@ function buildGamePage() {
     cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
   }  if (numberOfCards === 24) {
     cardContainer.style.gridTemplateColumns = `repeat(6, auto)`;
-    cardContainer.style.margin = '0 20%';
     cardContainer.style.gap = '30px';
     cardContainer.style.width = '900px';
     cardContainer.style.height = '60%';

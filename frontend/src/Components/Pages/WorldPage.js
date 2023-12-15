@@ -1,6 +1,9 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
 import makeDisappearNavbar from '../../utils/navbarSetup';
+import { getAuthenticatedUser} from '../../utils/auths';
+
+let user = null; // Variable stockant utilisateur connecte
 
 
   const createListGroup = () => {
@@ -33,6 +36,12 @@ import makeDisappearNavbar from '../../utils/navbarSetup';
 const WorldPage = () => {
   clearPage();
   makeDisappearNavbar(false);
+  user = getAuthenticatedUser();
+  if (!user) {
+    Navigate('/login');
+    return;
+  }
+  
 
   const main = document.querySelector('main');
 

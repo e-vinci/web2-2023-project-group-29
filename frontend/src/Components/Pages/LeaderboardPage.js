@@ -10,7 +10,7 @@ let thisPlayer = null;
 const LeaderboardPage = () => {
   thisPlayer = getAuthenticatedUser();
   if (!thisPlayer) {
-    Navigate('/');
+    Navigate('/login');
   } else {
     clearPage();
     makeDisappearNavbar(false);
