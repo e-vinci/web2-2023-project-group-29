@@ -2,6 +2,7 @@
 import { Navbar as BootstrapNavbar } from 'bootstrap';
 import Navigate from '../Router/Navigate';
 import { clearAuthenticatedUser } from '../../utils/auths';
+import Navigate from '../Router/Navigate';
 
 /**
  * Render the Navbar which is styled by using Bootstrap

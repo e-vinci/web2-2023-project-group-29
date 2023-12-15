@@ -1,23 +1,21 @@
 import Navigate from '../Router/Navigate';
-import img1 from '../../img/players/image1.png';
-import img2 from '../../img/players/image2.png';
-import img3 from '../../img/players/image3.png';
-import img4 from '../../img/players/image4.png';
-import img5 from '../../img/players/image5.png';
-import img6 from '../../img/players/image6.png';
-import img7 from '../../img/players/image7.png';
-import img8 from '../../img/players/image8.png';
 import makeDisappearNavbar from '../../utils/navbarSetup';
+import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
+import { clearPage } from '../../utils/render';
 
 const RegisterPage = () => {
+  clearPage();
   makeDisappearNavbar(true);
   
   const main = document.querySelector('main');
 
   const generateAvatarOptions = () => {
-    const avatarImages = [img1, img2, img3, img4, img5, img6, img7, img8];
-
-    return avatarImages.map((image, index) => `<img src="${image}" class="avatar-option" data-avatar="avatar${index + 1}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`).join('');
+    const avatarImages = ['avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5', 'avatar6', 'avatar7', 'avatar8'];
+    
+    return avatarImages.map((image) => {
+      const avatarSrc = findBossOrPlayerImg(image);
+      return `<img src="${avatarSrc}" class="avatar-option" data-avatar="${image}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`;
+    }).join('');
   };
 
   const registerPage = `
@@ -62,7 +60,6 @@ const RegisterPage = () => {
               <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
               <div id="existingUserError" class="text-danger mt-3 text-center"></div>
 
-              <br>
               <div class="text-center">
                 <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
               </div>
@@ -106,9 +103,15 @@ avatarOptions.addEventListener('click', (e) => {
     const login = document.querySelector('#username').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
+    const confirmPassword = document.querySelector('#confirmPassword').value;
     const avatarPath = selectedAvatarInput.value;
 
+    if(password !== confirmPassword){
+      passwordMismatchError.textContent = 'Les mots de passe ne correspondent pas !';
+    } else {
+
     try {
+
       const response = await fetch('http://localhost:3000/players/register', {
         method: 'POST',
         headers: {
@@ -126,6 +129,7 @@ avatarOptions.addEventListener('click', (e) => {
     } catch (error) {
       passwordMismatchError.textContent = error.message;
     }
+  }
   });
 };
 

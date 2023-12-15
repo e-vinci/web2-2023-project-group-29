@@ -9,9 +9,10 @@ import imgskull from '../../img/favicon.ico';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
-
 import Navigate from '../Router/Navigate';
-import { getAuthenticatedUser } from '../../utils/auths';
+import { getAuthenticatedUser , setXp, setLastLevel } from '../../utils/auths';
+import  calculateRank  from '../../utils/xp';
+
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 let bossLifeMax = null; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
@@ -25,14 +26,19 @@ let firstCard = null; // Variable stockant la première carte cliquée.
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
-let level = null; // Variable stockant
-let imgBoss = null;
+let level = null; // Variable stockant tous les informations du level (world, l'image du boss, level number,memory timer etc...)
+let nbrOfclicks=null; // Variable stockant le nombre de clicks sur les cartes
+let imgBoss = null; // Variable stockant l'image du boss
 let urlParams = null;
 let levelparams = null;
+let xpBarWarpper = null;
+let gameSeconds = 0;
+let user = null; // Variable stockant utilisateur connecte
+let divBossAndPlayer;
+
 const main = document.querySelector('main');
 
-let divBossAndPlayer;
-let user = null;
+
 
 const GamePage = async () => {
   user = getAuthenticatedUser();
@@ -40,11 +46,16 @@ const GamePage = async () => {
     Navigate('/start');
     return;
   }
- 
+  
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
 
   clearPage();
+  countHeartPlayer = 3;
+  
+  // on initialise le nombre de click au debut de chaque partie a 0
+  nbrOfclicks=0;
+
   divBossAndPlayer = document.createElement('div');
   divBossAndPlayer.className = 'bossAndPlayer';
   // Recuperation des donnees (Level, World, Memory Timer etc..)
@@ -71,6 +82,7 @@ const GamePage = async () => {
 
   cards = document.querySelectorAll('.card');
   lifeBarWrapper = document.querySelector('#LifeBar');
+  
   bossLifeWrapper = document.querySelector('#bossLife');
 
   // On creer le timer de memorisation
@@ -78,24 +90,28 @@ const GamePage = async () => {
 
   // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
   turnAllTheCards();
-
+  
   // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte.
   cards.forEach((card) =>
     card.addEventListener('click', () => {
       const firstCardid = firstCard?.dataset?.id;
       const secondCardid = card?.dataset?.id;
-
+      nbrOfclicks++;
       // Si le joueur a clicker sur la meme carte alors on ne fait rien
       if (firstCardid === secondCardid) {
+        nbrOfclicks--;
         return;
       }
+      // Avec se if on oblige le joueur a clicker sur 2 cartes a la fois.
+      if(nbrOfclicks<=2){
       // Si la variable est vraie, le temps de mémorisation écoulé autorise le joueur à cliquer sur les cartes
       if (clickableWhenStartMemoryTimer === true) {
         if (!card.classList.contains('card-found')) {
           handleCardClick(card);
           checkMatchingCards(card);
+          
         }
-      }
+      }}
     }),
   );
 };
@@ -351,7 +367,7 @@ function checkMatchingCards(card) {
         console.log('first Card= ', firstCard);
         handleCardClick(card);
         console.log('second Card= ', card);
-
+        nbrOfclicks=0;
         if (firstCard !== null) {
           firstCard = null;
         }
@@ -364,7 +380,7 @@ function checkMatchingCards(card) {
       // On met le popUp alert dans un setTimeout afin de laisser asser de temps au cartes de se remettre dans le bon sens
       if (countHeartPlayer === 0) {
         setTimeout(() => {
-          alert('GAME OVER !');
+         gameOver();
         }, 1000);
       }
     } else {
@@ -376,9 +392,9 @@ function checkMatchingCards(card) {
       card.classList.add('card-found');
       firstCard.classList.add('card-found');
 
-      // On remet la first Card a Null et on enleve des point de vies au boss.
+      // On remet la first Card a Null ,on enleve des point de vies au boss et on remet le nombre de click a 0.
       firstCard = null;
-
+      nbrOfclicks = 0;
       bossLife -= 10;
       bossLifeWrapper.innerText = bossLife;
       animationBossLife(lifeBarWrapper);
@@ -386,7 +402,7 @@ function checkMatchingCards(card) {
       if (bossLife === 0) {
         stopGameTimer();
         setTimeout(() => {
-          alert(`you win with a time of : ${timerOfThePlayer}`);
+          victory();
         }, 850);
       }
     }
@@ -403,7 +419,7 @@ function startGameTimer() {
    *
    ************************************************************************************** */
 
-  let gameSeconds = 0;
+  
   const gameTimerElement = document.getElementById('gameTimer');
 
   idGameTimer = setInterval(() => {
@@ -436,5 +452,97 @@ function animationBreakHeart() {
     countHeartPlayer--;
   }
 }
+
+function gameOver(){
+  countHeartPlayer = 3;
+  const lastGamePlay = new URL(window.location.href);
+
+  const divGameOver = `<div class="game-over-container full-screen-bg">
+                        <h1 class="h1-game-over">GAME OVER !</h1>
+                        <button id="tryAgain" class="btn btn-warning button-game-over-try">Essayer encore?</button>
+                        <button id="giveUp" class="btn btn-warning button-game-over-give">Abandonner?</button>
+                      </div>
+                      `
+  main.innerHTML =divGameOver;
+
+  const tryAgain = document.getElementById('tryAgain');
+  tryAgain.addEventListener('click', () => {
+    Navigate(`/${lastGamePlay.href.substring(22,50)}`);  
+  });
+  const giveUp = document.getElementById('giveUp');
+  giveUp.addEventListener('click', () => {
+      Navigate('/world');
+  });
+
+}
+
+const fetchScores = async () => {
+  try {
+    const player = getAuthenticatedUser();
+    const {playerId} = player;
+    const score = gameSeconds;
+    const levelId = levelparams;
+    
+    const response = await fetch(`${process.env.API_BASE_URL}/scores/addScore`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({playerId, score, levelId}),
+    });
+    if (!response.ok) {
+      throw new Error('Réponse Network pas ok');
+    }
+    const data = await response.json();
+    setXp(data.xp);
+    setLastLevel(data.lastLevel);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des scores: ', error);
+  }
+};
+
+
+function victory(){
+  countHeartPlayer = 3;
+  const lastGamePlay = new URL(window.location.href);
+  fetchScores();
+  const rank = calculateRank();
+  const experience = rank.progressPercentage;
+  
+  const divGameOver = ` <div class="victory-container full-screen-bg">
+                          <h1 class="h1-victory">Bravo aventurier</h1>
+                          <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} </p>
+                          <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
+                          <div class="experience-victory"> Rank: ${rank.level}</div>
+                          <div id="experience" class="barre">
+                            <div id="experienceBar" class="experience-victory ">
+                              <p classe="p-victory">${experience}% </p>
+                            </div>
+                          </div>
+                          <br>
+                          <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
+                          <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
+                        </div>
+                      `
+  main.innerHTML =divGameOver;
+
+  xpBarWarpper = document.querySelector('#experienceBar')
+  xpBarWarpper.style.cssText = `width: ${experience}%`
+
+
+  const replayLevel = document.getElementById('replayLevel');
+  replayLevel.addEventListener('click', () => {
+    Navigate(`/${lastGamePlay.href.substring(22,50)}`);  
+  });
+  const goToWorld = document.getElementById('goToWorld');
+  goToWorld.addEventListener('click', () => {
+      Navigate('/world');
+  });
+
+}
+
+
+
+
 
 export default GamePage;

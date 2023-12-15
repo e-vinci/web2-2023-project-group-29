@@ -206,6 +206,72 @@ body {
 
 /* ========================================================*/
 
+
+
+.game-over-container {
+  position: fixed;
+  text-align: center;
+}
+
+.h1-game-over {
+  color: #ff0000;
+  font-size: 230%;
+}
+
+.button-game-over-try {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+.button-game-over-give {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #af4c4c;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================================================*/
+
+
+.victory-container {
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.h1-victory {
+  color: #4caf50;
+}
+
+.p-victory {
+  font-size: 18px;
+}
+
+.experience-victory {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00ff08;
+}
+
+.button-victory {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* ========================================================*/
+
 .game-menu-alex {
   position: absolute;
   top: 20%;
@@ -290,6 +356,13 @@ body {
   border: 2px solid #ffa500;
 }
 
+/* Changer le curseur au survol pour indiquer que le lien est clickable */
+#register:hover {
+  cursor: pointer;
+}
+
+
+
 .bossAndPlayer {
   border-bottom: 1px solid #ffffff;
   display: grid;
@@ -316,6 +389,35 @@ body {
   background-color: #ff0000;
   font-size: 50%;
 }
+
+
+/*====== barre d'experience ======*/
+
+.barre {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+#experience {
+  position: fixed;
+  width: 30%;
+  height: 5%;
+  left: 35% ;
+  border: 1px solid #ffffff;
+  text-align: center;
+  border-radius: 20px;
+}
+
+#experienceBar {
+  height: 100%;
+  width: 100%;
+  background-color: #1185cd;
+  font-size: 60%;
+  border-radius: 20px;
+  
+}
+
+/*=================================*/
 #divVersus {
   grid-area: vs;
 }
