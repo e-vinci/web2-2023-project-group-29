@@ -289,6 +289,13 @@ body {
   border: 2px solid #ffa500;
 }
 
+/* Changer le curseur au survol pour indiquer que le lien est clickable */
+#register:hover {
+  cursor: pointer;
+}
+
+
+
 .bossAndPlayer {
   border-bottom: 1px solid #ffffff;
   display: grid;

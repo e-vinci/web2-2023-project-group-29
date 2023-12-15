@@ -94,9 +94,18 @@ const LoginPage = () => {
   });
 
   const registerLink = document.querySelector('#register');
-  registerLink.addEventListener('click', () => {
+registerLink.addEventListener('click', () => {
+  // Appliquer la classe pour l'effet de bouton
+  registerLink.classList.add('button-active');
+
+  // Naviguer vers la page d'inscription après un court délai (pour l'effet visuel)
+  setTimeout(() => {
     Navigate('/register');
-  });
+
+    // Réinitialiser la classe après la navigation
+    registerLink.classList.remove('button-active');
+  }, 500); // Délai de 500 millisecondes (ajustez selon vos besoins)
+});
 };
 
 export default LoginPage;
