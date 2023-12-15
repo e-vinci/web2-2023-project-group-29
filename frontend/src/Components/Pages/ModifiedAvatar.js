@@ -192,7 +192,6 @@ avatarOptions.addEventListener('click', (e) => {
   }
   // Ajoutez la classe "selected" à l'image sélectionnée
   if (selectedAvatar && !isLocked) {
-    console.log(selectedAvatar);
     selectedAvatarInput.value = selectedAvatar;
     e.target.classList.add('selected');
   }
