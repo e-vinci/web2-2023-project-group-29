@@ -118,7 +118,7 @@ async function searchPlayerByLogin(login) {
 
 async function updatePassword(id, newPassword) {
   try {
-    await client.query('UPDATE remember_or_die.players SET password = $1 WHERE player_id = $2;', [newPassword, id]);
+    await client.query('UPDATE remember_or_die.players SET password = $1 WHERE player_id = $2;', [await bcrypt.hash(newPassword, saltRounds), id]);
     return { success: true, message: 'Mot-de-passe modifié avec succès !' };
   } catch (error) {
     throw new Error(`Error updating player's password (id = ${id}): ${error.message}`);
