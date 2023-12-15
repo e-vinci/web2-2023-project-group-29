@@ -12,6 +12,8 @@ import makeDisappearNavbar from '../../utils/navbarSetup';
 import Navigate from '../Router/Navigate';
 import { getAuthenticatedUser , setXp, setLastLevel } from '../../utils/auths';
 import  calculateRank  from '../../utils/xp';
+import backgroundImage from '../../img/backgrounds/background_Game.png'
+
 
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
@@ -43,14 +45,15 @@ const main = document.querySelector('main');
 const GamePage = async () => {
   user = getAuthenticatedUser();
   if (!user) {
-    Navigate('/start');
+    Navigate('/login');
     return;
   }
-  
+ 
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
 
   clearPage();
+  
   countHeartPlayer = 3;
   
   // on initialise le nombre de click au debut de chaque partie a 0
@@ -65,12 +68,21 @@ const GamePage = async () => {
     // Récupérez la valeur du paramètre 'levelId'
     levelparams = urlParams.get('levelId');
     console.log(levelparams);
-
+    
     await recoveryData();
+    
+    main.style.backgroundImage=`url(${backgroundImage})`;
+    main.style.height='100vh';
+      
+  
   } catch (error) {
     console.error(error);
   }
-
+  if(user.lastLevel.world+1<level.world || user.lastLevel.level_number+1<level.level_number) {
+    Navigate(`/levelMap?world=${user.lastLevel.world+1}`)
+    return;
+  }
+  
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -121,8 +133,7 @@ async function recoveryData() {
     level = await getLevel();
   } catch (error) {
     console.Error(error);
-  }
-
+  } 
   numberOfCards = level.card_number;
   memoryTimer = level.memorisation_time;
   bossLifeMax = numberOfCards * 5;
@@ -130,16 +141,16 @@ async function recoveryData() {
 }
 
 async function getLevel() {
-  try {
-    const response = await fetch(`api/levels/${levelparams}`);
-    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-    const levelresult = await response.json();
-    console.log(levelresult);
-    return levelresult;
-  } catch (error) {
-    console.error('getLevelById::error: ', error);
-    throw error;
-  }
+try{
+  const response = await fetch(`${process.env.API_BASE_URL}/levels/${levelparams}`);
+  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  const levelresult = await response.json();
+  console.log(levelresult);
+  return levelresult;
+} catch (error) {
+  console.error('getLevelById::error: ', error);
+  throw error;
+}
 }
 
 function displayVSAndTitle() {
@@ -243,7 +254,7 @@ function buildGamePage() {
 
   if (numberOfCards === 8) {
     cardContainer.style.gridTemplateColumns = `repeat(4, auto)`;
-    cardContainer.style.gap = '40px';
+    cardContainer.style.gap = '30px';
     cardContainer.style.width = '600px';
     cardContainer.style.height = '60%';
     cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
@@ -256,7 +267,6 @@ function buildGamePage() {
     cardContainer.style.gridTemplateRows = 'repeat(4, 125px)';
   }  if (numberOfCards === 24) {
     cardContainer.style.gridTemplateColumns = `repeat(6, auto)`;
-    cardContainer.style.margin = '0 20%';
     cardContainer.style.gap = '30px';
     cardContainer.style.width = '900px';
     cardContainer.style.height = '60%';

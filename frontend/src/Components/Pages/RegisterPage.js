@@ -1,8 +1,10 @@
 import Navigate from '../Router/Navigate';
 import makeDisappearNavbar from '../../utils/navbarSetup';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
+import { clearPage } from '../../utils/render';
 
 const RegisterPage = () => {
+  clearPage();
   makeDisappearNavbar(true);
   
   const main = document.querySelector('main');
@@ -58,7 +60,6 @@ const RegisterPage = () => {
               <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
               <div id="existingUserError" class="text-danger mt-3 text-center"></div>
 
-              <br>
               <div class="text-center">
                 <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
               </div>
@@ -102,7 +103,12 @@ avatarOptions.addEventListener('click', (e) => {
     const login = document.querySelector('#username').value;
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
+    const confirmPassword = document.querySelector('#confirmPassword').value;
     const avatarPath = selectedAvatarInput.value;
+
+    if(password !== confirmPassword){
+      passwordMismatchError.textContent = 'Les mots de passe ne correspondent pas !';
+    } else {
 
     try {
 
@@ -123,6 +129,7 @@ avatarOptions.addEventListener('click', (e) => {
     } catch (error) {
       passwordMismatchError.textContent = error.message;
     }
+  }
   });
 };
 

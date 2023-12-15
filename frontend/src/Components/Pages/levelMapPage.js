@@ -13,8 +13,7 @@ let worldparam=null;
 let imagesMap=null;
 
 const main = document.querySelector('main');
-let user = null;
-
+let user
 function levelPage (){
     user = getAuthenticatedUser();
     if (!user){
@@ -68,7 +67,7 @@ function buildLevelPage() {
         rowDiv.id =index ;
         console.log(user,'je suis bangala');
         divList.appendChild(rowDiv);
-        if(user.lastLevel.world>=worldparam && user.lastLevel.level_number>=index ){
+        if(user.lastLevel.world+1>=worldparam && user.lastLevel.level_number+1>=index ){
             addEventListenerMe(rowDiv); 
     }else{
         const img = document.createElement('img');
@@ -88,7 +87,7 @@ function addEventListenerMe(wrapper){
     
      wrapper.addEventListener('click',async ()=>{
         try {
-            const response = await fetch(`api/levels/${worldparam}/${wrapper.id}`);
+            const response = await fetch(`${process.env.API_BASE_URL}/levels/${worldparam}/${wrapper.id}`);
 
             if(!response.ok)throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
