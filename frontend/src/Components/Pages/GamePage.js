@@ -26,15 +26,18 @@ let firstCard = null; // Variable stockant la première carte cliquée.
 let idGameTimer;
 let timerOfThePlayer; // Variable stockant le temps pris par le joueur pour vaincre le boss ou trouver toutes les paires de cartes.
 let countHeartPlayer = 3; // Variable stockant le nombre de coeurs restant du joueur durant la partie .
-let level = null; // Variable stockant
-let imgBoss = null;
+let level = null; // Variable stockant tous les informations du level (world, l'image du boss, level number,memory timer etc...)
+let nbrOfclicks=null; // Variable stockant le nombre de clicks sur les cartes
+let imgBoss = null; // Variable stockant l'image du boss
 let urlParams = null;
 let levelparams = null;
 let gameSeconds = 0;
+let user = null; // Variable stockant utilisateur connecte
+let divBossAndPlayer;
+
 const main = document.querySelector('main');
 
-let divBossAndPlayer;
-let user = null;
+
 
 const GamePage = async () => {
   user = getAuthenticatedUser();
@@ -42,16 +45,15 @@ const GamePage = async () => {
     Navigate('/start');
     return;
   }
- 
+  
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
 
   clearPage();
   countHeartPlayer = 3;
-  console.log(countHeartPlayer);
-
   
-
+  // on initialise le nombre de click au debut de chaque partie a 0
+  nbrOfclicks=0;
 
   divBossAndPlayer = document.createElement('div');
   divBossAndPlayer.className = 'bossAndPlayer';
@@ -86,24 +88,28 @@ const GamePage = async () => {
 
   // Retourner toutes les cartes dès le début de la partie afin que le joueur puisse mémoriser les cartes dans le temps imparti
   turnAllTheCards();
-
+  
   // Mise en place d'un écouteur d'événement sur toutes les cartes lorsque l'on clique sur une carte.
   cards.forEach((card) =>
     card.addEventListener('click', () => {
       const firstCardid = firstCard?.dataset?.id;
       const secondCardid = card?.dataset?.id;
-
+      nbrOfclicks++;
       // Si le joueur a clicker sur la meme carte alors on ne fait rien
       if (firstCardid === secondCardid) {
+        nbrOfclicks--;
         return;
       }
+      // Avec se if on oblige le joueur a clicker sur 2 cartes a la fois.
+      if(nbrOfclicks<=2){
       // Si la variable est vraie, le temps de mémorisation écoulé autorise le joueur à cliquer sur les cartes
       if (clickableWhenStartMemoryTimer === true) {
         if (!card.classList.contains('card-found')) {
           handleCardClick(card);
           checkMatchingCards(card);
+          
         }
-      }
+      }}
     }),
   );
 };
@@ -359,7 +365,7 @@ function checkMatchingCards(card) {
         console.log('first Card= ', firstCard);
         handleCardClick(card);
         console.log('second Card= ', card);
-
+        nbrOfclicks=0;
         if (firstCard !== null) {
           firstCard = null;
         }
@@ -384,9 +390,9 @@ function checkMatchingCards(card) {
       card.classList.add('card-found');
       firstCard.classList.add('card-found');
 
-      // On remet la first Card a Null et on enleve des point de vies au boss.
+      // On remet la first Card a Null ,on enleve des point de vies au boss et on remet le nombre de click a 0.
       firstCard = null;
-
+      nbrOfclicks = 0;
       bossLife -= 10;
       bossLifeWrapper.innerText = bossLife;
       animationBossLife(lifeBarWrapper);
