@@ -23,6 +23,12 @@ const clearAuthenticatedUser = () => {
   sessionStorage.removeItem(STORE_NAME);
   currentUser = undefined;
 };
+const setLastLevel = (newLastLevel) => {
+  currentUser.lastLevel = newLastLevel
+};
+const setXp = (newXp) => {
+  currentUser.xp = newXp
+};
 
 // eslint-disable-next-line object-curly-newline
-export { getAuthenticatedUser, setAuthenticatedUser, isAuthenticated, clearAuthenticatedUser };
+export { setXp, setLastLevel, getAuthenticatedUser, setAuthenticatedUser, isAuthenticated, clearAuthenticatedUser };
