@@ -504,7 +504,13 @@ function victory(){
                           <h1 class="h1-victory">Bravo aventurier</h1>
                           <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} S</p>
                           <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
-                          <div class="experience-victory">votre Xp est de ${rank.progressPercentage}% et votre rank est ${rank.level}</div>
+                          <div id="experience" class="barre">
+                            <div id="experienceBar" class="experience-victory ">
+                              <p classe="p-victory">votre Xp est de ${rank.progressPercentage}% </p>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="experience-victory"> Et votre rank est ${rank.level}</div>
                           <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
                           <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
                         </div>
