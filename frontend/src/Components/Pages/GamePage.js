@@ -11,7 +11,7 @@ import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
 import Navigate from '../Router/Navigate';
 import { getAuthenticatedUser, setAuthenticatedUser } from '../../utils/auths';
-import  getPlayerRank  from '../../utils/xp';
+import  calculateRank  from '../../utils/xp';
 
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
@@ -31,6 +31,7 @@ let imgBoss = null;
 let urlParams = null;
 let levelparams = null;
 let xp = null;
+let gameSeconds = 0;
 const main = document.querySelector('main');
 
 let divBossAndPlayer;
@@ -411,7 +412,7 @@ function startGameTimer() {
    *
    ************************************************************************************** */
 
-  let gameSeconds = 0;
+  
   const gameTimerElement = document.getElementById('gameTimer');
 
   idGameTimer = setInterval(() => {
@@ -470,11 +471,12 @@ function gameOver(){
 
 const fetchScores = async () => {
   try {
-    const {playerId} = getAuthenticatedUser();
-    const score = timerOfThePlayer;
-    const levelId = sessionStorage.getItem('levelId');
+    const player = getAuthenticatedUser();
+    const {playerId} = player;
+    const score = gameSeconds;
+    const levelId = levelparams;
     
-    const response = await fetch(`${process.env.API_BASE_URL}/score/addScore`,{
+    const response = await fetch(`${process.env.API_BASE_URL}/scores/addScore`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -485,7 +487,7 @@ const fetchScores = async () => {
       throw new Error('Réponse Network pas ok');
     }
     const data = await response.json();
-    setAuthenticatedUser(data);
+    setAuthenticatedUser(data.xp);
     xp = data.xp;
     console.log(xp);
   } catch (error) {
@@ -498,13 +500,13 @@ function victory(){
   countHeartPlayer = 3;
   const lastGamePlay = new URL(window.location.href);
   fetchScores();
-  const rank = getPlayerRank().level;
+  const rank = calculateRank();
 
   const divGameOver = ` <div class="victory-container full-screen-bg">
                           <h1 class="h1-victory">Bravo aventurier</h1>
                           <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} S</p>
                           <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
-                          <div class="experience-victory">votre Xp est de ${xp} et votre rank est ${rank}</div>
+                          <div class="experience-victory">votre Xp est de ${rank.progressPercentage}% et votre rank est ${rank.level}</div>
                           <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
                           <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
                         </div>
