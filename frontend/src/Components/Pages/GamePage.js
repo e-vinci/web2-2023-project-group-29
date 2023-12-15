@@ -61,8 +61,8 @@ async function GamePage() {
   } catch (error) {
     console.error(error);
   }
-  if(user.lastLevel.world<level.world || user.lastLevel.level_number<level.level_number) {
-    Navigate(`/levelMap?world=${user.lastLevel.world}`)
+  if(user.lastLevel.world+1<level.world || user.lastLevel.level_number+1<level.level_number) {
+    Navigate(`/levelMap?world=${user.lastLevel.world+1}`)
     return;
   }
   
@@ -122,7 +122,7 @@ async function recoveryData(){
 
 async function getLevel() {
 try{
-  const response = await fetch(`api/levels/${levelparams}`);
+  const response = await fetch(`${process.env.API_BASE_URL}/levels/${levelparams}`);
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
   const levelresult = await response.json();
   console.log(levelresult);

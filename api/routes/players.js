@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
     }
 
     const data = await getLastLevel(authenticatedUser.playerId);
-    if (!data) authenticatedUser.lastLevel = { world: 1, level_number: 1 };
+    if (!data) authenticatedUser.lastLevel = { world: 0, level_number: 0 };
     else authenticatedUser.lastLevel = data;
 
     const { token } = authenticatedUser;
