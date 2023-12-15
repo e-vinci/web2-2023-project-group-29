@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from './auths';
 
-const { xp } = getAuthenticatedUser();
+const  xp  = getAuthenticatedUser();
 
 const rank = calculateRank();
 
@@ -20,4 +20,4 @@ function getPlayerRank() {
     return rank
 }
 
-export default getPlayerRank();
+export default  getPlayerRank ;

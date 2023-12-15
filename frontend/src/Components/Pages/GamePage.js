@@ -9,9 +9,10 @@ import imgskull from '../../img/favicon.ico';
 import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
-
 import Navigate from '../Router/Navigate';
 import { getAuthenticatedUser } from '../../utils/auths';
+import  getPlayerRank  from '../../utils/xp';
+
 
 let numberOfCards = null; // Variable stockant par rapport au niveau le nombre de cartes a généré.
 let bossLifeMax = null; // Variable stockant les points de vie du boss en fonction du nombre de cartes.(NB : Une paire de cartes trouvée => -10 pv au boss . C'est pour cela qu'on fait *5)
@@ -392,7 +393,6 @@ function checkMatchingCards(card) {
       if (bossLife === 0) {
         stopGameTimer();
         setTimeout(() => {
-          alert(`you win with a time of : ${timerOfThePlayer}`);
           victory();
         }, 850);
       }
@@ -475,7 +475,7 @@ function victory(){
                           <h1 class="h1-victory">Bravo aventurier</h1>
                           <p classe="p-victory">Vous avez fini en seulement ${timerOfThePlayer} S</p>
                           <p classe="p-victory">Vous avez gagné beaucoup d'expérience grace a ce temps</p>
-                          <div class="experience-victory">500 points d'expérience</div>
+                          <div class="experience-victory">${getPlayerRank().progressPercentage} points d'expérience gagné</div>
                           <button id="replayLevel" class="btn btn-warning button-victory">Refaire le niveau ?</button>
                           <button id="goToWorld" class="btn btn-warning button-victory">Partir Ailleur ?</button>
                         </div>
@@ -492,5 +492,7 @@ function victory(){
   });
 
 }
+
+// timerOfThePlayer
 
 export default GamePage;
