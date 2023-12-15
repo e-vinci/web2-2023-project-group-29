@@ -1,8 +1,8 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
-import findAvatarImg  from '../../utils/imagesBossAndPlayer';
+import findBossOrPlayerImg  from '../../utils/imagesBossAndPlayer';
 import testImageProfil from '../../img/backgrounds/caise.jpg';
 import shield from '../../img/backgrounds/Bouclier.png';
 
@@ -59,7 +59,7 @@ const ProfilPage = () => {
 
 
         const imgProfil = document.createElement('img');
-        imgProfil.src = findAvatarImg.findAvatarImg(`${player.avatarPath}`);
+        imgProfil.src = findBossOrPlayerImg(player.avatarPath);
         imgProfil.classList.add('img-profil');
 
         const imgProfilBack = document.createElement('img');

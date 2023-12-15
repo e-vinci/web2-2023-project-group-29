@@ -1,16 +1,11 @@
 /* eslint-disable no-console */
 import { getAuthenticatedUser } from '../../utils/auths';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { clearPage } from '../../utils/render';
 import Navigate from '../Router/Navigate';
 
-const thisPlayer = getAuthenticatedUser();
+let thisPlayer = null;
 let playerId = null;
-// eslint-disable-next-line prefer-destructuring
-if (thisPlayer) {
-  playerId = thisPlayer.playerId;
-} else {
-  Navigate('/')
-}
 
 const fetchInvitations = async () => {
   try {
@@ -193,6 +188,16 @@ const createAlliesTable = async () => {
 };
 
 const AlliesPage = async () => {
+  thisPlayer = getAuthenticatedUser();
+  
+  if (thisPlayer) {
+    playerId = thisPlayer.playerId;
+  } else {
+    Navigate('/')
+  }
+
+  makeDisappearNavbar(false);
+
   clearPage();
 
   const main = document.querySelector('main');

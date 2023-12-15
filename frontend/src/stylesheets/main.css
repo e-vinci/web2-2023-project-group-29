@@ -231,6 +231,72 @@ body {
 
 /* ========================================================*/
 
+
+
+.game-over-container {
+  position: fixed;
+  text-align: center;
+}
+
+.h1-game-over {
+  color: #ff0000;
+  font-size: 230%;
+}
+
+.button-game-over-try {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+.button-game-over-give {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #af4c4c;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================================================*/
+
+
+.victory-container {
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.h1-victory {
+  color: #4caf50;
+}
+
+.p-victory {
+  font-size: 18px;
+}
+
+.experience-victory {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00ff08;
+}
+
+.button-victory {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* ========================================================*/
+
 .game-menu-alex {
   position: absolute;
   top: 20%;
@@ -239,6 +305,7 @@ body {
   padding: 2%;
   background-color: #3a3a3a00;
   user-select: none;
+  word-wrap: break-word;
 }
 
 .game-menu-alex .list-group-item-alex {
@@ -285,6 +352,19 @@ body {
     padding: 1vw 1vw;
     margin: 1vw 0;
   }
+  
+}
+/** *************************************************************************************
+   *    Author: https://chat.openai.com/
+   
+   ************************************************************************************** */
+@media (max-width: 1400px) {
+  .navbar-expand-lg .navbar-collapse {
+    display: none !important;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    display: block !important;
+  }
 }
 /* ========================================================*/
 
@@ -306,7 +386,7 @@ body {
 
 /* Texte noir au survol */
 .bg-orange .navbar-nav .nav-link:hover {
-  color: #000000; /* Code couleur noir */
+  color: #ffffff; /* Code couleur noir */
 }
 
 /* Couleur de la bordure pour indiquer la sélection */
@@ -314,23 +394,27 @@ body {
   border: 2px solid #ffa500;
 }
 
+/* Changer le curseur au survol pour indiquer que le lien est clickable */
+#register:hover {
+  cursor: pointer;
+}
+
+
+
 .bossAndPlayer {
   border-bottom: 1px solid #ffffff;
   display: grid;
-  grid-template-areas: 'heart vs bossLife';
+  grid-template-areas: 'player vs boss';
   grid-template-columns: repeat(3, 1fr);
 }
 .divBoss {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  grid-area: boss;
 }
 .boss {
   width: 30%;
   height: 90%;
 }
 #life {
-  grid-area: bossLife;
   width: 100%;
   height: 9%;
   border: 1px solid #ffffff;
@@ -343,11 +427,40 @@ body {
   background-color: #ff0000;
   font-size: 50%;
 }
+
+
+/*====== barre d'experience ======*/
+
+.barre {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+#experience {
+  position: fixed;
+  width: 30%;
+  height: 5%;
+  left: 35% ;
+  border: 1px solid #ffffff;
+  text-align: center;
+  border-radius: 20px;
+}
+
+#experienceBar {
+  height: 100%;
+  width: 100%;
+  background-color: #1185cd;
+  font-size: 60%;
+  border-radius: 20px;
+  
+}
+
+/*=================================*/
 #divVersus {
   grid-area: vs;
 }
 
-.imgBoss {
+.imgBoss , .playerImg{
   width: AUTO;
   height: 125px;
   margin-bottom: 10px;
@@ -364,14 +477,16 @@ body {
 input[type="file"] {
   height: 3rem; /* Ajustez la hauteur selon vos préférences */
 }
-.divHearts {
-  margin-bottom: 2%;
+.divPlayer {
+  grid-area: player;
 }
-.hearts {
-  grid-area: heart;
+.divPlayer,.divBoss{
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: center;
+}
+.playerImg{
+  margin-left: 10px;
 }
 
 .heart,
@@ -416,8 +531,8 @@ h1 {
 .divMap{
   display: flex;
   flex-direction: column;
-  height: 89vh;
-  background-size: 100% 100%;
+  height: 90.89vh;
+  background-size: 100%  100%;
   background-position: center center;
   background-repeat: no-repeat;
 }

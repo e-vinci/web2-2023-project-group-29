@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable no-use-before-define */
 import { clearPage } from '../../utils/render';
-import { makeDisappearNavbar } from '../../utils/navbarSetup';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 import Navigate from '../Router/Navigate';
 
-const thisPlayer = getAuthenticatedUser();
+let thisPlayer = null;
 
 const LeaderboardPage = () => {
+  thisPlayer = getAuthenticatedUser();
   if (!thisPlayer) {
     Navigate('/');
   } else {
@@ -44,15 +45,25 @@ const LeaderboardPage = () => {
       const leaderboardTable = main.querySelector('table tbody');
       leaderboardTable.innerHTML = '';
 
-      data.forEach((o, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <th scope="row" style="text-align: center">${index + 1}</th>
-        <td style="text-align: center">${o.player}</td>
-        <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
-      `;
-        leaderboardTable.appendChild(row);
-      });
+      if (data.length === 0) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.setAttribute('colspan', '3');
+        emptyCell.style.textAlign = 'center';
+        emptyCell.textContent = 'Aucun brave pour le moment...';
+        emptyRow.appendChild(emptyCell);
+        leaderboardTable.appendChild(emptyRow);
+      } else {
+        data.forEach((o, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <th scope="row" style="text-align: center">${index + 1}</th>
+            <td style="text-align: center">${o.player}</td>
+            <td style="text-align: center">${secondsToMinutesSeconds(o.total_score)}</td>
+          `;
+          leaderboardTable.appendChild(row);
+        });
+      }
     };
 
     const updateTable = async () => {
@@ -167,8 +178,9 @@ const LeaderboardPage = () => {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
 
-      const formattedMinutes = `0${minutes}`.slice(-2);
-      const formattedSeconds = `0${remainingSeconds}`.slice(-2);
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const formattedSeconds =
+        remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
 
       const result = `${formattedMinutes}:${formattedSeconds}`;
       return result;
