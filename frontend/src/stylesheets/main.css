@@ -122,10 +122,11 @@ body {
 
 .img-profil {
   position: fixed;
-  top: 24%;
-  left: 70.5%;
-  width: 10%;
+  top: 26%;
+  left: 71%;
+  width: 9%;
   height: 15%;
+  border-radius: 50%;
 }
 
 .img-profil-shield {
@@ -136,10 +137,26 @@ body {
   height: 22%;
 }
 
-.button-profil {
+.button-profil-password {
   position: fixed;
   top: 70%;
-  left: 62%;
+  left: 65%;
+  width: 15%;
+  height: 7%;
+}
+
+.button-profil-avatar {
+  position: fixed;
+  top: 45%;
+  left: 70%;
+  width: 11%;
+  height: 8%;
+}
+
+.button-profil-validated {
+  position: fixed;
+  top: 70%;
+  left: 17%;
   width: 20%;
   height: 7%;
 }
@@ -149,6 +166,14 @@ body {
   background-position: center;
   
 }
+
+.button-container {
+  text-align: center; /* Ajuste le texte à l'intérieur du conteneur */
+}
+
+.button-container button {
+  margin: 5px; /* Ajoute une marge entre les boutons */
+}
 /*==============================================*/
 
 .container-fluid {
@@ -157,6 +182,8 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+
 
 .game-menu {
   position: absolute;
@@ -329,6 +356,21 @@ body {
   }
   
 }
+
+
+/** *************************************************************************************
+   *    Author: https://chat.openai.com/
+   
+   ************************************************************************************** */
+@media (max-width: 1400px) {
+  .navbar-expand-lg .navbar-collapse {
+    display: none !important;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    display: block !important;
+  }
+}
+/* ========================================================*/
 
 /* Ajouté par Kusay pour avoir toute la page en noir */
 body {

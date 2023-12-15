@@ -16,6 +16,14 @@ import img5 from '../img/players/image5.png';
 import img6 from '../img/players/image6.png';
 import img7 from '../img/players/image7.png';
 import img8 from '../img/players/image8.png';
+import img9 from '../img/players/image9.png';
+import img10 from '../img/players/image10.png';
+import img11 from '../img/players/image11.png';
+import img12 from '../img/players/image12.png';
+import img13 from '../img/players/image13.png';
+import img14 from '../img/players/image14.png';
+import img15 from '../img/players/image15.png';
+import img16 from '../img/players/image16.png';
 
 const imagesBoss = []
 
@@ -39,6 +47,14 @@ imagesBoss.push({img: img5, src :'avatar5'})
 imagesBoss.push({img: img6, src :'avatar6'})
 imagesBoss.push({img: img7, src :'avatar7'})
 imagesBoss.push({img: img8, src :'avatar8'})
+imagesBoss.push({img: img9, src :'avatar9'})
+imagesBoss.push({img: img10, src :'avatar10'})
+imagesBoss.push({img: img11, src :'avatar11'})
+imagesBoss.push({img: img12, src :'avatar12'})
+imagesBoss.push({img: img13, src :'avatar13'})
+imagesBoss.push({img: img14, src :'avatar14'})
+imagesBoss.push({img: img15, src :'avatar15'})
+imagesBoss.push({img: img16, src :'avatar16'})
 
 
 

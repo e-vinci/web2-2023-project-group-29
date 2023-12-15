@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/updatePassword', async (req, res) => {
+router.put('/updatePassword', async (req, res) => {
   const { playerId } = req.body;
   const { newPassword } = req.body;
 
@@ -80,7 +80,7 @@ router.post('/updatePassword', async (req, res) => {
   }
 });
 
-router.post('/updateAvatar', async (req, res) => {
+router.put('/updateAvatar', async (req, res) => {
   const { playerId } = req.body;
   const { avatar } = req.body;
 

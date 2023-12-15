@@ -30,5 +30,9 @@ const setXp = (newXp) => {
   currentUser.xp = newXp
 };
 
+const setAvatar = (newAvatarPath) => {
+  currentUser.avatarPath = newAvatarPath
+};
+
 // eslint-disable-next-line object-curly-newline
-export { setXp, setLastLevel, getAuthenticatedUser, setAuthenticatedUser, isAuthenticated, clearAuthenticatedUser };
+export { setAvatar, setXp, setLastLevel, getAuthenticatedUser, setAuthenticatedUser, isAuthenticated, clearAuthenticatedUser };
