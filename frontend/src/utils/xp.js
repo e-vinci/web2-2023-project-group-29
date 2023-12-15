@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from './auths';
 
-const  xp  = getAuthenticatedUser();
+const  {xp}  = getAuthenticatedUser();
 
 const rank = calculateRank();
 

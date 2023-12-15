@@ -10,7 +10,7 @@ import findBossOrPlayerImg from '../../utils/imagesBossAndPlayer';
 import { initializeArrayOfCards } from '../../utils/imagesCards';
 import makeDisappearNavbar from '../../utils/navbarSetup';
 import Navigate from '../Router/Navigate';
-import { getAuthenticatedUser } from '../../utils/auths';
+import { getAuthenticatedUser, setAuthenticatedUser } from '../../utils/auths';
 import  getPlayerRank  from '../../utils/xp';
 
 
@@ -470,23 +470,35 @@ function gameOver(){
 
 const fetchScores = async () => {
   try {
+    const {playerId} = getAuthenticatedUser();
+    const score = timerOfThePlayer;
+    const levelId = sessionStorage.getItem('levelId');
     
-    const response = await fetch(`${process.env.API_BASE_URL}/score/addScore/${timerOfThePlayer}`);
+    const response = await fetch(`${process.env.API_BASE_URL}/score/addScore`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({playerId, score, levelId}),
+    });
     if (!response.ok) {
       throw new Error('Réponse Network pas ok');
     }
     const data = await response.json();
+    setAuthenticatedUser(data);
     xp = data.xp;
+    console.log(xp);
   } catch (error) {
     console.error('Erreur lors de la récupération des scores: ', error);
   }
 };
 
+
 function victory(){
   countHeartPlayer = 3;
   const lastGamePlay = new URL(window.location.href);
   fetchScores();
-  const rank = getPlayerRank().value;
+  const rank = getPlayerRank().level;
 
   const divGameOver = ` <div class="victory-container full-screen-bg">
                           <h1 class="h1-victory">Bravo aventurier</h1>
