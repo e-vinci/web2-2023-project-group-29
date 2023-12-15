@@ -48,7 +48,7 @@ const GamePage = async () => {
     Navigate('/login');
     return;
   }
-  
+ 
   // Permet de faire disparaitre la bar de navigation
   makeDisappearNavbar(true);
 
@@ -78,7 +78,11 @@ const GamePage = async () => {
   } catch (error) {
     console.error(error);
   }
-
+  if(user.lastLevel.world+1<level.world || user.lastLevel.level_number+1<level.level_number) {
+    Navigate(`/levelMap?world=${user.lastLevel.world+1}`)
+    return;
+  }
+  
   // Affichage du monde , du niveau et du logo VS
   displayVSAndTitle();
   // Affichage de la barre de vie du boss
@@ -129,8 +133,7 @@ async function recoveryData() {
     level = await getLevel();
   } catch (error) {
     console.Error(error);
-  }
-
+  } 
   numberOfCards = level.card_number;
   memoryTimer = level.memorisation_time;
   bossLifeMax = numberOfCards * 5;
@@ -138,16 +141,16 @@ async function recoveryData() {
 }
 
 async function getLevel() {
-  try {
-    const response = await fetch(`api/levels/${levelparams}`);
-    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-    const levelresult = await response.json();
-    console.log(levelresult);
-    return levelresult;
-  } catch (error) {
-    console.error('getLevelById::error: ', error);
-    throw error;
-  }
+try{
+  const response = await fetch(`${process.env.API_BASE_URL}/levels/${levelparams}`);
+  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  const levelresult = await response.json();
+  console.log(levelresult);
+  return levelresult;
+} catch (error) {
+  console.error('getLevelById::error: ', error);
+  throw error;
+}
 }
 
 function displayVSAndTitle() {
