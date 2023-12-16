@@ -30,7 +30,7 @@ const Navbar = () => {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-4 mb-lg-0">
               <li class="nav-item me-5 ms-5">
-                <a class="nav-link" href="#" data-uri="/world">Cartes</a>
+                <a class="nav-link" href="#" data-uri="/worlds">Mondes</a>
               </li> 
               <li class="nav-item me-5">
                 <a class="nav-link" href="#" data-uri="/leaderboard">Chroniques des Braves</a>
@@ -39,7 +39,7 @@ const Navbar = () => {
                 <a class="nav-link" href="#" data-uri="/allies">Alliés du Royaume</a>
               </li>     
               <li class="nav-item me-5">
-                <a class="nav-link" href="#" data-uri="/profil">Profil</a>
+                <a class="nav-link" href="#" data-uri="/profile">Profil</a>
               </li>   
               <li id="disconnectBtn" class="nav-item me-5">
                 <a class="nav-link" data-uri="/play" href="#">Déconnexion</a>

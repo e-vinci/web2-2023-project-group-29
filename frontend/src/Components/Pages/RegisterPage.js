@@ -6,16 +6,27 @@ import { clearPage } from '../../utils/render';
 const RegisterPage = () => {
   clearPage();
   makeDisappearNavbar(true);
-  
+
   const main = document.querySelector('main');
 
   const generateAvatarOptions = () => {
-    const avatarImages = ['avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5', 'avatar6', 'avatar7', 'avatar8'];
-    
-    return avatarImages.map((image) => {
-      const avatarSrc = findBossOrPlayerImg(image);
-      return `<img src="${avatarSrc}" class="avatar-option" data-avatar="${image}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`;
-    }).join('');
+    const avatarImages = [
+      'avatar1',
+      'avatar2',
+      'avatar3',
+      'avatar4',
+      'avatar5',
+      'avatar6',
+      'avatar7',
+      'avatar8',
+    ];
+
+    return avatarImages
+      .map((image) => {
+        const avatarSrc = findBossOrPlayerImg(image);
+        return `<img src="${avatarSrc}" class="avatar-option" data-avatar="${image}" alt="Avatar" style="border-radius: 50%; width: 12.5%; height: 10%;">`;
+      })
+      .join('');
   };
 
   const registerPage = `
@@ -83,19 +94,19 @@ const RegisterPage = () => {
   });
 
   // Ajout du gestionnaire d'événements pour les options d'avatar
-avatarOptions.addEventListener('click', (e) => {
-  const selectedAvatar = e.target.dataset.avatar;
-  const avatarImages = document.querySelectorAll('.avatar-option');
-  // Retirez la classe "selected" de toutes les images
-  avatarImages.forEach((image) => {
-    image.classList.remove('selected');
+  avatarOptions.addEventListener('click', (e) => {
+    const selectedAvatar = e.target.dataset.avatar;
+    const avatarImages = document.querySelectorAll('.avatar-option');
+    // Retirez la classe "selected" de toutes les images
+    avatarImages.forEach((image) => {
+      image.classList.remove('selected');
+    });
+    // Ajoutez la classe "selected" à l'image sélectionnée
+    if (selectedAvatar) {
+      selectedAvatarInput.value = selectedAvatar;
+      e.target.classList.add('selected');
+    }
   });
-  // Ajoutez la classe "selected" à l'image sélectionnée
-  if (selectedAvatar) {
-    selectedAvatarInput.value = selectedAvatar;
-    e.target.classList.add('selected');
-  }
-});
 
   registrationForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -106,30 +117,30 @@ avatarOptions.addEventListener('click', (e) => {
     const confirmPassword = document.querySelector('#confirmPassword').value;
     const avatarPath = selectedAvatarInput.value;
 
-    if(password !== confirmPassword){
-      passwordMismatchError.textContent = 'Les mots de passe ne correspondent pas !';
+    if (password !== confirmPassword) {
+      passwordMismatchError.textContent = 'Les mots-de-passe ne correspondent pas !';
+    } else if (login.trim() === '' || login.trim() === null) {
+      passwordMismatchError.textContent = "Veuillez entrer un nom d'utilisateur valide";
     } else {
+      try {
+        const response = await fetch('http://localhost:3000/players/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ login, email, password, avatarPath }),
+        });
 
-    try {
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error);
+        }
 
-      const response = await fetch('http://localhost:3000/players/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ login, email, password, avatarPath }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error);
+        Navigate('/login');
+      } catch (error) {
+        passwordMismatchError.textContent = error.message;
       }
-
-      Navigate('/login');
-    } catch (error) {
-      passwordMismatchError.textContent = error.message;
     }
-  }
   });
 };
 

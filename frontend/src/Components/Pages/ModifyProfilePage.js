@@ -1,20 +1,23 @@
 import Navigate from '../Router/Navigate';
 import { clearPage } from '../../utils/render';
-import  makeDisappearNavbar  from '../../utils/navbarSetup';
+import makeDisappearNavbar from '../../utils/navbarSetup';
 import { getAuthenticatedUser } from '../../utils/auths';
 
+const ModifyProfilePage = () => {
+  const player = getAuthenticatedUser();
 
+  if (!player) {
+    Navigate('/login');
+    return;
+  }
 
-const ModifiedProfilPage = () => {
   clearPage();
   makeDisappearNavbar(false);
   const main = document.querySelector('main');
 
-
-
   const modifiedProfilPage = `
     <div class="full-screen-bg">
-      <div class="full-screen-bois">
+      <div class="full-screen-wood">
         <div class="container mt-5">
           <div class="row justify-content-center">
             <div class="col-md-6">
@@ -53,44 +56,39 @@ const ModifiedProfilPage = () => {
 
   const backButton = document.getElementById('backButton');
   backButton.addEventListener('click', () => {
-    Navigate('/profil');
+    Navigate('/profile');
   });
 
+  modificatedForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-modificatedForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const password = document.querySelector('#password').value;
-  const confirmPassword = document.querySelector('#confirmPassword').value;
-  if (password !== confirmPassword) {
-    passwordMismatchError.textContent = 'Les mots de passe ne correspondent pas';
-    return;
-  }
-
-  const player = getAuthenticatedUser();
-  const {playerId} = player;
-
-  try {
-    const response = await fetch(`${process.env.API_BASE_URL}/players/updatePassword`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({playerId, newPassword: password}),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error);
+    const password = document.querySelector('#password').value;
+    const confirmPassword = document.querySelector('#confirmPassword').value;
+    if (password !== confirmPassword) {
+      passwordMismatchError.textContent = 'Les mots-de-passe ne correspondent pas';
+      return;
     }
-    Navigate('/profil');
-  } catch (error) {
-    passwordMismatchError.textContent = error.message;
-  }
 
-});
+    const { playerId } = player;
 
-    
+    try {
+      const response = await fetch(`${process.env.API_BASE_URL}/players/updatePassword`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ playerId, newPassword: password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+      Navigate('/profile');
+    } catch (error) {
+      passwordMismatchError.textContent = error.message;
+    }
+  });
 };
 
-export default ModifiedProfilPage;
+export default ModifyProfilePage;

@@ -8,9 +8,9 @@ let user = null; // Variable stockant utilisateur connecte
 
   const createListGroup = () => {
     const links = [
-      { text: 'Easy', uri: '/levelMap?world=1' , img: 'easy-image_back'},
-      { text: 'Medium', uri: '/levelMap?world=2', img: 'medium-image_back' },
-      { text: 'Hard', uri: '/levelMap?world=3', img: 'hard-image_back' },
+      { text: 'Facile', uri: '/levels?world=1' , img: 'easy-image_back'},
+      { text: 'Moyen', uri: '/levels?world=2', img: 'medium-image_back' },
+      { text: 'Difficile', uri: '/levels?world=3', img: 'hard-image_back' },
     ];
   
     const listGroup = document.createElement('div');
@@ -41,7 +41,6 @@ const WorldPage = () => {
     Navigate('/login');
     return;
   }
-  
 
   const main = document.querySelector('main');
 

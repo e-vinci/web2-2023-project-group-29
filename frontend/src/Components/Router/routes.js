@@ -1,18 +1,17 @@
 import HomePage from '../Pages/HomePage';
 import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
-import GamePage  from '../Pages/GamePage';
+import GamePage from '../Pages/GamePage';
 import RulesPage from '../Pages/RulesPage';
 import CreditsPage from '../Pages/CreditsPage';
 import PlayPage from '../Pages/PlayPage';
 import WorldPage from '../Pages/WorldPage';
 import LeaderboardPage from '../Pages/LeaderboardPage';
 import AlliesPage from '../Pages/AlliesPage';
-import ProfilPage from '../Pages/ProfilPage';
-import levelMapPage from '../Pages/levelMapPage';
-import ModifiedProfil from '../Pages/ModifiedProfilPage';
-import ModifiedAvatar from '../Pages/ModifiedAvatar';
-
+import ProfilePage from '../Pages/ProfilePage';
+import LevelsPage from '../Pages/LevelsPage';
+import ModifyProfilePage from '../Pages/ModifyProfilePage';
+import ModifyAvatarPage from '../Pages/ModifyAvatar';
 
 const routes = {
   '/': HomePage,
@@ -22,14 +21,13 @@ const routes = {
   '/rules': RulesPage,
   '/credits': CreditsPage,
   '/play': PlayPage,
-  '/world': WorldPage,
+  '/worlds': WorldPage,
   '/leaderboard': LeaderboardPage,
   '/allies': AlliesPage,
-  '/profil': ProfilPage,
-  '/levelMap':levelMapPage,
-  '/modifiedProfil':ModifiedProfil,
-  '/modifiedAvatar':ModifiedAvatar
-
+  '/profile': ProfilePage,
+  '/levels': LevelsPage,
+  '/modifyProfile': ModifyProfilePage,
+  '/modifyAvatar': ModifyAvatarPage,
 };
 
 export default routes;

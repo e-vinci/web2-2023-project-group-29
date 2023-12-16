@@ -98,9 +98,7 @@ body {
   z-index: -2;
 }
 
-/*==============================================*/
-
-.full-screen-bois {
+.full-screen-wood {
   background-image: url('../img/backgrounds/ProfilImage.png');
   background-size: 100% 100%;
   background-position: top left;
@@ -112,7 +110,7 @@ body {
   z-index: -2;
 }
 
-.container-fluid-profil {
+.container-fluid-profile {
   position: fixed;
   top: 23%;
   left: 17%;
@@ -120,7 +118,7 @@ body {
   height: 40%;
 }
 
-.img-profil {
+.img-profile {
   position: fixed;
   top: 26%;
   left: 71%;
@@ -129,7 +127,7 @@ body {
   border-radius: 50%;
 }
 
-.img-profil-shield {
+.img-profile-shield {
   position: fixed;
   top: 23%;
   left: 70%;
@@ -137,7 +135,7 @@ body {
   height: 22%;
 }
 
-.button-profil-password {
+.button-profile-password {
   position: fixed;
   top: 70%;
   left: 65%;
@@ -145,7 +143,7 @@ body {
   height: 7%;
 }
 
-.button-profil-avatar {
+.button-profile-avatar {
   position: fixed;
   top: 45%;
   left: 70%;
@@ -153,7 +151,7 @@ body {
   height: 8%;
 }
 
-.button-profil-validated {
+.button-profile-validated {
   position: fixed;
   top: 70%;
   left: 17%;
@@ -161,20 +159,19 @@ body {
   height: 7%;
 }
 
-.image-back-profil{
+.image-back-profile{
   background-image: url('../img/backgrounds/ProfilImage.png');
   background-position: center;
   
 }
 
 .button-container {
-  text-align: center; /* Ajuste le texte à l'intérieur du conteneur */
+  text-align: center;
 }
 
 .button-container button {
-  margin: 5px; /* Ajoute une marge entre les boutons */
+  margin: 5px;
 }
-/*==============================================*/
 
 .container-fluid {
   height: 100%;
@@ -182,8 +179,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-
 
 .game-menu {
   position: absolute;
@@ -231,9 +226,11 @@ body {
   }
 }
 
-/* ========================================================*/
-
-
+@media (max-width: 1550px) {
+  .nav-link {
+    font-size: large;
+  }
+}
 
 .game-over-container {
   position: fixed;
@@ -261,9 +258,6 @@ body {
   border: none;
   cursor: pointer;
 }
-
-/* ========================================================*/
-
 
 .victory-container {
   text-align: center;
@@ -297,8 +291,6 @@ body {
   cursor: pointer;
 }
 
-/* ========================================================*/
-
 .game-menu-alex {
   position: absolute;
   top: 20%;
@@ -307,7 +299,7 @@ body {
   padding: 2%;
   background-color: #3a3a3a00;
   user-select: none;
-  word-wrap: break-word;
+  scale: 1.5;
 }
 
 .game-menu-alex .list-group-item-alex {
@@ -357,53 +349,34 @@ body {
   
 }
 
-
-/** *************************************************************************************
-   *    Author: https://chat.openai.com/
-   
-   ************************************************************************************** */
-@media (max-width: 1400px) {
-  .navbar-expand-lg .navbar-collapse {
-    display: none !important;
-  }
-  .navbar-expand-lg .navbar-toggler {
-    display: block !important;
-  }
-}
-/* ========================================================*/
-
-/* Ajouté par Kusay pour avoir toute la page en noir */
 body {
   background-color: black;
-  color: white; /* Text color */
+  color: white;
 }
 
-/* Fond orange pour la navbar */
 .bg-orange {
-  background-color: #ffa500; /* Code couleur orange */
+  background-color: #ffa500;
 }
 
-/* Texte noir pour les liens de la navbar */
 .bg-orange .navbar-nav .nav-link {
-  color: #000000; /* Code couleur noir */
+  color: #000000;
 }
 
-/* Texte noir au survol */
 .bg-orange .navbar-nav .nav-link:hover {
-  color: #ffffff; /* Code couleur noir */
+  color: #ffffff;
 }
 
-/* Couleur de la bordure pour indiquer la sélection */
+.avatar-option {
+  cursor: pointer;
+}
+
 .avatar-option.selected {
   border: 2px solid #ffa500;
 }
 
-/* Changer le curseur au survol pour indiquer que le lien est clickable */
 #register:hover {
   cursor: pointer;
 }
-
-
 
 .bossAndPlayer {
   border-bottom: 1px solid #ffffff;
@@ -425,41 +398,13 @@ body {
   text-align: center;
 }
 
-#LifeBar {
+#lifeBar {
   height: 100%;
   width: 100%;
   background-color: #ff0000;
   font-size: 50%;
 }
 
-
-/*====== barre d'experience ======*/
-
-.barre {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-#experience {
-  position: fixed;
-  width: 30%;
-  height: 5%;
-  left: 35% ;
-  border: 1px solid #ffffff;
-  text-align: center;
-  border-radius: 20px;
-}
-
-#experienceBar {
-  height: 100%;
-  width: 100%;
-  background-color: #1185cd;
-  font-size: 60%;
-  border-radius: 20px;
-  
-}
-
-/*=================================*/
 #divVersus {
   grid-area: vs;
 }
@@ -535,7 +480,7 @@ h1 {
 .divMap{
   display: flex;
   flex-direction: column;
-  height: 90.89vh;
+  height: 92.25vh;
   background-size: 100%  100%;
   background-repeat: no-repeat;
 }
@@ -549,6 +494,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 .rowLevel:nth-of-type(1){
   width: 11%;
@@ -556,6 +502,7 @@ h1 {
   position: absolute;
   top: 20%;
   left: 25%;
+  cursor: pointer;
 }
 .rowLevel:nth-of-type(2){
   width: 11%;
@@ -563,6 +510,7 @@ h1 {
   position: absolute;
   bottom: 40%;
   right: 45%;
+  cursor: pointer;
 }
 .rowLevel:nth-of-type(3){
   width: 11%;
@@ -570,5 +518,6 @@ h1 {
   position: absolute;
   top: 18%;
   right: 30%;
+  cursor: pointer;
 }
 

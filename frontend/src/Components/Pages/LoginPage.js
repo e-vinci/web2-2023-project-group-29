@@ -12,7 +12,7 @@ const handleLoginResponse = async (response) => {
   const player = await response.json();
   setAuthenticatedUser(player);
 
-  Navigate('/world');
+  Navigate('/worlds');
 };
 
 const LoginPage = () => {

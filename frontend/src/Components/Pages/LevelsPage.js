@@ -15,7 +15,7 @@ let imagesMap = null;
 
 const main = document.querySelector('main');
 let user;
-function levelPage() {
+function LevelsPage() {
   user = getAuthenticatedUser();
   if (!user) {
     Navigate('/login');
@@ -41,7 +41,6 @@ function buildLevelPage() {
   main.appendChild(div);
   const divMap = document.createElement('div');
   divMap.className = 'divMap';
-  // eslint-disable-next-line eqeqeq
   const imgBackground = imagesMap.find((img) => img.world == worldparam).img;
   divMap.style.backgroundImage = `url(${imgBackground})`;
   div.appendChild(divMap);
@@ -50,8 +49,9 @@ function buildLevelPage() {
 
   const title = document.createElement('h1');
   divTitle.appendChild(title);
-  title.innerText = `Image d'un monde`;
-  title.className = 'text-center';
+  title.innerText = `XXXXXX`;
+  title.classList.add('text-center');
+  title.style.color = 'transparent';
 
   const divList = document.createElement('div');
   divMap.appendChild(divList);
@@ -60,7 +60,7 @@ function buildLevelPage() {
   const userLastWorld = user.lastLevel.world;
   const userLastLevel = user.lastLevel.level_number;
 
-  for (let index = 1; index <= 3; index+=1) {
+  for (let index = 1; index <= 3; index += 1) {
     const rowDiv = document.createElement('div');
     const rowListTitle = document.createElement('h2');
     rowDiv.appendChild(rowListTitle);
@@ -72,7 +72,8 @@ function buildLevelPage() {
     if (
       userLastWorld > worldparam ||
       (userLastWorld == worldparam && userLastLevel >= index - 1) ||
-      (userLastWorld == worldparam - 1 && userLastLevel == 3 && index <= 1)
+      (userLastWorld == worldparam - 1 && userLastLevel == 3 && index <= 1) ||
+      (worldparam == 1 && index == 1)
     ) {
       addEventListenerMe(rowDiv);
     } else {
@@ -94,7 +95,7 @@ function addEventListenerMe(wrapper) {
       if (!response.ok)
         throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
-      const data = await response.json(); // Utilisation de response.json() pour obtenir les données JSON
+      const data = await response.json();
       const { levelId } = data;
 
       Navigate(`/game?levelId=${levelId}`);
@@ -105,4 +106,4 @@ function addEventListenerMe(wrapper) {
   });
 }
 
-export default levelPage;
+export default LevelsPage;
