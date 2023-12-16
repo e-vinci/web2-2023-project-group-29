@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
 const cookie = require('cookie');
-const Player = require('../models/players');
-const { authenticate, logout } = require('../utils/auths');
+const Player = require('../models/Player');
+const { authenticate } = require('../utils/auths');
 
 const router = express.Router();
-const { lifetimeJwt } = require('../models/players');
+const { lifetimeJwt } = require('../models/Player');
 const { getLastLevel } = require('../models/Score');
 
 router.get('/', authenticate, async (req, res) => {
@@ -91,7 +91,5 @@ router.put('/updateAvatar', async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 });
-
-router.post('/logout', authenticate, logout);
 
 module.exports = router;

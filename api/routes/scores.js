@@ -2,7 +2,7 @@ const express = require('express');
 const {
   getLastLevel, getBestScoresByWorldId, getFriendsBestScores, addScore,
 } = require('../models/Score');
-const { searchPlayerById } = require('../models/players');
+const { searchPlayerById } = require('../models/Player');
 
 const router = express.Router();
 

@@ -7,7 +7,7 @@ const {
   acceptAlly,
   rejectAlly,
 } = require('../models/Alliance');
-const { searchPlayerByLogin } = require('../models/players');
+const { searchPlayerByLogin } = require('../models/Player');
 
 const router = express.Router();
 

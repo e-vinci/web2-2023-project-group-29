@@ -1,9 +1,11 @@
+@baseUrl = http://localhost:3000
+
 ### Read all players
-GET http://localhost:3000/players/
+GET {{baseUrl}}/players/
 Authorization: {{player.response.body.token}}
 
 ### Create a new player
-POST http://localhost:3000/players/register
+POST {{baseUrl}}/players/register
 Content-Type: application/json
 
 {
@@ -15,7 +17,7 @@ Content-Type: application/json
 
 ### Login as a player
 # @name player
-POST http://localhost:3000/players/login
+POST {{baseUrl}}/players/login
 Content-Type: application/json
     
 {
@@ -23,6 +25,22 @@ Content-Type: application/json
     "password": "kusay"
 }
 
-### Déconnexion
-POST http://localhost:3000/players/logout
+### Update player's password
+PUT {{baseUrl}}/players/updatePassword
+Content-Type: application/json
 Authorization: {{player.response.body.token}}
+
+{
+    "playerId": "1",
+    "newPassword": "new"
+}
+
+### Update player's avatar
+PUT {{baseUrl}}/players/updateAvatar
+Content-Type: application/json
+Authorization: {{player.response.body.token}}
+
+{
+    "playerId": "1",
+    "avatar": "5"
+}

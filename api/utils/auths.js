@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const jwt = require('jsonwebtoken');
 const cookie = require('cookie');
-const { readOneUserFromUsername } = require('../models/players');
+const { readOneUserFromUsername } = require('../models/Player');
 
 const jwtSecret = process.env.JWT_SECRET;
 
