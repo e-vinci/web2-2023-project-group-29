@@ -13,15 +13,9 @@ import { clearAuthenticatedUser } from '../../utils/auths';
 const Navbar = () => {
   const navbarWrapper = document.querySelector('#navbarWrapper');
   const navbar = `
-<<<<<<< HEAD
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Add your brand here</a>
-=======
     <nav class="navbar navbar-expand-lg navbar-light bg-orange navigation">
         <div class="container-fluid">
           <a class="navbar-brand href="#">Remember Or Die</a>
->>>>>>> release/v.1.00
           <button
             class="navbar-toggler"
             type="button"
@@ -34,18 +28,6 @@ const Navbar = () => {
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-<<<<<<< HEAD
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#" data-uri="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/game">Game</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-uri="/new">New Page</a>
-              </li>                        
-=======
             <ul class="navbar-nav me-auto mb-4 mb-lg-0">
               <li class="nav-item me-5 ms-5">
                 <a class="nav-link" href="#" data-uri="/worlds">Mondes</a>
@@ -62,7 +44,6 @@ const Navbar = () => {
               <li id="disconnectBtn" class="nav-item me-5">
                 <a class="nav-link" data-uri="/play" href="#">Déconnexion</a>
               </li>          
->>>>>>> release/v.1.00
             </ul>
           </div>
         </div>

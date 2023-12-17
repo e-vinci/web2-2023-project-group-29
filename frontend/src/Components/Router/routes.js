@@ -1,8 +1,4 @@
-import GamePage from '../Pages/GamePage';
 import HomePage from '../Pages/HomePage';
-<<<<<<< HEAD
-import NewPage from '../Pages/NewPage';
-=======
 import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
 import GamePage from '../Pages/GamePage';
@@ -17,14 +13,12 @@ import LevelsPage from '../Pages/LevelsPage';
 import ModifyProfilePage from '../Pages/ModifyProfilePage';
 import ModifyAvatarPage from '../Pages/ModifyAvatar';
 import GdprPage from '../Pages/GdprPage';
->>>>>>> release/v.1.00
 
 const routes = {
   '/': HomePage,
+  '/login': LoginPage,
+  '/register': RegisterPage,
   '/game': GamePage,
-<<<<<<< HEAD
-  '/new': NewPage,
-=======
   '/rules': RulesPage,
   '/credits': CreditsPage,
   '/play': PlayPage,
@@ -36,7 +30,6 @@ const routes = {
   '/modifyProfile': ModifyProfilePage,
   '/modifyAvatar': ModifyAvatarPage,
   '/gdpr': GdprPage,
->>>>>>> release/v.1.00
 };
 
 export default routes;
