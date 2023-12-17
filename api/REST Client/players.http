@@ -1,0 +1,46 @@
+@baseUrl = http://localhost:3000
+
+### Read all players
+GET {{baseUrl}}/players/
+Authorization: {{player.response.body.token}}
+
+### Create a new player
+POST {{baseUrl}}/players/register
+Content-Type: application/json
+
+{
+    "email": "kusay@gmail.com",
+    "login": "kusay",
+    "password": "kusay",
+    "avatarPath": "/avatars/avatar.png"
+}
+
+### Login as a player
+# @name player
+POST {{baseUrl}}/players/login
+Content-Type: application/json
+    
+{
+    "email": "kusay@gmail.com",
+    "password": "kusay"
+}
+
+### Update player's password
+PUT {{baseUrl}}/players/updatePassword
+Content-Type: application/json
+Authorization: {{player.response.body.token}}
+
+{
+    "playerId": "1",
+    "newPassword": "new"
+}
+
+### Update player's avatar
+PUT {{baseUrl}}/players/updateAvatar
+Content-Type: application/json
+Authorization: {{player.response.body.token}}
+
+{
+    "playerId": "1",
+    "avatar": "5"
+}
