@@ -41,7 +41,7 @@ const RegisterPage = () => {
           <div class="col-md-6">
             <form id="registrationForm">
               <div class="form-group">
-                <label for="username">Nom d'utilisateur</label>
+                <label for="username">Pseudo</label>
                 <input type="text" class="form-control" id="username" name="username" required>
               </div>
 
@@ -70,6 +70,12 @@ const RegisterPage = () => {
 
               <div id="passwordMismatchError" class="text-danger mt-3 text-center"></div>
               <div id="existingUserError" class="text-danger mt-3 text-center"></div>
+
+              <div class="text-center">
+                <p class="consent">
+                  En vous inscrivant, vous consentez à notre <a id="consentA">Politique de Confidentialité</a>.
+                </p>
+              </div>
 
               <div class="text-center">
                 <button type="submit" class="btn btn-warning btn-block">S'inscrire</button>
@@ -141,6 +147,11 @@ const RegisterPage = () => {
         passwordMismatchError.textContent = error.message;
       }
     }
+  });
+
+  const consentA = document.querySelector('#consentA');
+  consentA.addEventListener('click', () => {
+    Navigate('/gdpr');
   });
 };
 
