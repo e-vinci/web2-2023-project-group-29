@@ -11,13 +11,17 @@ L'API est déployée sur Azure : https://remember-or-die-api.azurewebsites.net
 Le frontend est déplayé sur Github Pages : https://e-vinci.github.io/remember-or-die
 
 ## Ergonomie
-- La vision marketing ainsi que les wireframes se trouvent dans le répertoire `/ergonomics`.
+La vision marketing ainsi que les wireframes se trouvent dans le répertoire `/ergonomics`.
 
 ## Exécution de vos projets
 Il est impossible d'exécuter notre projet localement étant donné qu'un fichier de secrets est nécéssaire.
 
 ## Rapport de projet
-Le rapport doit se trouver dans le répertoire `/report`.
+Le rapport trouve dans le répertoire `/report`.
 
 ## Vidéo
 Lien vers la vidéo : https://www.youtube.com/watch?v=RtcaMU8Evw0
+
+## Dev Team
+Groupe 29:
+Budak Melik, Ciborowski Dawid, Demir Ahmet Kusay, Alexandre Garcia, Koubai Omar
