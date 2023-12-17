@@ -8,7 +8,7 @@ Le rapport contient la documentation de l'API. Pour tester l'API, des requêtes 
 L'API est déployée sur Azure : https://remember-or-die-api.azurewebsites.net
 
 ## Frontend
-Le frontend est déplayé sur Github Pages : https://e-vinci.github.io/remember-or-die
+Le frontend est déployé sur Github Pages : https://e-vinci.github.io/remember-or-die
 
 ## Ergonomie
 La vision marketing ainsi que les wireframes se trouvent dans le répertoire `/ergonomics`.
