@@ -1,3 +1,4 @@
+IMPOSSIBLE D'UTILISER LOCALEMENT SANS LES SECRETS !
 
 # Boilerplate d'une RESTful API offrant l'authentification et l'autorisation via JWT
 ## Comment l'utiliser ?
